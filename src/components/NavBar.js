@@ -8,6 +8,8 @@ const Navbar = (props) => {
   let { path } = useRouteMatch();
 
   useEffect(() => {
+    const elems = document.querySelectorAll('.sidenav');
+    const instances = M.Sidenav.init(elems, options);
     setLocation(path);
     console.log(path, location);
   }, [path, location]);
@@ -20,7 +22,7 @@ const Navbar = (props) => {
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           {links.map((link, index) => (
             <li key={index}>
-              <Link to={link.route}>{link.text}</Link>
+              <Link className={location !== path ? "" : "active"} to={link.route}>{link.text}</Link>
             </li>
           ))}
         </ul>
