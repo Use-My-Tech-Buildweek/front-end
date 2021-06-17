@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
@@ -25,13 +26,13 @@ const Navbar = (props) => {
       <nav>
         <div className="nav-wrapper">
           <span className="brand-logo">Use My Tech</span>
-          <span
+          <a
             href="#"
             data-target="responsive-nav"
             className="sidenav-trigger"
           >
             <i className="material-icons">menu</i>
-          </span>
+          </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {links.map((link, index) => (
               <li key={`nav-mobile_${index}`}>
