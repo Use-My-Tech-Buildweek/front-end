@@ -17,11 +17,6 @@ const Navbar = (props) => {
   useEffect(() => {
     setLocation(path);
     console.log(path, location);
-
-    const abortcontroller = new AbortController();
-    return function cleanup() {
-      abortcontroller.abort();
-    };
   }, [path, location]);
 
   const { links } = props;
@@ -30,7 +25,11 @@ const Navbar = (props) => {
       <nav>
         <div className="nav-wrapper">
           <span className="brand-logo">Use My Tech</span>
-          <span href="#" data-target="responsive-nav" className="sidenav-trigger">
+          <span
+            href="#"
+            data-target="responsive-nav"
+            className="sidenav-trigger"
+          >
             <i className="material-icons">menu</i>
           </span>
           <ul id="nav-mobile" className="right hide-on-med-and-down">

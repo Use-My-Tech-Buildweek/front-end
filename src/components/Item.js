@@ -30,7 +30,7 @@ const Item = (props) => {
         </div>
         <div className="card-action">
           <p>Price {price || "$4.20"}/day</p>
-          <button> Rent</button>
+          <button className="waves-effect-light btn" style={{display: "flex", justifyContent:"space-between"}} ><i className="material-icons" style={{marginRight: ".5em"}} >add_shopping_cart</i>Rent</button>
         </div>
       </div>
     </div>
