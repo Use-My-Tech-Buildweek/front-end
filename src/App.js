@@ -24,7 +24,7 @@ function App() {
         {/* Reusable navbar that can be changed dynamically using state or route info */}
         <NavBar
           links={[
-            { text: "Home", route: "/home" },
+            { text: "Home", route: "/" },
             { text: "My Items", route: "/items" },
             { text: "Log In", route: "/login" },
           ]}
