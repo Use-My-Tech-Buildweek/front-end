@@ -1,24 +1,24 @@
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
-import { useState } from 'react'
+//import { useState } from 'react'
 import './App.css';
 
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Welcome from './components/Welcome'
-import MyItems  from './components/MyItems'
-import NewItem  from './components/NewItem'
+import MyItems from './components/MyItems'
+import NewItem from './components/NewItem'
 
 
 
 
 function App() {
 
-  // default variables
-  const defaultUser = {
-    username: '',
-    email: '',
-    rating: [],
-  } 
+  // // default variables
+  // const defaultUser = {
+  //   username: '',
+  //   email: '',
+  //   rating: [],
+  // }
 
   return (
     <Router>
@@ -26,7 +26,7 @@ function App() {
       <div>
         <Link to='/'>Home</Link>
         <Link to='/items'>My Items</Link>
-        <Link to='/login'>Login</Link> 
+        <Link to='/login'>Login</Link>
         {/* once user loggedin login should link to my profile */}
       </div>
       {/* main section */}
@@ -46,7 +46,7 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        
+
         <Route path="/">
           <Welcome />
         </Route>
