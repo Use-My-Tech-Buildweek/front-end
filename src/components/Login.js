@@ -1,47 +1,44 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router'
 
-//import { useFetch } from '../hooks/useFetch'
+import { useForm } from '../hooks/useForm'
+import useCallAPI from '../hooks/useCallAPI'
 
-const Login = props => {
-    const [credentials, setCredentials] = useState({
+
+const initialValues = {
+    credentials: {
         username: '',
         password: ''
+    },
+    error: '',
+    url: '/login',
+    method: 'post',
+    body: '',
+    headers: ''
+
+}
+
+const Login = props => {
+    const [state, handleChanges, handleSubmit] = useForm(initialValues)
+    const { response, error, loading } = useCallAPI({
+        method: 'post',
+        url: '/login',
+        headers: { accept: '*/*' },
+        data: state.credentials,
     })
-    /*  const res = useFetch({
-         method: 'post',
-         url: 'http://pokeapi.co/api/v2/ability/stench',
-         data: credentials,
-         config: '',
-     }) */
-    const handleChanges = e => {
-        setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
-        })
-    }
 
-    const login = e => {
-        e.preventDefault()
-        console.log('Logging in')
-        axios.post('#', credentials)                //waiting on url
-            .then(res => {
-                localStorage.setItem('token', res.data.payload)
-                props.history.push('/protected')
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    };
+    const { push } = useHistory();
 
-    // if (!res.response) {
-    //     return <div>Loading...</div>
-    // }
-
-
+    /*   useEffect(() => {
+          if (response !== null) {
+              localStorage.setItem('token', response)
+              push('/profile')
+          }
+      }, [response, push])
+   */
     return (
-        <form onSubmit={login}>
+        <form onSubmit={handleSubmit}>
 
             <input
                 name="username"
@@ -62,7 +59,13 @@ const Login = props => {
             <Link to="/myprofile">Sign up!</Link>
             <p>Forgot your password?</p>
             {/* handle password forgotten */}
-        </form>
+
+            {loading ? (<p>Loading...</p>) : (<div>
+                {error && (<div><p>{error.message}</p></div>)}</div>)
+            }
+
+
+        </form >
     )
 
 }
