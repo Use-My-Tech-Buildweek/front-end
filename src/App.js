@@ -6,6 +6,7 @@ import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
 import MyItems from "./components/MyItems";
 import NewItem from "./components/NewItem";
+import Navbar from "./components/Navbar";
 
 function App() {
   // default variables
@@ -26,6 +27,8 @@ function App() {
         <Link to="/login">Login</Link>
         {/* once user loggedin login should link to my profile */}
       </div>
+      <Navbar />
+
       {/* main section */}
       <Switch>
         <Route path="/myprofile">
