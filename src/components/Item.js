@@ -1,47 +1,39 @@
-import React from 'react';
-
+import React from "react";
 
 const Item = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { pictures, description, price, user } = props;
 
   return (
-    <>
-      <div className="row">
-        <div className="col s12 m7">
-          <div className="card">
-            {/* IMAGE CAROUSEL */}
-            <span className="card-title">Title</span>
+    <div className="row">
+      <div className="col s12 m7">
+        <div className="card">
+          {/* IMAGE CAROUSEL */}
+          <span className="card-title">Title</span>
+        </div>
+        <div className="card-content">
+          <div>
+            <h5>Item Name</h5>
+            <p>User ratings</p>
           </div>
-          <div className="card-content">
-            <div>
-              <p>item.name</p>
-              <p>user.ratings</p>
-            </div>
-            <div>
-              <h2>description</h2>
-              <p>this is a very good item , lorem ipsum etc etc...</p>
-            </div>
-          </div>
-          <div className="card-action">
-            <p>price $/day</p>
-            <button> Rent</button>
+          <div>
+            <h6>Item Description</h6>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quando
+              enim Socrates, qui parens philosophiae iure dici potest, quicquam
+              tale fecit? <i>Sed nimis multa.</i> Sint ista Graecorum; Nobis
+              aliter videtur, recte secusne, postea; Quae diligentissime contra
+              Aristonem dicuntur a Chryippo. Duo Reges: constructio interrete.
+              <i>Non dolere, inquam, istud quam vim habeat postea videro;</i>
+            </p>
           </div>
         </div>
+        <div className="card-action">
+          <p>Price {price || "$4.20"}/day</p>
+          <button> Rent</button>
+        </div>
       </div>
-
-      <div>
-        <p>picture1</p>
-        <p>picture2</p>
-        <p>....</p>
-        {/* {pictures.map((pic) => {
-                return(
-                    <img src={pic.src} alt={pic.alt} />
-                )
-            })} */}
-      </div>
-
-      <div></div>
-    </>
+    </div>
   );
 };
 

@@ -1,33 +1,64 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import M from "materialize-css";
 
 const Navbar = (props) => {
   const [location, setLocation] = useState("/");
 
-  //   can't get this to update on navigation. I want to disable the navigation link for the current page
+  //   TODO: disable the navigation link for the current page
   let { path } = useRouteMatch();
 
   useEffect(() => {
-    const elems = document.querySelectorAll('.sidenav');
-    const instances = M.Sidenav.init(elems, options);
+    // Initialize responsive menu elements
+    const elems = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(elems);
+  }, []);
+
+  useEffect(() => {
     setLocation(path);
     console.log(path, location);
+
+    const abortcontroller = new AbortController();
+    return function cleanup() {
+      abortcontroller.abort();
+    };
   }, [path, location]);
 
   const { links } = props;
   return (
-    <nav>
-      <div className="nav-wrapper">
-      <span className="brand-logo">Use My Tech</span>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
-          {links.map((link, index) => (
-            <li key={index}>
-              <Link className={location !== path ? "" : "active"} to={link.route}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+    <div className="nav-wrapper">
+      <nav>
+        <div className="nav-wrapper">
+          <span className="brand-logo">Use My Tech</span>
+          <span href="#" data-target="responsive-nav" className="sidenav-trigger">
+            <i className="material-icons">menu</i>
+          </span>
+          <ul id="nav-mobile" className="right hide-on-med-and-down">
+            {links.map((link, index) => (
+              <li key={`nav-mobile_${index}`}>
+                {/* not toggling class as expected - location is not updating */}
+                <Link
+                  className={location !== path ? "" : "active"}
+                  to={link.route}
+                >
+                  {link.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+      <ul className="sidenav" id="responsive-nav">
+        {links.map((link, index) => (
+          <li key={`sidenav_${index}`}>
+            {/* not toggling class as expected - location is not updating */}
+            <Link className={location !== path ? "" : "active"} to={link.route}>
+              {link.text}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
