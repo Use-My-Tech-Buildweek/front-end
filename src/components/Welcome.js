@@ -1,19 +1,22 @@
 import Item from "./Item";
 
 const Welcome = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("search form submitted");
+  };
+
   return (
     <div className="container">
-      <div className="row">
-        <form>
-          <div className="row">
-            <div className="input-field col s6">
-              <i className="material-icons prefix">search</i>
-              <input type="text" id="search_input" className="validate" />
-              <label htmlFor="search_input">What are you looking for?</label>
-            </div>
+      <form action="submit" onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="input-field col s6">
+            <i className="material-icons prefix">search</i>
+            <input type="text" id="search_input" className="validate" />
+            <label htmlFor="search_input">What are you looking for?</label>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <div>
         <h4 className="center-align">Electronics</h4>
         <Item />
