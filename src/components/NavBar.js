@@ -1,14 +1,15 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-const NavBar = (props) => {
+const Navbar = (props) => {
   const [location, setLocation] = useState("/");
+
   //   can't get this to update on navigation. I want to disable the navigation link for the current page
   let { path } = useRouteMatch();
 
   useEffect(() => {
     setLocation(path);
-    console.log(location);
+    console.log(path, location);
   }, [path, location]);
 
   const { links } = props;
@@ -28,4 +29,4 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+export default Navbar;

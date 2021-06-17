@@ -352,7 +352,7 @@ template {
 
 /* END OF CSS RESET */
 
-/* Roboto font for Matierial-UI */
+/* Roboto font for Materialize CSS */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
-/* Material-UI font icons */
+/* Material font icons */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");

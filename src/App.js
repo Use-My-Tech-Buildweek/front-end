@@ -6,7 +6,7 @@ import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
 import MyItems from "./components/MyItems";
 import NewItem from "./components/NewItem";
-import NavBar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 
 function App() {
   // default variables
@@ -21,8 +21,8 @@ function App() {
   return (
     <Router>
       <header>
-        {/* Reusable navbar that can be changed dynamically using state or route info */}
-        <NavBar
+        {/* Reusable Navbar that can be changed dynamically using state or route info */}
+        <Navbar
           links={[
             { text: "Home", route: "/" },
             { text: "My Items", route: "/items" },
