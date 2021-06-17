@@ -4,6 +4,9 @@ const Item = () => {
     return(
         <>
         <div>
+            {/* renter name and profile picture should linked to renter's profile via /profile */}
+            <img src='' alt="renter's profile picture" />
+            <p>renter.name</p>
             <p>item.name</p>
             <p>user.ratings</p>
         </div>

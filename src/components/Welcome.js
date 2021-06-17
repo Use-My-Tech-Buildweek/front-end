@@ -3,13 +3,13 @@ import Item from './Item'
 const Welcome = () => {
     return(
         <>
-        <from>
+        <form>
             <label>
                 I'm looking for :
                 <input type='text' placeholder="I'm looking for...."/>
             </label>
            
-        </from>
+        </form>
         <div>
             <h2>Electronics</h2>
             <Item />
