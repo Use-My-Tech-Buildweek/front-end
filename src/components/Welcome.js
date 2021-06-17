@@ -2,28 +2,33 @@ import Item from "./Item";
 
 const Welcome = () => {
   return (
-    <>
-      <form>
-        <label>
-          I'm looking for :
-          <input type="text" placeholder="I'm looking for...." />
-        </label>
-      </form>
+    <div className="container">
+      <div className="row">
+        <form>
+          <div className="row">
+            <div className="input-field col s6">
+              <i className="material-icons prefix">search</i>
+              <input type="text" id="search_input" className="validate" />
+              <label htmlFor="search_input">What are you looking for?</label>
+            </div>
+          </div>
+        </form>
+      </div>
       <div>
-        <h2>Electronics</h2>
+        <h4 className="center-align">Electronics</h4>
         <Item />
         <Item />
         <Item />
         <Item />
       </div>
       <div>
-        <h2>Tools / DIY</h2>
+        <h4 className="center-align">Tools / DIY</h4>
         <Item />
         <Item />
         <Item />
         <Item />
       </div>
-    </>
+    </div>
   );
 };
 

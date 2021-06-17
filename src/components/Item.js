@@ -5,8 +5,8 @@ const Item = (props) => {
   const { pictures, description, price, user } = props;
 
   return (
-    <div className="row">
-      <div className="col s12 m7">
+    <div className="row" style={{display: "flex", flexDirection: "row", border: "1px solid green", justifyContent: "center"}} >
+      <div className="col s12 m8 offset-m1">
         <div className="card">
           {/* IMAGE CAROUSEL */}
           <span className="card-title">Title</span>
@@ -30,7 +30,15 @@ const Item = (props) => {
         </div>
         <div className="card-action">
           <p>Price {price || "$4.20"}/day</p>
-          <button className="waves-effect-light btn" style={{display: "flex", justifyContent:"space-between"}} ><i className="material-icons" style={{marginRight: ".5em"}} >add_shopping_cart</i>Rent</button>
+          <button
+            className="waves-effect-light btn"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <i className="material-icons" style={{ marginRight: ".5em" }}>
+              add_shopping_cart
+            </i>
+            Rent
+          </button>
         </div>
       </div>
     </div>
