@@ -14,13 +14,16 @@ const NavBar = (props) => {
   const { links } = props;
   return (
     <nav>
-      <ul>
-        {links.map((link, index) => (
-          <li key={index}>
-            <Link to={link.route}>{link.text}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="nav-wrapper">
+      <span className="brand-logo">Use My Tech</span>
+        <ul id="nav-mobile" className="right hide-on-med-and-down">
+          {links.map((link, index) => (
+            <li key={index}>
+              <Link to={link.route}>{link.text}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };
