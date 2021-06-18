@@ -6,11 +6,33 @@ const Welcome = () => {
     console.log("search form submitted");
   };
 
+  const h4Style = { border: "1px solid black", borderRadius: "4px" };
+  const itemsWrapperStyle = {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "space-evenly"
+  };
+
   return (
-    <div className="container">
+    <div style={{padding: "2rem"}} >
       <form action="submit" onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="input-field col s6 center-align offset-s3">
+        <div
+          className="row"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p>I'm looking for</p>
+          <div
+            className="input-field col s12 m8 offset-m2 l6 offset-l3"
+            style={{
+              border: "1px solid black",
+              borderRadius: "4px",
+              marginLeft: "1em",
+            }}
+          >
             <i className="material-icons prefix">search</i>
             <input type="text" id="search_input" className="validate" />
             <label htmlFor="search_input">What are you looking for?</label>
@@ -18,14 +40,20 @@ const Welcome = () => {
         </div>
       </form>
       <div>
-        <h4 className="center-align">Electronics</h4>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        <h4 style={h4Style} className="center-align">
+          Electronics
+        </h4>
+        <div className="items-wrapper" style={itemsWrapperStyle}>
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+        </div>
       </div>
       <div>
-        <h4 className="center-align">Tools / DIY</h4>
+        <h4 style={h4Style} className="center-align">
+          Tools / DIY
+        </h4>
         <Item />
         <Item />
         <Item />
