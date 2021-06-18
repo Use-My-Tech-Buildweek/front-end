@@ -1,7 +1,8 @@
 const Signup = () => {
-    return (
-        // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
+ return (
+    // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
     <form>
+
         <label>
             Username
             <input name="username" type="text" placeholder="choose your username"/>
@@ -35,8 +36,9 @@ const Signup = () => {
             <input name="profilePicture" type="file" accept=".jpg,.jpeg,.png" placeholder="about me..."/>
         </label>
         <button type="input">Sign up</button>
-    </form>
-    )
-}
 
-export default Signup
+    </form>
+  );
+};
+
+export default Signup;
