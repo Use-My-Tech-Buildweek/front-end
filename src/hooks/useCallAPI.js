@@ -13,13 +13,13 @@ const useCallAPI = (axiosParams) => {
 		try {
 			const result = await axios.request(params);
 			setResponse(result.data)
+			setError('')
 		} catch (err) {
 			setError(err)
 		} finally {
 			setLoading(false)
 		}
 	}
-
 	useEffect(() => {
 		fetchData(axiosParams);
 	}, [axiosParams])

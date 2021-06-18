@@ -12,11 +12,6 @@ const initialValues = {
         password: ''
     },
     error: '',
-    url: '/login',
-    method: 'post',
-    body: '',
-    headers: ''
-
 }
 
 const Login = props => {
@@ -31,13 +26,18 @@ const Login = props => {
 
     const { push } = useHistory();
 
-    /*   useEffect(() => {
-          if (response !== null) {
-              localStorage.setItem('token', response)
-              push('/profile')
-          }
-      }, [response, push])
-   */
+    const errorStyle = {
+        color: 'red',
+        fontWeight: 'bold',
+        fontSize: '36px'
+    }
+
+    /*  useEffect(() => {
+         if (response.statusCode === '200') {
+             push('/profile')
+         }
+     }, [response, push]) */
+
     return (
         <form onSubmit={handleSubmit}>
 
@@ -62,12 +62,14 @@ const Login = props => {
             {/* handle password forgotten */}
 
             {loading ? (<p>Loading...</p>) : (<div>
-                {error && (<div><p>{error.message}</p></div>)}</div>)
+                {error && (<div><p style={errorStyle}>{error.message}</p></div>)}</div>)
             }
+            {response ? (<p>Successfully logged in!</p>) : ''}
 
 
         </form >
     )
+
 
 }
 

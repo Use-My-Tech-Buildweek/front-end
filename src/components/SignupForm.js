@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import useHistory from 'react-router-dom'
 
 import { useForm } from '../hooks/useForm'
+//import useCallAPI from '../hooks/useCallAPI'
 import { addUser, setError } from '../actions'
-
 
 const initialValues = {
     newUser: {
@@ -12,12 +13,20 @@ const initialValues = {
         email: '',
         bio: '',
         profileImg: '',
-    }
+    },
+    sendApiCall: false,
+    error: ''
 }
 
 const SignupForm = (props) => {
     const [state, handleChanges, handleSubmit] = useForm(initialValues)
 
+    const { push } = useHistory();
+
+    if (state.sendApiCall) {
+        addUser(state.newUser)
+        push('/profile')
+    }
 
     return (
         // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
@@ -93,6 +102,8 @@ const mapStateToProps = state => {
     return {
         users: state.users,
         newUser: state.newUser,
+        error: state.error,
+        sendApiCall: state.sendApiCall,
     }
 }
 export default connect(mapStateToProps, { setError, addUser })(SignupForm)
