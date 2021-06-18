@@ -10,11 +10,11 @@ const Welcome = () => {
   const itemsWrapperStyle = {
     display: "flex",
     flexFlow: "row wrap",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   };
 
   return (
-    <div style={{padding: "2rem"}} >
+    <div style={{ padding: "2rem" }}>
       <form action="submit" onSubmit={handleSubmit}>
         <div
           className="row"
@@ -54,10 +54,12 @@ const Welcome = () => {
         <h4 style={h4Style} className="center-align">
           Tools / DIY
         </h4>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        <div className="items-wrapper" style={itemsWrapperStyle}>
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+        </div>
       </div>
     </div>
   );

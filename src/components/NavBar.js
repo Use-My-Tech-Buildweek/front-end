@@ -48,28 +48,22 @@ const Navbar = (props) => {
           className="right hide-on-med-and-down"
         >
           <button
-            onClick={handleClick}
             style={navButtonStyle}
-            data_nav="/"
             className="waves-effect-light btn"
           >
-            <span className="valign-wrapper">Home</span>
+            <span className="valign-wrapper"><Link to="/" >Home</Link></span>
           </button>
           <button
-            onClick={handleClick}
             style={navButtonStyle}
-            data_nav="/items"
             className="waves-effect-light btn"
           >
-            <span className="valign-wrapper">My Items</span>
+            <span className="valign-wrapper"><Link to="/items" >My Items</Link></span>
           </button>
           <button
-            onClick={handleClick}
             style={navButtonStyle}
-            data_nav="/login"
             className="right waves-effect-light btn"
           >
-            <span className="valign-wrapper">Log In</span>
+            <span className="valign-wrapper"><Link to="/login" >Log In</Link></span>
           </button>
         </div>
       </nav>
