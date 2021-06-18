@@ -2,7 +2,6 @@ const Signup = ({ toggleVisible, visible }) => {
  return (
     // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
     <form>
-
         <label>
             Username
             <input 
