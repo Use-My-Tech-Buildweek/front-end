@@ -3,12 +3,10 @@ import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = () => {
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("search form submitted");
   };
-
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -45,7 +43,10 @@ const Welcome = () => {
           <Item />
           <Item />
           <Item />
-          </div>
-</div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Welcome;

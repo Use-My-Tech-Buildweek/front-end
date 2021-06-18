@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import M from "materialize-css";
 import { navButtonStyle } from "./styles/styles";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [location, setLocation] = useState("/");
 
   //   TODO: disable the navigation link for the current page
@@ -21,9 +21,6 @@ const Navbar = (props) => {
     console.log(path, location);
   }, [path, location]);
 
-  const { links } = props;
-
-  
   return (
     <div className="nav-wrapper">
       <nav style={{ padding: "0 1em" }} className="valign-wrapper">
@@ -56,14 +53,9 @@ const Navbar = (props) => {
         </div>
       </nav>
       <ul className="sidenav" id="responsive-nav">
-        {links.map((link, index) => (
-          <li key={`sidenav_${index}`}>
-            {/* not toggling class as expected - location is not updating */}
-            <Link className={location !== path ? "" : "active"} to={link.route}>
-              {link.text}
-            </Link>
-          </li>
-        ))}
+        <li><Link to="/" >Home</Link></li>
+        <li><Link to="/items" >My Items</Link></li>
+        <li><Link to="/login" >Log In</Link></li>
       </ul>
     </div>
   );
