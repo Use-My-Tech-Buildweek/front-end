@@ -1,13 +1,9 @@
 import React from "react";
+import { cardStyle } from "./styles/styles";
 
 const Item = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { pictures, description, price, user } = props;
-  const cardStyle = {
-    width: "clamp(350px, 30vw, 450px)",
-    margin: "1em",
-    padding: "8px"
-  }
 
   return (
     <div className="card" style={cardStyle}>

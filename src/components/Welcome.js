@@ -1,4 +1,6 @@
+import React from "react";
 import Item from "./Item";
+import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = () => {
   const handleSubmit = (e) => {
@@ -6,12 +8,6 @@ const Welcome = () => {
     console.log("search form submitted");
   };
 
-  const h4Style = { border: "1px solid black", borderRadius: "4px" };
-  const itemsWrapperStyle = {
-    display: "flex",
-    flexFlow: "row wrap",
-    justifyContent: "space-evenly",
-  };
 
   return (
     <div style={{ padding: "2rem" }}>

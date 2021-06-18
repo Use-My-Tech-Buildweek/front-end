@@ -1,13 +1,10 @@
 import Item from "./Item";
 import { useHistory } from "react-router-dom";
+import { itemsWrapperStyle } from "./styles/styles";
 
 const MyItems = () => {
   const history = useHistory();
-  const itemsWrapperStyle = {
-    display: "flex",
-    flexFlow: "row wrap",
-    justifyContent: "space-evenly",
-  };
+  
   return (
     <div>
       <div className="button-wrapper center-align" style={{marginTop: "1em"}} >

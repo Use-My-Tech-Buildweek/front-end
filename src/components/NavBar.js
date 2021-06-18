@@ -2,6 +2,7 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
+import { navButtonStyle } from "./styles/styles";
 
 const Navbar = (props) => {
   const [location, setLocation] = useState("/");
@@ -22,13 +23,7 @@ const Navbar = (props) => {
 
   const { links } = props;
 
-  const navButtonStyle = {
-    padding: "8px",
-    margin: "0.5em",
-    display: "inline-flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  };
+  
   return (
     <div className="nav-wrapper">
       <nav style={{ padding: "0 1em" }} className="valign-wrapper">
