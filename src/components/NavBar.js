@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
 
@@ -21,24 +21,17 @@ const Navbar = (props) => {
   }, [path, location]);
 
   const { links } = props;
-  const history = useHistory();
 
   const navButtonStyle = {
     padding: "8px",
     margin: "0.5em",
     display: "inline-flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    history.push(e.target.data_nav);
-  };
-
   return (
-    <div className="nav-wrapper" >
-      <nav style={{padding: "0 1em"}} className="valign-wrapper" >
+    <div className="nav-wrapper">
+      <nav style={{ padding: "0 1em" }} className="valign-wrapper">
         <a href="#" data-target="responsive-nav" className="sidenav-trigger">
           <i className="material-icons">menu</i>
         </a>
@@ -47,23 +40,23 @@ const Navbar = (props) => {
           id="nav-mobile"
           className="right hide-on-med-and-down"
         >
-          <button
-            style={navButtonStyle}
-            className="waves-effect-light btn"
-          >
-            <span className="valign-wrapper"><Link to="/" >Home</Link></span>
+          <button style={navButtonStyle} className="waves-effect-light btn">
+            <span className="valign-wrapper">
+              <Link to="/">Home</Link>
+            </span>
           </button>
-          <button
-            style={navButtonStyle}
-            className="waves-effect-light btn"
-          >
-            <span className="valign-wrapper"><Link to="/items" >My Items</Link></span>
+          <button style={navButtonStyle} className="waves-effect-light btn">
+            <span className="valign-wrapper">
+              <Link to="/items">My Items</Link>
+            </span>
           </button>
           <button
             style={navButtonStyle}
             className="right waves-effect-light btn"
           >
-            <span className="valign-wrapper"><Link to="/login" >Log In</Link></span>
+            <span className="valign-wrapper">
+              <Link to="/login">Log In</Link>
+            </span>
           </button>
         </div>
       </nav>
