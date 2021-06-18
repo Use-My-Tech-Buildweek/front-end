@@ -24,13 +24,13 @@ function App() {
         {/* Reusable Navbar that can be changed dynamically using state or route info */}
         <Navbar
           links={[
-            { text: "Home", route: "/" },
-            { text: "My Items", route: "/items" },
-            { text: "Log In", route: "/login" },
+            { text: "Home", route: "/", classname: "left-align" },
+            { text: "My Items", route: "/items", classname: "left-align" },
+            { text: "Log In", route: "/login", classname: "right-align" },
           ]}
         />
       </header>
-      
+
       <main>
         <Switch>
           <Route path="/myprofile">
