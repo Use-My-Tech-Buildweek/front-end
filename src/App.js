@@ -5,9 +5,9 @@ import "./App.css";
 import PrivateRoute from './components/PrivateRoute'
 import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
-import Welcome from "./components/Welcome"
-import MyItems from "./components/MyItems";
-import Items from './components/Items'
+import Welcome from "./components/Welcome";
+//import Items from './components/Items'
+import MyItems from './components/MyItems'
 import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
@@ -28,7 +28,7 @@ function App() {
         <Navbar />
       </header>
       <main>
-        <Route path="/">
+        <Route exact path="/">
           <Welcome />
         </Route>
         <Switch>
