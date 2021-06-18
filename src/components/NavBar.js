@@ -37,8 +37,8 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="nav-wrapper">
-      <nav>
+    <div className="nav-wrapper" >
+      <nav style={{padding: "0 1em"}} className="valign-wrapper" >
         <a href="#" data-target="responsive-nav" className="sidenav-trigger">
           <i className="material-icons">menu</i>
         </a>

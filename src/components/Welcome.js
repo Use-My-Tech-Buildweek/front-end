@@ -10,7 +10,7 @@ const Welcome = () => {
     <div className="container">
       <form action="submit" onSubmit={handleSubmit}>
         <div className="row">
-          <div className="input-field col s6">
+          <div className="input-field col s6 center-align offset-s3">
             <i className="material-icons prefix">search</i>
             <input type="text" id="search_input" className="validate" />
             <label htmlFor="search_input">What are you looking for?</label>
