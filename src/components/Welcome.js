@@ -3,13 +3,14 @@ import Item from './Item'
 const Welcome = () => {
     return(
         <>
-        <from>
+        <form>
             <label>
                 I'm looking for :
                 <input type='text' placeholder="I'm looking for...."/>
             </label>
            
-        </from>
+        </form>
+        {/* if user look for some items display a block with the results: <Item> */}
         <div>
             <h2>Electronics</h2>
             <Item />
