@@ -7,6 +7,14 @@ const Signup = () => {
             <input name="username" type="text" placeholder="choose your username"/>
         </label>
         <label>
+            Role
+            <select name="role">
+                <option value="" selected disabled hidden>== option ==</option>
+                <option value="Renter">Renter</option>
+                <option value="Client">Client</option>
+            </select>
+        </label>
+        <label>
             email
             <input name="email" type="text" placeholder="contact email"/>
         </label>

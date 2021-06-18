@@ -17,6 +17,9 @@ function App() {
   const defaultUser = {
     username: '',
     email: '',
+    role: '',
+    aboutMe: '',
+    profilePicture: '',
     rating: [],
   } 
 
