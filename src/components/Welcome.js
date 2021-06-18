@@ -10,6 +10,7 @@ const Welcome = () => {
             </label>
            
         </form>
+        {/* if user look for some items display a block with the results: <Item> */}
         <div>
             <h2>Electronics</h2>
             <Item />

@@ -7,6 +7,9 @@ import Signup from './components/Signup'
 import Welcome from './components/Welcome'
 import MyItems  from './components/MyItems'
 import NewItem  from './components/NewItem'
+import NewReview from './components/NewReview'
+import Profile from './components/Profile'
+
 
 
 
@@ -27,12 +30,16 @@ function App() {
         <Link to='/'>Home</Link>
         <Link to='/items'>My Items</Link>
         <Link to='/login'>Login</Link> 
-        {/* once user loggedin login should link to my profile */}
+        {/* once user loggedin login should link to /profile */}
+        {/* <Link to='/profile/userId'>Login</Link>  */}
       </div>
       {/* main section */}
       <Switch>
-        <Route path="/myprofile">
-          <Signup />
+        <Route path="/review">
+          <NewReview />
+        </Route>
+        <Route path="/profile/:userid">
+          <Profile />
         </Route>
         <Route path="/editProfile">
           <Signup />
@@ -46,7 +53,6 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        
         <Route path="/">
           <Welcome />
         </Route>

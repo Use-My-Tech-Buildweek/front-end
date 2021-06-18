@@ -9,7 +9,8 @@ const MyItems = () =>{
             <Item/>
             <Item/>
             <Item/>
-            {/*  */}
+
+            {/* if item on display are the user's item */}
             <button onClick={() => {history.push("/additem")}}> Add an Item </button>
         </>
         )
