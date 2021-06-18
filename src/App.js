@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import './App.css';
 
 import Login from './components/Login'
-import Signup from './components/Signup'
+import SignupForm from './components/SignupForm'
 import Welcome from './components/Welcome'
 import MyItems from './components/MyItems'
 import NewItem from './components/NewItem'
@@ -32,11 +32,11 @@ function App() {
       {/* main section */}
       <Switch>
         <Route path="/myprofile">
-          <Signup />
+          <SignupForm />
         </Route>
-        <Route path="/editProfile">
-          <Signup />
-        </Route>
+        { /* <Route path="/editProfile">
+  <SignupForm /> 
+        </Route>*/}
         <Route path="/additem">
           <NewItem />
         </Route>
@@ -51,7 +51,7 @@ function App() {
           <Welcome />
         </Route>
       </Switch>
-    </Router>
+    </Router >
   );
 }
 
