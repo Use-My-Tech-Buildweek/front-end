@@ -6,7 +6,7 @@ import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
 import MyItems from "./components/MyItems";
 import NewItem from "./components/NewItem";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavBar";
 
 function App() {
   // default variables
