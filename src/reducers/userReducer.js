@@ -1,4 +1,4 @@
-import { ADD_USER, SET_ERROR } from '../actions'
+import { ADD_USER, SET_ERROR, LOGIN_USER } from '../actions'
 
 const initialState = {
 	users: [],
@@ -10,6 +10,8 @@ const initialState = {
 	// 	profileImg: '',
 	// },
 	errorMessages: '',
+	isLoading: false,
+	sendApiCall: false,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +25,14 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				errorMessages: action.payload
+			}
+		case LOGIN_USER:
+			console.log('userReducer says: LOGIN_USER: updating state(isLoading, sendApiCall:true)')
+			return {
+				...state,
+				isLoading: true,
+				sendApiCall: true,
+				errorMessages: ''
 			}
 		default:
 			return state
