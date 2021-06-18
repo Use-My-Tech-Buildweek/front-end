@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event"
 
 const Review = () => {
-    // const path = "/profile/" + reviewer.id
+ // const path = "/profile/" + reviewer.id
     return(
         <>
         {/* reviewer name and profile picture should linked to renter's profile via /profile */}
@@ -17,4 +17,5 @@ const Review = () => {
     )
 }
 
-export default Review
+
+export default Review;
