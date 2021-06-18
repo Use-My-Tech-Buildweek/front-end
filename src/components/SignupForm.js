@@ -31,6 +31,15 @@ const SignupForm = (props) => {
     return (
         // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
         <form onSubmit={handleSubmit}>
+
+            <label>
+                Role
+            <select name="role">
+                    <option value="" selected disabled hidden>== option ==</option>
+                    <option value="Renter">Renter</option>
+                    <option value="Client">Client</option>
+                </select>
+            </label>
             <label>
                 Username
             <input

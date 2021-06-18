@@ -18,7 +18,11 @@ export const useForm = (initialValues) => {
 		//prevent page from re-rendering
 		e.preventDefault();
 		// set form data to state and send to api
-		setState({ ...state })
+		setState({
+			...state,
+			sendApiCall: true
+		})
+
 	}
 	return [state, handleChanges, handleSubmit];
 

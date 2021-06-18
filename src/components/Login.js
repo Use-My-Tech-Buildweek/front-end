@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router'
+//import { useHistory } from 'react-router'
 
 import { useForm } from '../hooks/useForm'
 import useCallAPI from '../hooks/useCallAPI'
@@ -24,7 +25,7 @@ const Login = props => {
         data: state.credentials,
     })
 
-    const { push } = useHistory();
+    // const { push } = useHistory();
 
     const errorStyle = {
         color: 'red',

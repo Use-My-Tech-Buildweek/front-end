@@ -22,7 +22,7 @@ export const fetchUsers = () => dispatch => {
 
 
 	} catch (error) {
-		dispatch({ type: FETCH_ERROR, payload: err })
+		dispatch({ type: FETCH_ERROR, payload: error })
 	}
 };
 
