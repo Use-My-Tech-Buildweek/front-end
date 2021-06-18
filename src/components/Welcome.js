@@ -3,6 +3,7 @@ import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = () => {
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("search form submitted");
@@ -44,21 +45,7 @@ const Welcome = () => {
           <Item />
           <Item />
           <Item />
-        </div>
-      </div>
-      <div>
-        <h4 style={h4Style} className="center-align">
-          Tools / DIY
-        </h4>
-        <div className="items-wrapper" style={itemsWrapperStyle}>
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-        </div>
-      </div>
-    </div>
-  );
-};
+          </div>
+</div>
 
 export default Welcome;

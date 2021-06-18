@@ -1,5 +1,7 @@
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -20,7 +22,7 @@ function App() {
 
   return (
     <Router>
-      <header>
+    <header>
         {/* Reusable Navbar that can be changed dynamically using state or route info */}
         <Navbar
           links={[
@@ -57,7 +59,7 @@ function App() {
             <Welcome />
           </Route>
         </Switch>
-      </main>
+
     </Router>
   );
 }

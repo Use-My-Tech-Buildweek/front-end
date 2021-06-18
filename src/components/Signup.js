@@ -1,5 +1,5 @@
 const Signup = () => {
-  return (
+ return (
     // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
     <form>
       <label>
@@ -36,6 +36,7 @@ const Signup = () => {
         />
       </label>
       <button type="input">Sign up</button>
+
     </form>
   );
 };

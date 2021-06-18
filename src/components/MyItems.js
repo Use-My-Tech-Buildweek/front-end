@@ -28,5 +28,4 @@ const MyItems = () => {
     </div>
   );
 };
-
 export default MyItems;
