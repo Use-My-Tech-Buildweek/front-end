@@ -4,12 +4,12 @@ import M from "materialize-css";
 const Signup = () => {
   const initialFormValues = {
     username: "",
-    role: "",
+    role: "default",
     email: "",
     password: "",
     pw_validate: "",
     about_me: "",
-    profilePicture: "",
+    profile_picture: "",
   };
   const [formValues, setFormValues] = useState(initialFormValues);
 
@@ -21,7 +21,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: submit form values to backend and reset form
-    setFormValues(initialFormValues)
+    setFormValues(initialFormValues);
   };
 
   const handlechange = (e) => {
@@ -55,7 +55,7 @@ const Signup = () => {
               onChange={handlechange}
               value={formValues.role}
             >
-              <option value="" disabled default>
+              <option name="role" value="default" disabled>
                 Choose your role
               </option>
               <option name="role" value="renter">
@@ -122,9 +122,9 @@ const Signup = () => {
               <span>Profile Picture</span>
               <input
                 type="file"
-                name="profilePicture"
+                name="profile_picture"
                 onChange={handlechange}
-                value={formValues.profilePicture}
+                value={formValues.profile_picture}
               />
             </div>
             <div className="file-path-wrapper">
