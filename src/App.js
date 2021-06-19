@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
 import Welcome from "./components/Welcome"
 import MyItems from "./components/MyItems";
-import Items from './components/Items'
+//import Items from './components/Items'
 import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
@@ -28,10 +28,11 @@ function App() {
         <Navbar />
       </header>
       <main>
-        <Route path="/">
-          <Welcome />
-        </Route>
+
         <Switch>
+          <Route path="/">
+            <Welcome />
+          </Route>
 
           <Route path="/register">
             <SignupForm visible={visible}
@@ -48,7 +49,7 @@ function App() {
             <MyItems />
           </Route>
 
-          <Route path="/login">
+          <Route path="/login" component={Login}>
             <Login />
           </Route>
 

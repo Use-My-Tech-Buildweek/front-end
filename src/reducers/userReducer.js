@@ -5,10 +5,10 @@ const initialState = {
 	users: [],
 	user: {
 		username: '',
-		//	email: '',
+		email: '',
 		password: '',
-		// 	bio: '',
-		// 	profileImg: '',
+		bio: '',
+		profileImg: '',
 	},
 	errorMessages: '',
 	isLoading: false,
