@@ -1,57 +1,48 @@
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
-import { useState } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css';
 
-import Login from './components/Login'
-import Signup from './components/Signup'
-import Welcome from './components/Welcome'
-import MyItems  from './components/MyItems'
-import NewItem  from './components/NewItem'
-
-
-
+import PrivateRoute from './components/PrivateRoute'
+import Login from "./components/Login";
+import SignupForm from "./components/SignupForm";
+import Welcome from "./components/Welcome";
+//import MyItems from "./components/MyItems";
+import Items from './components/Items'
+import NewItem from "./components/NewItem";
+import Navbar from './components/Navbar'
+import Profile from './components/Profile'
+import EditProfileForm from './components/EditProfileForm'
 
 function App() {
-
-  // default variables
-  const defaultUser = {
-    username: '',
-    email: '',
-    rating: [],
-  } 
-
   return (
     <Router>
-      {/* header section */}
-      <div>
-        <Link to='/'>Home</Link>
-        <Link to='/items'>My Items</Link>
-        <Link to='/login'>Login</Link> 
-        {/* once user loggedin login should link to my profile */}
-      </div>
-      {/* main section */}
+      <header>
+        <Navbar />
+      </header>
       <Switch>
-        <Route path="/myprofile">
-          <Signup />
+
+        <Route path="/register">
+          <SignupForm />
         </Route>
-        <Route path="/editProfile">
-          <Signup />
-        </Route>
-        <Route path="/additem">
-          <NewItem />
-        </Route>
+
+        <PrivateRoute path='/profile' component={Profile} />
+
+        <PrivateRoute path="/edit-profile" component={EditProfileForm} />
+
+        <PrivateRoute path="/additem" component={NewItem} />
+
         <Route path="/items">
-          <MyItems />
+          <Items />
         </Route>
+
         <Route path="/login">
           <Login />
         </Route>
-        
+
         <Route path="/">
           <Welcome />
         </Route>
       </Switch>
-    </Router>
+    </Router >
   );
 }
 
