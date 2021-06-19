@@ -1,4 +1,5 @@
-
+import axios from 'axios'
+import { useHistory } from 'react-router'
 import useCallAPI from "../hooks/useCallAPI"
 
 export const ADD_USER = 'ADD_USER'
@@ -9,6 +10,7 @@ export const FETCH_ERROR = 'FETCH_ERROR'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
+
 
 export const fetchUsers = () => dispatch => {
 	dispatch({ type: START_USER_FETCH })
@@ -46,15 +48,11 @@ export const loginUser = (credentials) => dispatch => {
 
 	try {
 		console.log('actions says: attempting api.post login', credentials)
-		const { response, error } = useCallAPI({
-			method: 'post',
-			url: '/login',
-			headers: { accept: '*/*' },
-			data: credentials,
-		})
-		if (!error) {
-			dispatch({ type: LOGIN_SUCCESS, payload: response })
-		}
+		axios.post('our-api-url', credentials)
+			.then(resp => {
+				localStorage.setItem('token', resp.data.payload)
+			}).catch(err => setError(err))
+
 	} catch (error) {
 		console.log('actions says: dispatching LOGIN_ERROR')
 		dispatch({ type: LOGIN_ERROR, payload: error })

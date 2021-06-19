@@ -1,5 +1,6 @@
 import { ADD_USER, SET_ERROR, LOGIN_USER } from '../actions'
 
+
 const initialState = {
 	users: [],
 	// user: {
