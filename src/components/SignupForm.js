@@ -1,110 +1,118 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 
-import { useForm } from '../hooks/useForm'
-//import useCallAPI from '../hooks/useCallAPI'
 import { addUser, setError } from '../actions'
 
-const initialValues = {
-    newUser: {
-        username: '',
-        password: '',
-        email: '',
-        bio: '',
-        profileImg: '',
-    },
-    sendApiCall: false,
-    error: ''
-}
-
-const SignupForm = (props) => {
-    const [state, handleChanges, handleSubmit] = useForm(initialValues)
-
-    const { push } = useHistory();
-
-    if (state.sendApiCall) {
-        addUser(state.newUser)
-        push('/profile')
+class SignupForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            newUser: {
+                username: '',
+                password: '',
+                email: '',
+                bio: '',
+                profileImg: '',
+                accountType: '',
+            },
+            sendApiCall: false,
+            error: ''
+        }
     }
 
-    return (
-        // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
-        <form onSubmit={handleSubmit}>
+    handleSubmit = e => {
+        e.preventDefault()
+        console.log('submit add new user button clicked, calling addUser', this.state.newUser)
+        this.props.addUser(this.state.newUser)
+    }
 
-            <label>
-                Role
-            <select name="role">
-                    <option value="" selected disabled hidden>== option ==</option>
-                    <option value="Renter">Renter</option>
-                    <option value="Client">Client</option>
-                </select>
-            </label>
-            <label>
-                Username
+    handleChanges = e => {
+        this.setState({
+            newUser: {
+                ...this.state.newUser,
+                [e.target.name]: e.target.value
+            }
+        })
+
+    }
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Role
+            <select name="role" onChange={this.handleChanges}>
+                        <option value="" disabled>== option ==</option>
+                        <option value="Renter">Renter</option>
+                        <option value="Client">Client</option>
+                    </select>
+                </label>
+                <label>
+                    Username
             <input
-                    name="username"
-                    type="text"
-                    placeholder="choose your username"
-                    onChange={handleChanges}
-                    value={state.newUser.username}
-                    id='username'
-                />
-            </label>
-            <label>
-                Email
+                        name="username"
+                        type="text"
+                        placeholder="choose your username"
+                        onChange={this.handleChanges}
+                        value={this.state.newUser.username}
+                        id='username'
+                    />
+                </label>
+                <label>
+                    Email
             <input
-                    name="email"
-                    type="text"
-                    placeholder="contact email"
-                    value={state.newUser.email}
-                    id='email'
-                    onChange={handleChanges}
-                />
-            </label>
-            <label>
-                Password
+                        name="email"
+                        type="text"
+                        placeholder="contact email"
+                        value={this.state.newUser.email}
+                        id='email'
+                        onChange={this.handleChanges}
+                    />
+                </label>
+                <label>
+                    Password
             <input
-                    name="password"
-                    type="text"
-                    placeholder="enter your password"
-                    value={state.newUser.password}
-                    id='password'
-                    onChange={handleChanges}
-                />
-            </label>
-            <label>
-                Confirm your Password
+                        name="password"
+                        type="password"
+                        placeholder="enter your password"
+                        value={this.state.newUser.password}
+                        id='password'
+                        onChange={this.handleChanges}
+                    />
+                </label>
+                <label>
+                    Confirm your Password
             <input
-                    name="passwordConfirmation"
-                    type="text"
-                    placeholder="confirm your password"
-                />
-            </label>
-            <label>
-                Tell everyone a little about yourself:
+                        name="passwordConfirmation"
+                        type="text"
+                        placeholder="confirm your password"
+                    />
+                </label>
+                <label>
+                    Tell everyone a little about yourself:
             <textarea
-                    name="bio"
-                    type="text"
-                    placeholder="About me..."
-                    id='bio'
-                    value={state.newUser.bio}
-                    onChange={handleChanges}
-                />
-            </label>
-            <label>
-                Profile picture
+                        name="bio"
+                        type="text"
+                        placeholder="About me..."
+                        id='bio'
+                        value={this.state.newUser.bio}
+                        onChange={this.handleChanges}
+                    />
+                </label>
+                <label>
+                    Profile picture
             <input
-                    name="profilePicture"
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    placeholder="Avatar"
-                    value={state.newUser.profileImg}
-                />
-            </label>
-            <button type="submit">Sign up</button>
-        </form>
-    )
+                        name="profilePicture"
+                        type="file"
+                        accept=".jpg,.jpeg,.png"
+                        placeholder="Avatar"
+                        value={this.state.newUser.profileImg}
+                        onChange={this.handleChanges}
+                    />
+                </label>
+                <button type="submit">Sign up</button>
+            </form>
+        )
+    }
 }
 
 const mapStateToProps = state => {

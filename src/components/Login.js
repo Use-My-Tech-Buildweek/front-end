@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -53,7 +53,8 @@ class Login extends React.Component {
                     type="password"
                     id='password'
                     placeholder="Password"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                    onChange={this.handleChanges}
+                    value={this.state.credentials.password}
                 />
                 <button type="submit">Login</button>
 
@@ -72,7 +73,6 @@ class Login extends React.Component {
         )
     }
 }
-
 const mapStateToProps = state => {
     return {
         credentials: state.credentials,
@@ -82,4 +82,5 @@ const mapStateToProps = state => {
 
     }
 }
+
 export default connect(mapStateToProps, { loginUser, setError })(Login)
