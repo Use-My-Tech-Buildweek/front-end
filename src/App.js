@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
 import { useState } from 'react'
 import "./App.css";
 
@@ -22,6 +22,8 @@ function App() {
     setVisible(!visible)
   }
 
+
+
   return (
     <Router>
       <header>
@@ -30,7 +32,7 @@ function App() {
       <main>
 
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Welcome />
           </Route>
 
@@ -39,9 +41,9 @@ function App() {
               toggleVisible={toggleVisible} />
           </Route>
 
-          <PrivateRoute path='/profile' component={Profile} />
+          <PrivateRoute path='/profile/:userId' component={Profile} />
 
-          <PrivateRoute path="/edit-profile" component={EditProfileForm} />
+          <PrivateRoute path={`/edit-profile/:userId`} component={EditProfileForm} />
 
           <PrivateRoute path="/additem" component={NewItem} />
 
@@ -49,7 +51,7 @@ function App() {
             <MyItems />
           </Route>
 
-          <Route path="/login" component={Login}>
+          <Route path="/login">
             <Login />
           </Route>
 

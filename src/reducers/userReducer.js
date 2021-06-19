@@ -1,19 +1,43 @@
-import { ADD_USER, SET_ERROR, LOGIN_USER, LOGIN_SUCCESS, LOGIN_ERROR } from '../actions'
+// import action calls
+import {
+	ADD_USER,
+	SET_ERROR,
+	LOGIN_USER,
+	LOGIN_SUCCESS,
+	LOGIN_ERROR,
+	START_USER_FETCH,
+	USER_FETCH_SUCCESS,
+	USER_FETCH_ERROR,
+	START_UPDATE_PROFILE,
+	UPDATE_PROFILE_SUCCESS,
+	UPDATE_PROFILE_ERROR
+} from '../actions'
 
-
+// sets state 
 const initialState = {
-	users: [],
+	users: [
+		{
+			username: 'test-user',
+			email: 'testuser@example.com',
+			password: 'password',
+			bio: 'I love tech!',
+			profileImg: '',
+			userId: 1
+		}
+	],
 	user: {
-		username: '',
-		email: '',
-		password: '',
-		bio: '',
+		username: 'test-user',
+		email: 'testuser@example.com',
+		password: 'password',
+		bio: 'I love tech!',
 		profileImg: '',
+		userId: 1
 	},
 	errorMessages: '',
 	isLoading: false,
 }
 
+//reducer function
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_USER:
@@ -32,7 +56,6 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				sendApiCall: true,
 				errorMessages: ''
 			}
 		case LOGIN_SUCCESS:
@@ -48,9 +71,51 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				errorMessages: action.payload
 			}
+		case START_USER_FETCH:
+			console.log('userReducer says: attempting to fetch user profile', action.payload)
+			return {
+				...state,
+				isLoading: true,
+				errorMessages: ''
+			}
+		case USER_FETCH_SUCCESS:
+			console.log('userReducer says: user fetch successful', action.payload)
+			return {
+				...state,
+				user: action.payload,
+				isLoading: false,
+				errorMessages: ''
+			}
+		case USER_FETCH_ERROR:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: action.payload
+			}
+		case START_UPDATE_PROFILE:
+			return {
+				...state,
+				isLoading: true,
+				errorMessages: ''
+			}
+		case UPDATE_PROFILE_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				user: action.payload,
+				errorMessages: ''
+			}
+		case UPDATE_PROFILE_ERROR:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: action.payload
+			}
 		default:
 			return state
+
 	}
+
 }
 
 export default userReducer

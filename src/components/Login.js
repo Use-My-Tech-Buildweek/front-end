@@ -8,12 +8,15 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
 
+        // set initial form values
         this.state = {
             credentials: {
                 username: '',
                 password: ''
             }
         }
+
+        // change handler
         this.handleChanges = e => {
             this.setState({
                 credentials: {
@@ -24,12 +27,14 @@ class Login extends React.Component {
             })
         }
 
+        // onSubmit handler
         this.login = e => {
             e.preventDefault();
             console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
             this.props.loginUser(this.state.credentials)
         }
 
+        //error message styling
         this.errorStyle = {
             color: 'red',
             fontWeight: 'bold',
@@ -49,7 +54,7 @@ class Login extends React.Component {
                 />
 
                 <input
-                    name="credentials[password]"
+                    name="password"
                     type="password"
                     id='password'
                     placeholder="Password"
@@ -73,6 +78,7 @@ class Login extends React.Component {
         )
     }
 }
+//connecting global state to props
 const mapStateToProps = state => {
     return {
         credentials: state.credentials,
