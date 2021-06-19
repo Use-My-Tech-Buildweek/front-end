@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {useState} from 'react'
 import "./App.css";
 
 import Login from "./components/Login";
@@ -6,7 +7,7 @@ import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
 import MyItems from "./components/MyItems";
 import NewItem from "./components/NewItem";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavBar";
 
 function App() {
   // default variables
@@ -21,6 +22,12 @@ function App() {
   } 
   */
 
+  const [ visible, setVisible ] = useState(false)
+
+  function toggleVisible(){
+    setVisible(!visible)
+  }
+
   return (
     <Router>
       <header>
@@ -30,7 +37,9 @@ function App() {
       <main>
         <Switch>
           <Route path="/myprofile">
-            <Signup />
+            <Signup 
+              visible={visible} 
+              toggleVisible={toggleVisible}/>
           </Route>
 
           <Route path="/editProfile">
