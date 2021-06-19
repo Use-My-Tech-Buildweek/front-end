@@ -21,6 +21,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: submit form values to backend and reset form
+    setFormValues(initialFormValues)
   };
 
   const handlechange = (e) => {
@@ -110,7 +111,7 @@ const Signup = () => {
               rows="10"
               className="materialize-textarea"
               onChange={handlechange}
-              value={formValues.aboutMe}
+              value={formValues.about_me}
             />
             <label htmlFor="about_me">Introduce Yourself</label>
           </div>
