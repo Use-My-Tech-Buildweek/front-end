@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { loginUser, setError } from '../actions'
+import { loginUser, setError } from '../actions/userActions'
 
 class Login extends React.Component {
     constructor(props) {

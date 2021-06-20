@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+
 import "./App.css";
 
 import PrivateRoute from './components/PrivateRoute'
@@ -12,16 +14,19 @@ import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
+import { fetchUsers } from './actions/userActions'
 
 
-
-function App() {
+const App = props => {
   const [visible, setVisible] = useState(false)
 
   function toggleVisible() {
     setVisible(!visible)
   }
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
 
   return (
