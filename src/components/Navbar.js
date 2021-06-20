@@ -39,7 +39,7 @@ const Navbar = () => {
           </button>
           <button style={navButtonStyle} className="waves-effect-light btn">
             <span className="valign-wrapper">
-              <Link to="/profile">My Profile</Link>
+              <Link to="/profile/:userId">My Profile</Link>
             </span>
           </button>
           <button

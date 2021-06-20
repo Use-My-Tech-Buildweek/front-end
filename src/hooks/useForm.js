@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 // custom hook for form control
-export const useForm = (initialValues) => {
+export const useForm = (key, initialValues, cb) => {
 	//create generalized state object
-	const [state, setState] = useState(initialValues);
-
+	//const [state, setState] = useState(initialValues);
+	const [state, setState] = useLocalStorage(key, initialValues)
 	// onChange handler for form inputs
 	const handleChanges = e => {
 		setState({
@@ -13,17 +14,21 @@ export const useForm = (initialValues) => {
 		})
 	}
 
+	const clearForm = e => {
+		e.preventDefault()
+		setState(initialValues)
+	}
+
 	// onSubmit handler for form
 	const handleSubmit = e => {
 		//prevent page from re-rendering
 		e.preventDefault();
 		// set form data to state and send to api
-		setState({
-			...state,
-			sendApiCall: true
-		})
-
+		cb()
 	}
-	return [state, handleChanges, handleSubmit];
+
+}
+
+return [state, clear handleChanges, handleSubmit];
 
 }

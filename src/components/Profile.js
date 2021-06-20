@@ -1,22 +1,31 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux'
+import { getProfile } from '../actions'
+
 import Review from "./Review";
 
-const Profile = () => {
+const Profile = props => {
   const history = useHistory();
+
+  // loads the profile matching userId when the id changes 
+  useEffect(() => {
+    getProfile(props.userId)
+  }, [props.userId])
 
   return (
     <>
       <div>
         {/* <img src="" alt="profile picture" /> */}
-        <p>username</p>
-        <p>email</p>
-        <p>about</p>
-        <p>Ratings</p>
-        {/* add an edit profile button if Profile is from logged user */}
-        <button onClick={() => history.push("/editProfile")}>
-          edit profile
+        <p>{props.user.username}</p>
+        <p>{props.user.name}</p>
+        <p>{props.user.bio}</p>
+        <p>{props.user.email}</p>
+        <p>{props.user.ratings}</p>
+
+        <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
+          Edit Profile
         </button>
       </div>
       <div>
@@ -30,5 +39,16 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = state => {
+  return {
+    user: {
+      username: state.username,
+      email: state.email,
+      userId: state.userId
+
+    }
+  }
+}
+
+export default connect(mapStateToProps, {})(Profile)
 
