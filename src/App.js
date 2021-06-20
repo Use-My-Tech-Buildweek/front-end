@@ -30,7 +30,6 @@ function App() {
         <Navbar />
       </header>
       <main>
-
         <Switch>
           <Route exact path="/">
             <Welcome />
