@@ -1,45 +1,48 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useState } from 'react'
 import "./App.css";
 
+import PrivateRoute from './components/PrivateRoute'
 import Login from "./components/Login";
-import Signup from "./components/Signup";
+import SignupForm from "./components/SignupForm";
 import Welcome from "./components/Welcome";
-import MyItems from "./components/MyItems";
+//import Items from './components/Items'
+import MyItems from './components/MyItems'
 import NewItem from "./components/NewItem";
-import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar'
+import Profile from './components/Profile'
+import EditProfileForm from './components/EditProfileForm'
+
+
 
 function App() {
-  // default variables
-  /**
-  const defaultUser = {
-    username: '',
-    email: '',
-    role: '',
-    aboutMe: '',
-    profilePicture: '',
-    rating: [],
-  } 
-  */
+  const [visible, setVisible] = useState(false)
+
+  function toggleVisible() {
+    setVisible(!visible)
+  }
 
   return (
     <Router>
       <header>
         <Navbar />
       </header>
-
       <main>
+        <Route exact path="/">
+          <Welcome />
+        </Route>
         <Switch>
-          <Route path="/myprofile">
-            <Signup />
+
+          <Route path="/register">
+            <SignupForm visible={visible}
+              toggleVisible={toggleVisible} />
           </Route>
 
-          <Route path="/editProfile">
-            <Signup />
-          </Route>
+          <PrivateRoute path='/profile' component={Profile} />
 
-          <Route path="/additem">
-            <NewItem />
-          </Route>
+          <PrivateRoute path="/edit-profile" component={EditProfileForm} />
+
+          <PrivateRoute path="/additem" component={NewItem} />
 
           <Route path="/items">
             <MyItems />
@@ -49,9 +52,7 @@ function App() {
             <Login />
           </Route>
 
-          <Route path="/">
-            <Welcome />
-          </Route>
+
         </Switch>
       </main>
     </Router>
