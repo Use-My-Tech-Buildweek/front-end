@@ -49,7 +49,7 @@ class Login extends React.Component {
                 />
 
                 <input
-                    name="credentials[password]"
+                    name="password"
                     type="password"
                     id='password'
                     placeholder="Password"
@@ -60,7 +60,7 @@ class Login extends React.Component {
 
                 {/* add a keep me logged in checkbox? */}
                 <p>Don't have an account?</p>
-                <Link to="/myprofile">Sign up!</Link>
+                <Link to="/register">Sign up!</Link>
                 <p>Forgot your password?</p>
                 {/* handle password forgotten */}
 
