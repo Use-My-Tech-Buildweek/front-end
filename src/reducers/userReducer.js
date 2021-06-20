@@ -1,6 +1,8 @@
 // import action calls
 import {
-	ADD_USER,
+	START_ADD_USER,
+	ADD_USER_SUCCESS,
+	ADD_USER_ERROR,
 	SET_ERROR,
 	LOGIN_USER,
 	LOGIN_SUCCESS,
@@ -40,11 +42,25 @@ const initialState = {
 //reducer function
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case ADD_USER:
+		case START_ADD_USER:
 			return {
 				...state,
-				users: [...state.users, action.payload],
-				user: [...state.user, action.payload]
+				isLoading: true,
+				errorMessages: ''
+			}
+		case ADD_USER_SUCCESS:
+			return {
+				...state,
+				user: action.payload,
+				users: action.payload,
+				isLoading: false,
+				errorsMessages: ''
+			}
+		case ADD_USER_ERROR:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: action.payload
 			}
 		case SET_ERROR:
 			return {
@@ -111,6 +127,7 @@ const userReducer = (state = initialState, action) => {
 				isLoading: false,
 				errorMessages: action.payload
 			}
+
 		default:
 			return state
 

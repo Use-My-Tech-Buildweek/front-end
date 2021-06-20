@@ -13,10 +13,10 @@ class SignupForm extends React.Component {
                 email: '',
                 bio: '',
                 profileImg: '',
-                accountType: '',
+                department: '',
             },
-            sendApiCall: false,
-            error: ''
+            error: '',
+            isFilePicked: false
         }
     }
 
@@ -33,17 +33,27 @@ class SignupForm extends React.Component {
                 [e.target.name]: e.target.value
             }
         })
+    }
 
+    handleSelectFile = e => {
+        this.setState({
+            ...this.state.user,
+            profileImg: e.target.files[0],
+        })
+        this.setState({
+            ...this.state,
+            isFilePicked: true,
+        })
     }
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Role
-            <select name="role" onChange={this.handleChanges}>
+            <select name="department" onChange={this.handleChanges}>
                         <option value="" disabled>== option ==</option>
-                        <option value="Renter">Renter</option>
-                        <option value="Client">Client</option>
+                        <option value="Renter">nRenter</option>
+                        <option value="Owner">Owner</option>
                     </select>
                 </label>
                 <label>
@@ -83,7 +93,7 @@ class SignupForm extends React.Component {
                     Confirm your Password
             <input
                         name="passwordConfirmation"
-                        type="text"
+                        type="password"
                         placeholder="confirm your password"
                     />
                 </label>
@@ -101,12 +111,12 @@ class SignupForm extends React.Component {
                 <label>
                     Profile picture
             <input
-                        name="profilePicture"
+                        name="profileImg"
                         type="file"
                         accept=".jpg,.jpeg,.png"
                         placeholder="Avatar"
                         value={this.state.newUser.profileImg}
-                        onChange={this.handleChanges}
+                        onChange={this.handleSelectFile}
                     />
                 </label>
                 <button type="submit">Sign up</button>

@@ -3,8 +3,9 @@ import axios from 'axios'
 import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 
-
-export const ADD_USER = 'ADD_USER'
+export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
+export const START_ADD_USER = 'START_ADD_USER'
+export const ADD_USER_ERROR = 'ADD_USER_ERROR'
 export const SET_ERROR = 'SET_ERROR'
 export const START_USERS_FETCH = 'START_USER_FETCH'
 export const FETCH_SUCCESS = 'FETCH_SUCCESS'
@@ -26,7 +27,7 @@ export const fetchUsers = () => dispatch => {
 	try {
 		const { response, loading } = useCallAPI({
 			method: 'get',
-			url: '/users',
+			url: 'https://ptpt-use-my-tech5.herokuapp.com/api/users',
 			headers: {
 				accept: '*/*'
 			},
@@ -39,8 +40,17 @@ export const fetchUsers = () => dispatch => {
 };
 
 // action call to add user to database
-export const addUser = newUser => {
-	return { type: ADD_USER, payload: newUser }
+export const addUser = newUser => dispatch => {
+	dispatch({ type: START_ADD_USER, payload: newUser })
+	try {
+		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register')
+			.then(resp => {
+				dispatch({ type: ADD_USER_SUCCESS, payload: resp.data })
+			}).catch(err => dispatch({ type: ADD_USER_ERROR, payload: err })
+			)
+	} catch (error) {
+		dispatch({ type: ADD_USER_ERROR, payload: error })
+	}
 }
 
 // action call to set error messages
@@ -55,7 +65,7 @@ export const loginUser = (credentials) => dispatch => {
 
 	try {
 		console.log('actions says: attempting api.post login', credentials)
-		axiosWithAuth().post('our-api-url', credentials)
+		axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
 			.then(resp => {
 				console.log('actions says: post call success', resp)
 				localStorage.setItem('token', resp.data.payload)
@@ -77,7 +87,7 @@ export const getProfile = userId => dispatch => {
 	console.log('actions says: calling getProfile', userId)
 	dispatch({ type: START_USER_FETCH, payload: userId })
 	try {
-		axiosWithAuth().get(`our-app-url/profile/${userId}`)
+		axiosWithAuth().get(`https://ptpt-use-my-tech5.herokuapp.com/api/user/${userId}`)
 			.then(resp => {
 				console.log('actions says: success user fetch', userId)
 				dispatch({ type: USER_FETCH_SUCCESS, payload: resp.data })
@@ -98,7 +108,7 @@ export const updateProfile = user => dispatch => {
 	console.log('actions says: calling updateProfile')
 	dispatch({ type: START_UPDATE_PROFILE, payload: user })
 	try {
-		axiosWithAuth().put('our-app-url', user)
+		axiosWithAuth().put(`https://ptpt-use-my-tech5.herokuapp.com/api/user/${user}`, user)
 			.then(resp => {
 				console.log('updated profile', resp)
 				dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: resp.data })
