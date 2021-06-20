@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getProfile, updateProfile, uploadFile } from '../actions/userActions'
+import { getProfile, updateProfile } from '../actions/userActions'
 import { connect } from 'react-redux'
 
 class EditProfileForm extends Component {

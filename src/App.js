@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
@@ -66,4 +66,10 @@ const App = props => {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    users: state.users,
+    user: state.user,
+  }
+}
+export default connect(mapStateToProps, {})(App);

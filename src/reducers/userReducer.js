@@ -65,7 +65,7 @@ const userReducer = (state = initialState, action) => {
 				errorMessages: action.payload
 			}
 		case LOGIN_USER:
-			console.log('userReducer says: LOGIN_USER: updating state(isLoading, sendApiCall:true)')
+			console.log('userReducer says: starting call to login user')
 			return {
 				...state,
 				isLoading: true,

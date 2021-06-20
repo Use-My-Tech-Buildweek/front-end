@@ -60,7 +60,8 @@ class SignupForm extends React.Component {
                             <input
                                 name="username"
                                 type="text"
-                                id='username' onGotPointerCapture
+                                id='username'
+                                autoComplete='username'
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.username}
                             />
@@ -107,6 +108,7 @@ class SignupForm extends React.Component {
                                 type="password"
                                 name="password"
                                 id="password"
+                                autoComplete='current-password'
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.password}
                             />
