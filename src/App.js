@@ -15,7 +15,7 @@ import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
-//import Users from './components/User'
+import UserList from './components/UserList'
 //import { userLogOut } from './actions/userActions'
 
 const App = props => {
@@ -52,7 +52,7 @@ const App = props => {
 
           <PrivateRoute path="/additem" render={NewItem} type='private' />
 
-
+          <PrivateRoute path='/user-list' render={UserList} type='private' />
 
           <Route path="/items">
             <MyItems />
