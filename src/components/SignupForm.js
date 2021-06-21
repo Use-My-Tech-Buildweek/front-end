@@ -1,14 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
+import * as yup from 'yup'
 
 import { addUser, setError } from '../actions/userActions'
+import signupSchema from '../schemas/signupSchema'
 
 class SignupForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             newUser: {
+                username: '',
+                password: '',
+                confirmPassword:'',
+                // email: '',
+                //bio,
+                //profileImg: '',
+                department: '',
+            },
+            errors: {
                 username: '',
                 password: '',
                 confirmPassword:'',
@@ -40,13 +51,19 @@ class SignupForm extends React.Component {
     }
 
     handleChanges = e => {
-        this.setState({
-            newUser: {
-                ...this.state.newUser,
-                [e.target.name]: e.target.value
-            }
-        })
+        yup.reach(signupSchema, e.target.name)
+            .validate(e.target.value)
+            .then(() => {
+            this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
+            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))
+            this.setState({
+                newUser: {
+                    ...this.state.newUser,
+                    [e.target.name]: e.target.value
+                }
+            })
     }
+    
 
     handleSelectFile = e => {
         this.setState({
@@ -62,6 +79,7 @@ class SignupForm extends React.Component {
         return (
             <div className='row'>
                 <form action='submit' className='col s12' onSubmit={this.handleSubmit}>
+                    <p>{this.state.errors.username}</p>
                     <div className='row'>
                         <div className='input-field col s6'>
                             <input
@@ -75,6 +93,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="username">Username</label>
                         </div>
                     </div>
+                    <p>{this.state.errors.department}</p>
                     <div className="row">
                         <div className="input-field col s12">
                             <select
@@ -83,7 +102,7 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.department}
                             >
-                                <option name="department" value="default" >
+                                <option name="department" value="default" selected hidden>
                                     Choose your role
                         </option>
                                 <option name="department" value="renter">
@@ -109,6 +128,7 @@ class SignupForm extends React.Component {
                         </div>
                     </div>
         */}
+                    <p>{this.state.errors.password}</p>
                     <div className="row">
                         <div className="input-field col s6">
                             <input
