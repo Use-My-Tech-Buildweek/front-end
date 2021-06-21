@@ -13,27 +13,19 @@ import {
 	START_UPDATE_PROFILE,
 	UPDATE_PROFILE_SUCCESS,
 	UPDATE_PROFILE_ERROR
-} from '../actions'
+} from '../actions/userActions'
 
 // sets state 
 const initialState = {
-	users: [
-		{
-			username: 'test-user',
-			email: 'testuser@example.com',
-			password: 'password',
-			bio: 'I love tech!',
-			profileImg: '',
-			userId: 1
-		}
-	],
+	users: [],
 	user: {
-		username: 'test-user',
-		email: 'testuser@example.com',
-		password: 'password',
-		bio: 'I love tech!',
-		profileImg: '',
-		userId: 1
+		username: '',
+		//email:'',
+		password: '',
+		department: '',
+		//bio: '',
+		//profileImg: '',
+		userId: ''
 	},
 	errorMessages: '',
 	isLoading: false,
@@ -52,9 +44,14 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				user: action.payload,
-				users: action.payload,
+				users: [...state.users, action.payload],
 				isLoading: false,
-				errorsMessages: ''
+				errorsMessages: '',
+				newUser: {
+					username: '',
+					password: '',
+					department: ''
+				}
 			}
 		case ADD_USER_ERROR:
 			return {
@@ -68,7 +65,7 @@ const userReducer = (state = initialState, action) => {
 				errorMessages: action.payload
 			}
 		case LOGIN_USER:
-			console.log('userReducer says: LOGIN_USER: updating state(isLoading, sendApiCall:true)')
+			console.log('userReducer says: starting call to login user')
 			return {
 				...state,
 				isLoading: true,

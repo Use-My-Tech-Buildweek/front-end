@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import M from "materialize-css";
 
-import { addUser, setError } from '../actions'
+import { addUser, setError } from '../actions/userActions'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -10,20 +11,25 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
-                email: '',
-                bio: '',
-                profileImg: '',
+                // email: '',
+                //bio,
+                //profileImg: '',
                 department: '',
             },
             error: '',
             isFilePicked: false
         }
     }
+    componentDidMount() {
+        const elems = document.querySelectorAll("select");
+        M.FormSelect.init(elems);
+    }
 
     handleSubmit = e => {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
         this.props.addUser(this.state.newUser)
+        this.props.history.push(`/profile/:${this.props.user.id}`);
     }
 
     handleChanges = e => {
@@ -47,84 +53,119 @@ class SignupForm extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Role
-            <select name="department" onChange={this.handleChanges}>
-                        <option value="" disabled>== option ==</option>
-                        <option value="Renter">nRenter</option>
-                        <option value="Owner">Owner</option>
-                    </select>
-                </label>
-                <label>
-                    Username
-            <input
-                        name="username"
-                        type="text"
-                        placeholder="choose your username"
-                        onChange={this.handleChanges}
-                        value={this.state.newUser.username}
-                        id='username'
-                    />
-                </label>
-                <label>
-                    Email
-            <input
-                        name="email"
-                        type="text"
-                        placeholder="contact email"
-                        value={this.state.newUser.email}
-                        id='email'
-                        onChange={this.handleChanges}
-                    />
-                </label>
-                <label>
-                    Password
-            <input
-                        name="password"
-                        type="password"
-                        placeholder="enter your password"
-                        value={this.state.newUser.password}
-                        id='password'
-                        onChange={this.handleChanges}
-                    />
-                </label>
-                <label>
-                    Confirm your Password
-            <input
-                        name="passwordConfirmation"
-                        type="password"
-                        placeholder="confirm your password"
-                    />
-                </label>
-                <label>
-                    Tell everyone a little about yourself:
-            <textarea
-                        name="bio"
-                        type="text"
-                        placeholder="About me..."
-                        id='bio'
-                        value={this.state.newUser.bio}
-                        onChange={this.handleChanges}
-                    />
-                </label>
-                <label>
-                    Profile picture
-            <input
-                        name="profileImg"
-                        type="file"
-                        accept=".jpg,.jpeg,.png"
-                        placeholder="Avatar"
-                        value={this.state.newUser.profileImg}
-                        onChange={this.handleSelectFile}
-                    />
-                </label>
-                <button type="submit">Sign up</button>
-            </form>
+            <div className='row'>
+                <form action='submit' className='col s12' onSubmit={this.handleSubmit}>
+                    <div className='row'>
+                        <div className='input-field col s6'>
+                            <input
+                                name="username"
+                                type="text"
+                                id='username'
+                                autoComplete='username'
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.username}
+                            />
+                            <label htmlFor="username">Username</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <select
+                                name="department"
+                                id="department"
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.department}
+                            >
+                                <option name="department" value="default" >
+                                    Choose your role
+                        </option>
+                                <option name="department" value="renter">
+                                    Renter
+                        </option>
+                                <option name="department" value="owner">
+                                    Owner
+                        </option>
+                            </select>
+                            <label htmlFor="department">Account Type</label>
+                        </div>
+                    </div>
+                    {/*  <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.email}
+                            />
+                            <label htmlFor="email">Email</label>
+                        </div>
+                    </div>
+        */}
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                autoComplete='current-password'
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.password}
+                            />
+                            <label htmlFor="password"></label>
+                        </div>
+                        {/*<div className="input-field col s6">
+                            <input
+                                type="password"
+                                name="pw_validate"
+                                id="pw_validate"
+                                onChange={this.handleChanges}
+                                value={this.state.pw_validate}
+                            />
+                            <label htmlFor="pw_verify"></label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <textarea
+                                name="bio"
+                                id="bio"
+                                cols="30"
+                                rows="10"
+                                className="materialize-textarea"
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.bio}
+                            />
+                            <label htmlFor="bio">Introduce Yourself</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        {/*    <div className="file-field input-field col s12">
+                               <div className="btn">
+                              <span>Profile Picture</span>
+                                <input
+                                 type="file"
+                                name="profile_picture"
+                          onChange={handlechange}
+                             value={formValues.profile_picture}
+                                 />
+                                   </div>
+                            </div>*/}
+                        <div className="row">
+                            <div className="col s6">
+                                <button type="submit" className="btn btn-waves-effect">
+                                    Submit
+                            </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
         )
     }
 }
-
 const mapStateToProps = state => {
     return {
         users: state.users,

@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+//import { useLocalStorage } from '../hooks/useLocalStorage'
 
 // custom hook for form control
-export const useForm = (key, initialValues, cb) => {
+export const useForm = (initialValues, cb) => {
 	//create generalized state object
-	//const [state, setState] = useState(initialValues);
-	const [state, setState] = useLocalStorage(key, initialValues)
+	const [state, setState] = useState(initialValues);
+	//const [state, setState] = useLocalStorage(key, initialValues)
 	// onChange handler for form inputs
 	const handleChanges = e => {
 		setState({
@@ -27,8 +27,8 @@ export const useForm = (key, initialValues, cb) => {
 		cb()
 	}
 
-}
 
-return [state, clear handleChanges, handleSubmit];
+
+	return [state, clearForm, handleChanges, handleSubmit];
 
 }

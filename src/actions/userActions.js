@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import useCallAPI from "../hooks/useCallAPI"
+//import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
@@ -8,8 +8,8 @@ export const START_ADD_USER = 'START_ADD_USER'
 export const ADD_USER_ERROR = 'ADD_USER_ERROR'
 export const SET_ERROR = 'SET_ERROR'
 export const START_USERS_FETCH = 'START_USER_FETCH'
-export const FETCH_SUCCESS = 'FETCH_SUCCESS'
-export const FETCH_ERROR = 'FETCH_ERROR'
+export const FETCH_USERS_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_USERS_ERROR = 'FETCH_ERROR'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -24,26 +24,36 @@ export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
 // action call to call api for list of users 
 export const fetchUsers = () => dispatch => {
 	dispatch({ type: START_USERS_FETCH })
-	try {
-		const { response, loading } = useCallAPI({
-			method: 'get',
-			url: 'https://ptpt-use-my-tech5.herokuapp.com/api/users',
-			headers: {
-				accept: '*/*'
-			},
+	console.log('attempting to fetch all users')
+	axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/users')
+		.then(resp => {
+			dispatch({ type: FETCH_USERS_SUCCESS, payload: resp.data })
+			console.log('successfully fetched users')
 		})
-		dispatch({ type: FETCH_SUCCESS, payload: response.data, loading })
+		.catch(err => dispatch({ type: FETCH_USERS_ERROR, payload: err }))
+}
 
-	} catch (error) {
-		dispatch({ type: FETCH_ERROR, payload: error })
-	}
-};
+//try {
+// 	const { response, loading } = useCallAPI({
+// 		method: 'get',
+// 		url: 'https://ptpt-use-my-tech5.herokuapp.com/api/users',
+// 		headers: {
+// 			accept: '*/*'
+// 		},
+// 	})
+// 	dispatch({ type: FETCH_SUCCESS, payload: response.data, loading })
+
+// } catch (error) {
+// 	dispatch({ type: FETCH_ERROR, payload: error })
+// }
+
 
 // action call to add user to database
 export const addUser = newUser => dispatch => {
 	dispatch({ type: START_ADD_USER, payload: newUser })
+	console.log('userActions says: attempting to register user', newUser)
 	try {
-		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register')
+		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register', newUser)
 			.then(resp => {
 				dispatch({ type: ADD_USER_SUCCESS, payload: resp.data })
 			}).catch(err => dispatch({ type: ADD_USER_ERROR, payload: err })

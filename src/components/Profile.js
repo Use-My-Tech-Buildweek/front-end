@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
-import { getProfile } from '../actions'
+import { getProfile } from '../actions/userActions'
 
 import Review from "./Review";
 
