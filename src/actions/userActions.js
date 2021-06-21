@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
-import { history } from '../utils/history'
+//import { history } from '../utils/history'
 
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
@@ -21,6 +21,8 @@ export const USER_FETCH_ERROR = 'USER_FETCH_ERROR'
 export const START_UPDATE_PROFILE = 'START_UPDATE_PROFILE'
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS'
 export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
+export const USER_LOG_OUT = 'USER_LOG_OUT'
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
 
 // action call to call api for list of users 
 export const fetchUsers = () => dispatch => {
@@ -79,10 +81,10 @@ export const loginUser = (credentials) => dispatch => {
 		axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
 			.then(resp => {
 				console.log('actions says: post call success', resp)
-				console.log(history)
+				//console.log(history)
 				localStorage.setItem('token', resp.data.token)
 				dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
-				history.push(`/profile/:id`)
+				//history.push(`/profile/:id`)
 			}).catch(err => {
 				setError(err)
 				console.log('actions says: error in post call to login', err)
@@ -133,5 +135,9 @@ export const updateProfile = user => dispatch => {
 		dispatch({ type: UPDATE_PROFILE_ERROR, payload: error })
 
 	}
-
 }
+/*
+export const userLogOut = ()=>dispatch=>{
+	dispatch({type: USER_LOG_OUT})
+
+} */

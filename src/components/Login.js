@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { generatePath } from 'react-router'
 import { connect } from 'react-redux'
 
 import { loginUser, setError } from '../actions/userActions'
@@ -16,31 +17,45 @@ class Login extends React.Component {
             }
         }
 
-        // change handler
-        this.handleChanges = e => {
-            this.setState({
-                credentials: {
-                    ...this.state.credentials,
-                    [e.target.id]: e.target.value
+    }
+    // change handler
+    handleChanges = e => {
+        this.setState({
+            credentials: {
+                ...this.state.credentials,
+                [e.target.id]: e.target.value
 
-                }
+            }
+        })
+    }
+
+    // onSubmit handler
+    login = async e => {
+        e.preventDefault();
+        console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
+        await this.props.loginUser(this.state.credentials)
+        this.redirect();
+    }
+
+    redirect = () => {
+        if (this.props.user !== undefined) {
+            generatePath('/profile/:user/:id', {
+                user: this.props.user,
+                id: this.props.user.id,
             })
-        }
+            this.props.history.push(this.generatePath)
+        } else {
+            this.props.history.push('/welcome')
 
-        // onSubmit handler
-        this.login = e => {
-            e.preventDefault();
-            console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
-            this.props.loginUser(this.state.credentials)
-        }
-
-        //error message styling
-        this.errorStyle = {
-            color: 'red',
-            fontWeight: 'bold',
-            fontSize: '36px'
         }
     }
+    //error message styling
+    errorStyle = {
+        color: 'red',
+        fontWeight: 'bold',
+        fontSize: '36px'
+    }
+
     render() {
         return (
             <form onSubmit={this.login}>
@@ -72,9 +87,8 @@ class Login extends React.Component {
                 {this.props.loading ? (<p>Loading...</p>) : (<div>
                     {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
                 }
-
-
-            </form >
+        )
+            </form>
         )
     }
 }
@@ -85,8 +99,7 @@ const mapStateToProps = state => {
         errorMessages: state.errorMessages,
         loading: state.loading,
 
-
+        user: state.user
     }
 }
-
-export default connect(mapStateToProps, { loginUser, setError })(Login)
+export default withRouter(connect(mapStateToProps, { loginUser, setError })(Login))

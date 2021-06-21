@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useState } from 'react'
 import { connect } from 'react-redux'
 
+
 import "./App.css";
 
-import { history } from './utils/history.js'
 import PrivateRoute from './components/PrivateRoute'
 import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
@@ -15,17 +15,23 @@ import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
+//import Users from './components/User'
+//import { userLogOut } from './actions/userActions'
 
 const App = props => {
   const [visible, setVisible] = useState(false)
-
 
   function toggleVisible() {
     setVisible(!visible)
   }
 
+
+  // const logout = () => {
+  //   userLogOut();
+  // }
+
   return (
-    <Router history={history}>
+    <Router>
       <header>
         <Navbar />
       </header>
@@ -37,14 +43,16 @@ const App = props => {
 
           <Route path="/register">
             <SignupForm visible={visible}
-              toggleVisible={toggleVisible} history={history} />
+              toggleVisible={toggleVisible} />
           </Route>
 
-          <PrivateRoute path={`/profile/:id}`} render={Profile} type='private' />
+          <PrivateRoute path='/profile/user/:id' render={Profile} type='private' />
 
           <PrivateRoute path={`/edit-profile/:id}`} render={EditProfileForm} type='private' />
 
           <PrivateRoute path="/additem" render={NewItem} type='private' />
+
+
 
           <Route path="/items">
             <MyItems />
