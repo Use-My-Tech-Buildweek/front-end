@@ -74,9 +74,10 @@ const userReducer = (state = initialState, action) => {
 		case LOGIN_SUCCESS:
 			console.log('userReducer says: login success. setting state')
 			return {
-				...state.user,
-				username: action.payload.username,
-				password: action.payload.password
+				...state,
+				user: action.payload.user,
+				isLoading: false,
+				errorMessages: ''
 			}
 		case LOGIN_ERROR:
 			console.log('userReducer says: login error')

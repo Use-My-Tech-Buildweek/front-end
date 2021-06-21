@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
-
+import { withRouter } from 'react-router-dom'
 import { addUser, setError } from '../actions/userActions'
+
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -25,11 +26,13 @@ class SignupForm extends React.Component {
         M.FormSelect.init(elems);
     }
 
+
+
     handleSubmit = e => {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
         this.props.addUser(this.state.newUser)
-        this.props.history.push(`/profile/:${this.props.user.id}`);
+        this.props.history.push('/login')
     }
 
     handleChanges = e => {
@@ -171,7 +174,6 @@ const mapStateToProps = state => {
         users: state.users,
         newUser: state.newUser,
         error: state.error,
-        sendApiCall: state.sendApiCall,
     }
 }
-export default connect(mapStateToProps, { setError, addUser })(SignupForm)
+export default withRouter(connect(mapStateToProps, { setError, addUser })(SignupForm))

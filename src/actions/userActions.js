@@ -2,6 +2,7 @@ import axios from 'axios'
 
 //import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+import { history } from '../utils/history'
 
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
@@ -49,7 +50,7 @@ export const fetchUsers = () => dispatch => {
 
 
 // action call to add user to database
-export const addUser = newUser => dispatch => {
+export const addUser = (newUser) => dispatch => {
 	dispatch({ type: START_ADD_USER, payload: newUser })
 	console.log('userActions says: attempting to register user', newUser)
 	try {
@@ -78,8 +79,10 @@ export const loginUser = (credentials) => dispatch => {
 		axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
 			.then(resp => {
 				console.log('actions says: post call success', resp)
-				localStorage.setItem('token', resp.data.payload)
-				dispatch({ type: LOGIN_SUCCESS, payload: resp })
+				console.log(history)
+				localStorage.setItem('token', resp.data.token)
+				dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
+				history.push(`/profile/:id`)
 			}).catch(err => {
 				setError(err)
 				console.log('actions says: error in post call to login', err)
