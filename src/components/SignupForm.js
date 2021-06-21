@@ -28,42 +28,49 @@ class SignupForm extends React.Component {
                 //profileImg: '',
                 department: '',
             },
-            passwordError: '',
             error: '',
-            isFilePicked: false
+            isFilePicked: false,
+            validation: true,
         }
     }
+
     componentDidMount() {
         const elems = document.querySelectorAll("select");
         M.FormSelect.init(elems);
     }
 
-    handleSubmit = e => {
-        e.preventDefault()
-        if (this.state.newUser.password === this.state.newUser.confirmPassword) {
-            this.setState({...this.state, passwordError: ""})
-        console.log('submit add new user button clicked, calling addUser', this.state.newUser)
-        this.props.addUser(this.state.newUser)
-        this.props.history.push(`/profile/:${this.props.user.id}`);}
-        else{
-            this.setState({...this.state, passwordError: "Passwords don't match!"})
-        }
+    componentDidUpdate() {
+        signupSchema.isValid(this.state.newUser)
+        .then(valid => {
+            if(this.state.validation === valid){
+                this.setState({...this.state, validation: !valid})}
+        })
+
     }
 
+    handleSubmit = e => {
+        e.preventDefault()
+        console.log('submit add new user button clicked, calling addUser', this.state.newUser);
+        this.props.addUser(this.state.newUser);
+        this.props.history.push(`/profile/:${this.props.user.id}`);
+    }
+
+
+
     handleChanges = e => {
+        this.setState({
+            ...this.state,
+            newUser: {
+                ...this.state.newUser,
+                [e.target.name]: e.target.value
+            }
+        }) 
         yup.reach(signupSchema, e.target.name)
             .validate(e.target.value)
             .then(() => {
             this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
-            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))
-            this.setState({
-                newUser: {
-                    ...this.state.newUser,
-                    [e.target.name]: e.target.value
-                }
-            })
+            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))       
     }
-    
 
     handleSelectFile = e => {
         this.setState({
@@ -75,6 +82,9 @@ class SignupForm extends React.Component {
             isFilePicked: true,
         })
     }
+
+        
+
     render() {
         return (
             <div className='row'>
@@ -142,6 +152,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="password">Password</label>
                         </div>
                     </div>
+                    <p>{this.state.newUser.confirmPassword !== this.state.newUser.password?this.state.errors.confirmPassword:null}</p>
                     <div className="row">
                         <div className="input-field col s6">
                             <input
@@ -154,7 +165,6 @@ class SignupForm extends React.Component {
                             />
                             <label htmlFor="confirmPassword">Confirm Password</label>
                         </div>
-                        <p>{this.state.passwordError}</p>
                         {/*<div className="input-field col s6">
                             <input
                                 type="password"
@@ -194,7 +204,7 @@ class SignupForm extends React.Component {
                             </div>*/}
                         <div className="row">
                             <div className="col s6">
-                                <button type="submit" className="btn btn-waves-effect">
+                                <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
                                     Submit
                             </button>
                             </div>

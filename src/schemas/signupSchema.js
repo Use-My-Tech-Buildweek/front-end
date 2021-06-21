@@ -16,9 +16,10 @@ const signupSchema = yup.object().shape({
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
             "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
         ),
-    passwordConfirmation: yup
+    confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        .required('You must confirm your password')
+        .oneOf([yup.ref('password'), null], 'password must match'),
     // bio: yup
     //     .string()
     //     .max(500, "limited to 500 characters"),
