@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
-const Welcome = () => {
+const Welcome = ({ items }) => {
+
+  const [ userSearch, setUserSearch ] = useState(false)
+  const [ searchResult, setSearchResult ] = useState([])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("search form submitted");
   };
+
+  const onchange = (e) => {
+    e.target.value? setUserSearch(true): setUserSearch(false);
+    search(e)
+  }
+
+  const search = (e) => {
+    const lookFor = e.target.value.toLowerCase();
+    const res = items.filter( item => 
+      item.title.toLowerCase().includes(lookFor) || item.name.toLowerCase().includes(lookFor)
+    )
+    setSearchResult(res)
+  }
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -29,21 +46,29 @@ const Welcome = () => {
             }}
           >
             <i className="material-icons prefix">search</i>
-            <input type="text" id="search_input" className="validate" />
+            <input type="text" id="search_input" className="validate" onChange={onchange}/>
             <label htmlFor="search_input">What are you looking for?</label>
           </div>
         </div>
       </form>
       <div>
-        <h4 style={h4Style} className="center-align">
-          Electronics
-        </h4>
-        <div className="items-wrapper" style={itemsWrapperStyle}>
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-        </div>
+        {userSearch? 
+          <>
+            <h4 style={h4Style} className="center-align">My search</h4>
+            <div className="items-wrapper" style={itemsWrapperStyle}>
+              {searchResult.length>0? 
+                searchResult.map(item => { return( <Item item={item}/> )}):
+                "No item found"
+              }
+            </div>
+          </>:
+          <>
+            <h4 style={h4Style} className="center-align">Last items listed</h4>
+            <div className="items-wrapper" style={itemsWrapperStyle}>
+              {items.map(item => { return( <Item item={item}/> ) })}
+            </div>
+          </>
+        }
       </div>
     </div>
   );
