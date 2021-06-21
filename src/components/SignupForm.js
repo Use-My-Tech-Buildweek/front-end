@@ -11,11 +11,13 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
+                confirmPassword:'',
                 // email: '',
                 //bio,
                 //profileImg: '',
                 department: '',
             },
+            passwordError: '',
             error: '',
             isFilePicked: false
         }
@@ -27,9 +29,14 @@ class SignupForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault()
+        if (this.state.newUser.password === this.state.newUser.confirmPassword) {
+            this.setState({...this.state, passwordError: ""})
         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
         this.props.addUser(this.state.newUser)
-        this.props.history.push(`/profile/:${this.props.user.id}`);
+        this.props.history.push(`/profile/:${this.props.user.id}`);}
+        else{
+            this.setState({...this.state, passwordError: "Passwords don't match!"})
+        }
     }
 
     handleChanges = e => {
@@ -112,8 +119,22 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.password}
                             />
-                            <label htmlFor="password"></label>
+                            <label htmlFor="password">Password</label>
                         </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                id="confirmPassword"
+                                autoComplete='current-password'
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.confirmPassword}
+                            />
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                        </div>
+                        <p>{this.state.passwordError}</p>
                         {/*<div className="input-field col s6">
                             <input
                                 type="password"
