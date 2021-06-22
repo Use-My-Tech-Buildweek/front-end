@@ -65,6 +65,7 @@ class Login extends React.Component {
                     className="validate counter"
                     data-length="14"
                     required
+                    minLength="2"
                     maxLength="15"
                     name="username"
                     id="username"
