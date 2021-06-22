@@ -1,33 +1,37 @@
 import * as yup from 'yup'
 
 const signupSchema = yup.object().shape({
-    username: yup.string().required(),
-    role: yup
+    username: yup.string().required('username is required').min(3, "username must be at least 3 characters long"),
+    department: yup
         .string()
         .required()
-        .oneOf(['Renter', 'Client'], "You must select a role"),
-    email: yup
-        .string()
-        .email('enter a valid email'),
+        .oneOf(['renter', 'owner'], "You must select a role"),
+    // email: yup
+    //     .string()
+    //     .email('enter a valid email'),
     password: yup
         .string()
         .required('Password is required')
-        .min(6, 'password must be at least 6 characters long'),
-    passwordConfirmation: yup
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        ),
+    confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
-    aboutMe: yup
-        .string()
-        .max(500, "limited to 500 characters"),
-    profilePicture: yup
-        .mixed()
-        .test("fileSize", "The file is too large", 
-        (value) => {
-            console.log("value is ", value)
-            if (!value.length) return true // attachment is optional
-            return value[0].size <= 2000000
-            }
-        )
+        .required('You must confirm your password')
+        .oneOf([yup.ref('password'), null], 'password must match'),
+    // bio: yup
+    //     .string()
+    //     .max(500, "limited to 500 characters"),
+    // profileImg: yup
+    //     .mixed()
+    //     .test("fileSize", "The file is too large", 
+    //     (value) => {
+    //         console.log("value is ", value)
+    //         if (!value.length) return true // attachment is optional
+    //         return value[0].size <= 2000000
+    //         }
+    //     )
   });
 
 export default signupSchema

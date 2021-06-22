@@ -1,22 +1,22 @@
 import React from "react";
 import { cardStyle } from "./styles/styles";
 
-const Item = (props) => {
+const Item = ({item}) => {
   // eslint-disable-next-line no-unused-vars
-  const { pictures, description, price, user } = props;
+  const { pictures, description, price, user, title, name } = item;
 
   return (
     <div className="card" style={cardStyle}>
       <span className="card-title">
-        <h4>Title</h4>
+        <h4>{title}</h4>
       </span>
       <div className="card-content">
         <div>
-          <h5>Item Name</h5>
+          <h5>{name}</h5>
           <p>User ratings</p>
         </div>
         <div>
-          <h6>Item Description</h6>
+          <h6>{description}</h6>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quando enim
             Socrates, qui parens philosophiae iure dici potest, quicquam tale
