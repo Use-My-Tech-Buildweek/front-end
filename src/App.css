@@ -358,3 +358,8 @@ template {
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 /* Materialize CSS */
 @import url("./materialize.css");
+
+/* handle style conflicts with CSS Reset and Materialize CSS */
+a {
+  color: #FFF;
+}
