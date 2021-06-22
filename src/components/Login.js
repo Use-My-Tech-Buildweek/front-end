@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { loginUser, setError } from "../actions/userActions";
 import { forgotPasswordStyle } from "./styles/styles";
+import M from "materialize-css";
 
 class Login extends React.Component {
   constructor(props) {
@@ -44,6 +45,13 @@ class Login extends React.Component {
       fontSize: "36px",
     };
   }
+
+  componentDidMount() {
+    //   TODO: initialize character counters
+    const elems = document.querySelectorAll(".counter");
+    M.CharacterCounter.init(elems);
+  }
+
   render() {
     return (
       <div className="container">
@@ -54,8 +62,10 @@ class Login extends React.Component {
                 <div className="input-field col s12">
                   <i className="material-icons prefix">account_circle</i>
                   <input
-                    className="validate"
+                    className="validate counter"
                     data-length="14"
+                    required
+                    maxLength="15"
                     name="username"
                     id="username"
                     type="text"
@@ -70,15 +80,20 @@ class Login extends React.Component {
                 <div className="input-field col s12">
                   <i className="material-icons prefix">lock</i>
                   <input
-                    className="validate"
+                    className="validate counter"
                     name="password"
                     type="password"
                     id="password"
                     onChange={this.handleChanges}
                     value={this.state.credentials.password}
                     data-length="12"
+                    required
+                    maxLength="13"
+                    minLength="8"
                   />
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">
+                    Password<small>(8-10 characters)</small>
+                  </label>
                 </div>
               </div>
 
@@ -106,6 +121,7 @@ class Login extends React.Component {
                   </button>
                 </div>
               </div>
+
               <div className="row">
                 <p className="right" style={forgotPasswordStyle}>
                   Forgot your password?

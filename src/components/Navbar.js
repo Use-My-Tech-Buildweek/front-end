@@ -7,13 +7,14 @@ import { buttonStyle, navMobileStyle, navWrapperStyle } from "./styles/styles";
 const Navbar = () => {
   const [location, setLocation] = useState("/");
 
-  //   TODO: disable the navigation link for the current page
+  // Get current URL path for conditional styling
   const { pathname } = useLocation();
 
   useEffect(() => {
     // Initialize responsive menu elements
     const elems = document.querySelectorAll(".sidenav");
     M.Sidenav.init(elems);
+    // Store current URL path in state
     setLocation(pathname);
   }, [pathname]);
 
