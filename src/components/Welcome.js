@@ -1,6 +1,12 @@
 import React from "react";
 import Item from "./Item";
-import { itemsWrapperStyle, h4Style } from "./styles/styles";
+import {
+  itemsWrapperStyle,
+  h4Style,
+  searchWrapperStyle,
+  searchWrapperInputStyle,
+  welcomeWrapperStyle,
+} from "./styles/styles";
 
 const Welcome = () => {
   const handleSubmit = (e) => {
@@ -9,24 +15,13 @@ const Welcome = () => {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div id="welcome-wrapper" style={welcomeWrapperStyle}>
       <form action="submit" onSubmit={handleSubmit}>
-        <div
-          className="row"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div id="search-wrapper" className="row" style={searchWrapperStyle}>
           <p>I'm looking for</p>
           <div
             className="input-field col s12 m8 offset-m2 l6 offset-l3"
-            style={{
-              border: "1px solid black",
-              borderRadius: "4px",
-              marginLeft: "1em",
-            }}
+            style={searchWrapperInputStyle}
           >
             <i className="material-icons prefix">search</i>
             <input type="text" id="search_input" className="validate" />

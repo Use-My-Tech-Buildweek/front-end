@@ -1,5 +1,10 @@
 import React from "react";
-import { cardStyle } from "./styles/styles";
+import {
+  cardActionButtonStyle,
+  cardActionIconStyle,
+  cardActionStyle,
+  cardStyle,
+} from "./styles/styles";
 
 const Item = (props) => {
   // eslint-disable-next-line no-unused-vars
@@ -27,12 +32,12 @@ const Item = (props) => {
           </p>
         </div>
       </div>
-      <div className="card-action" style={{ paddingBottom: "1em" }}>
+      <div className="card-action" style={cardActionStyle}>
         <button
           className="waves-effect-light btn"
-          style={{ display: "flex", justifyContent: "space-between" }}
+          style={cardActionButtonStyle}
         >
-          <i className="material-icons" style={{ marginRight: ".5em" }}>
+          <i className="material-icons" style={cardActionIconStyle}>
             add_shopping_cart
           </i>
           {`Rent for $${price || "4.20"}/day`}

@@ -10,7 +10,7 @@ export const buttonStyle = {
   display: "inline-flex",
   justifyContent: "space-between",
   alignItems: "center",
-  color: "#FFF"
+  color: "#FFF",
 };
 
 export const h4Style = { border: "1px solid black", borderRadius: "4px" };
@@ -20,3 +20,48 @@ export const cardStyle = {
   margin: "1em",
   padding: "8px",
 };
+
+export const signupLabelStyle = {
+  position: "absolute",
+  top: "-2.5em",
+  left: "1.15em",
+  color: "gray",
+};
+
+export const forgotPasswordStyle = {
+  textDecoration: "underline",
+  color: "#007AAF",
+  cursor: "pointer",
+};
+
+export const navWrapperStyle = {
+  textDecoration: "underline",
+  color: "#007AAF",
+  cursor: "pointer",
+};
+export const navMobileStyle = { width: "100%" };
+
+export const cardActionStyle = { paddingBottom: "1em" };
+
+export const cardActionButtonStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+};
+
+export const cardActionIconStyle = { marginRight: ".5em" };
+
+export const buttonWrapperStyle = { marginTop: "1em" };
+
+export const searchWrapperStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+export const searchWrapperInputStyle = {
+  border: "1px solid black",
+  borderRadius: "4px",
+  marginLeft: "1em",
+};
+
+export const welcomeWrapperStyle = { padding: "2rem" };

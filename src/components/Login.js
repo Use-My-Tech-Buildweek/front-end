@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { loginUser, setError } from "../actions/userActions";
-import { buttonStyle } from "./styles/styles";
+import {
+  buttonStyle,
+  forgotPasswordStyle,
+  signupLabelStyle,
+} from "./styles/styles";
 
 class Login extends React.Component {
   constructor(props) {
@@ -78,13 +82,24 @@ class Login extends React.Component {
 
               <div className="row">
                 <div className="input-field col s6">
-                  <button type="submit" className="btn waves-effect-light" style={buttonStyle} >
+                  <button
+                    type="submit"
+                    className="btn waves-effect-light"
+                    style={buttonStyle}
+                  >
                     Login
                   </button>
                 </div>
                 <div className="input-field col s6">
-                  <label htmlFor="signup" style={{position: "absolute", top: "-2.5em", color: "gray"}} >Don't have an account?</label>
-                  <button type="button" id="signup" className="btn waves-effect-light" style={buttonStyle} >
+                  <label htmlFor="signup" style={signupLabelStyle}>
+                    Don't have an account?
+                  </label>
+                  <button
+                    type="button"
+                    id="signup"
+                    className="btn waves-effect-light"
+                    style={buttonStyle}
+                  >
                     <span className="valign-wrapper">
                       <Link to="/register">Sign up!</Link>
                     </span>
@@ -92,14 +107,7 @@ class Login extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <p
-                  className="right"
-                  style={{
-                    textDecoration: "underline",
-                    color: "#007AAF",
-                    cursor: "pointer",
-                  }}
-                >
+                <p className="right" style={forgotPasswordStyle}>
                   Forgot your password?
                 </p>
               </div>

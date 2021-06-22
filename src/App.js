@@ -1,33 +1,31 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
 import "./App.css";
 
-import PrivateRoute from './components/PrivateRoute'
+import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
-import Welcome from "./components/Welcome"
+import Welcome from "./components/Welcome";
 import MyItems from "./components/MyItems";
 //import Items from './components/Items'
 import NewItem from "./components/NewItem";
-import Navbar from './components/Navbar'
-import Profile from './components/Profile'
-import EditProfileForm from './components/EditProfileForm'
-import { fetchUsers } from './actions/userActions'
+import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
+import EditProfileForm from "./components/EditProfileForm";
+import { fetchUsers } from "./actions/userActions";
 
-
-const App = props => {
-  const [visible, setVisible] = useState(false)
+const App = (props) => {
+  const [visible, setVisible] = useState(false);
 
   function toggleVisible() {
-    setVisible(!visible)
+    setVisible(!visible);
   }
 
   useEffect(() => {
     fetchUsers();
   }, []);
-
 
   return (
     <Router>
@@ -39,13 +37,15 @@ const App = props => {
           <Route exact path="/" component={Welcome} />
 
           <Route path="/register">
-            <SignupForm visible={visible}
-              toggleVisible={toggleVisible} />
+            <SignupForm visible={visible} toggleVisible={toggleVisible} />
           </Route>
 
-          <PrivateRoute path='/profile/:userId' component={Profile} />
+          <PrivateRoute path="/profile/:userId" component={Profile} />
 
-          <PrivateRoute path={`/edit-profile/:userId`} component={EditProfileForm} />
+          <PrivateRoute
+            path={`/edit-profile/:userId`}
+            component={EditProfileForm}
+          />
 
           <PrivateRoute path="/additem" component={NewItem} />
 
@@ -56,18 +56,16 @@ const App = props => {
           <Route path="/login">
             <Login />
           </Route>
-
-
         </Switch>
       </main>
     </Router>
   );
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.users,
     user: state.user,
-  }
-}
+  };
+};
 export default connect(mapStateToProps, {})(App);

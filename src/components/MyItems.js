@@ -1,16 +1,15 @@
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Item from "./Item";
-import { itemsWrapperStyle } from "./styles/styles";
+import { buttonWrapperStyle, itemsWrapperStyle } from "./styles/styles";
 
 const MyItems = (props) => {
   const history = useHistory();
 
-
   return (
     <div>
-      <div className="button-wrapper center-align" style={{ marginTop: "1em" }} >
+      <div className="button-wrapper center-align" style={buttonWrapperStyle}>
         <button
           className="btn waves-effect-light"
           onClick={() => {
@@ -32,9 +31,9 @@ const MyItems = (props) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     items: state.items,
-  }
-}
+  };
+};
 export default connect(mapStateToProps, {})(MyItems);

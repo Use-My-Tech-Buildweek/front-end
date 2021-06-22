@@ -2,7 +2,7 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
-import { buttonStyle } from "./styles/styles";
+import { buttonStyle, navMobileStyle, navWrapperStyle } from "./styles/styles";
 
 const Navbar = () => {
   const [location, setLocation] = useState("/");
@@ -19,12 +19,12 @@ const Navbar = () => {
 
   return (
     <div className="nav-wrapper">
-      <nav style={{ padding: "0 1em" }} className="valign-wrapper">
+      <nav style={navWrapperStyle} className="valign-wrapper">
         <a href="#" data-target="responsive-nav" className="sidenav-trigger">
           <i className="material-icons">menu</i>
         </a>
         <div
-          style={{ width: "100%" }}
+          style={navMobileStyle}
           id="nav-mobile"
           className="right hide-on-med-and-down"
         >
