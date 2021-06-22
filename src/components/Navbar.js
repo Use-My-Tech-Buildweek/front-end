@@ -30,7 +30,7 @@ const Navbar = () => {
         >
           <button
             className={
-              location === "/" ? "btn disabled" : "btn waves-effect-light"
+              location === "/" ? "btn disabled" : "btn waves-effect waves-light"
             }
             style={buttonStyle}
           >
@@ -42,9 +42,9 @@ const Navbar = () => {
           </button>
           <button
             className={
-              location.includes("/profile")
-                ? "btn disabled"
-                : "btn waves-effect-light"
+              location.includes("/profile") || location === "/login"
+                ? "btn disabled waves-effect waves-light"
+                : "btn waves-effect waves-light"
             }
             style={buttonStyle}
           >
@@ -60,8 +60,8 @@ const Navbar = () => {
           <button
             className={
               location === "/login"
-                ? "btn right disabled"
-                : "btn right waves-effect-light"
+                ? "btn right disabled waves-effect waves-light"
+                : "btn right waves-effect waves-light"
             }
             style={buttonStyle}
           >

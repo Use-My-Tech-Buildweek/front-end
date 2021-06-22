@@ -56,7 +56,10 @@ class Login extends React.Component {
             <form onSubmit={this.login} className="col s12">
               <div className="row">
                 <div className="input-field col s12">
+                  <i className="material-icons prefix">account_circle</i>
                   <input
+                    className="validate"
+                    data-length="14"
                     name="username"
                     id="username"
                     type="text"
@@ -69,12 +72,15 @@ class Login extends React.Component {
 
               <div className="row">
                 <div className="input-field col s12">
+                  <i className="material-icons prefix">lock</i>
                   <input
+                    className="validate"
                     name="password"
                     type="password"
                     id="password"
                     onChange={this.handleChanges}
                     value={this.state.credentials.password}
+                    data-length="12"
                   />
                   <label htmlFor="password">Password</label>
                 </div>
@@ -84,7 +90,7 @@ class Login extends React.Component {
                 <div className="input-field col s6">
                   <button
                     type="submit"
-                    className="btn waves-effect-light"
+                    className="btn waves-effect waves-light"
                     style={buttonStyle}
                   >
                     Login
@@ -97,7 +103,7 @@ class Login extends React.Component {
                   <button
                     type="button"
                     id="signup"
-                    className="btn waves-effect-light"
+                    className="btn waves-effect waves-light"
                     style={buttonStyle}
                   >
                     <span className="valign-wrapper">
