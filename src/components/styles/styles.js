@@ -21,13 +21,6 @@ export const cardStyle = {
   padding: "8px",
 };
 
-export const signupLabelStyle = {
-  position: "absolute",
-  top: "-2.5em",
-  left: "1.15em",
-  color: "gray",
-};
-
 export const forgotPasswordStyle = {
   textDecoration: "underline",
   color: "#007AAF",

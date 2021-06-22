@@ -3,11 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { loginUser, setError } from "../actions/userActions";
-import {
-  buttonStyle,
-  forgotPasswordStyle,
-  signupLabelStyle,
-} from "./styles/styles";
+import { forgotPasswordStyle } from "./styles/styles";
 
 class Login extends React.Component {
   constructor(props) {
@@ -91,20 +87,18 @@ class Login extends React.Component {
                   <button
                     type="submit"
                     className="btn waves-effect waves-light"
-                    style={buttonStyle}
                   >
                     Login
                   </button>
                 </div>
                 <div className="input-field col s6">
-                  <label htmlFor="signup" style={signupLabelStyle}>
+                  <label htmlFor="signup" className="active">
                     Don't have an account?
                   </label>
                   <button
                     type="button"
                     id="signup"
                     className="btn waves-effect waves-light"
-                    style={buttonStyle}
                   >
                     <span className="valign-wrapper">
                       <Link to="/register">Sign up!</Link>
