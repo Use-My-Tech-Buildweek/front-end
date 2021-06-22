@@ -4,12 +4,13 @@ export const itemsWrapperStyle = {
   justifyContent: "space-evenly",
 };
 
-export const navButtonStyle = {
+export const buttonStyle = {
   padding: "8px",
   margin: "0.5em",
   display: "inline-flex",
   justifyContent: "space-between",
   alignItems: "center",
+  color: "#FFF"
 };
 
 export const h4Style = { border: "1px solid black", borderRadius: "4px" };

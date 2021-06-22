@@ -2,7 +2,7 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
-import { navButtonStyle } from "./styles/styles";
+import { buttonStyle } from "./styles/styles";
 
 const Navbar = () => {
   const [location, setLocation] = useState("/");
@@ -32,7 +32,7 @@ const Navbar = () => {
             className={
               location === "/" ? "btn disabled" : "btn waves-effect-light"
             }
-            style={navButtonStyle}
+            style={buttonStyle}
           >
             <span className="valign-wrapper">
               <Link to="/" disabled={location === "/" ? true : false}>
@@ -46,7 +46,7 @@ const Navbar = () => {
                 ? "btn disabled"
                 : "btn waves-effect-light"
             }
-            style={navButtonStyle}
+            style={buttonStyle}
           >
             <span className="valign-wrapper">
               <Link
@@ -63,7 +63,7 @@ const Navbar = () => {
                 ? "btn right disabled"
                 : "btn right waves-effect-light"
             }
-            style={navButtonStyle}
+            style={buttonStyle}
           >
             <span className="valign-wrapper">
               <Link to="/login" disabled={location === "/login" ? true : false}>
