@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
 import { withRouter } from 'react-router-dom'
-import { addUser, setError } from '../actions/userActions'
+import { addUser, setError, clearRegisterForm } from '../actions/userActions'
 
 
 class SignupForm extends React.Component {
@@ -32,9 +32,12 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
         this.props.addUser(this.state.newUser)
-        this.props.history.push('/login')
+        if (!this.props.errorMessages) {
+            this.props.history.push('/login')
+        } else {
+            clearRegisterForm();
+        }
     }
-
     handleChanges = e => {
         this.setState({
             newUser: {
@@ -176,4 +179,4 @@ const mapStateToProps = state => {
         error: state.error,
     }
 }
-export default withRouter(connect(mapStateToProps, { setError, addUser })(SignupForm))
+export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm })(SignupForm))

@@ -41,7 +41,7 @@ const Navbar = (props) => {
           </button>
           <button style={navButtonStyle} className="waves-effect-light btn">
             <span className="valign-wrapper">
-              <Link to={props.user !== undefined ? (`/profile/:${user.id}`) : ('/login')}>My Profile</Link>
+              <Link to={props.user === undefined ? ('/login') : (`/profile/:${user.id}`)} > My Profile</Link>
             </span>
           </button>
           <button

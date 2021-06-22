@@ -1,43 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react' // 
 import { connect } from 'react-redux'
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	useParams
-} from 'react-router-dom'
+// import {
+// 	BrowserRouter as Router,
+// 	Switch,
+// 	Route,
+// 	Link,
+// 	useParams
+// } from 'react-router-dom'
 
 import User from './User'
-import Profile from './Profile'
-import PrivateRoute from './PrivateRoute'
-import { fetchUsers } from '../actions/userActions'
+// import Profile from './Profile'
+// import PrivateRoute from './PrivateRoute'
+import { fetchUserList } from '../actions/userActions'
 
 const UserList = props => {
-	useEffect(() => {
-		fetchUsers();
-	}, [])
 
-	if (props.isLoading) {
-		return (
-			<h2>Loading....</h2>
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		fetch('/users').then(res => setUsers(res.data)
 		)
-	}
+	})
 
 	return (
-		<div className='listContainer'>
-			{props.users.map((user) => (
+		<div div className='listContainer' >
+			{users.map((user) => (
 				<User key={user.id} user={user} />
 			))}
-		/</div>
+		</div>
 	)
 }
 
 const mapStateToProps = state => {
 	return {
-		users: state.users,
+		userList: state.userList,
 		isLoading: state.isLoading,
 		errorMessages: state.errorMessages
 	}
 }
-export default connect(mapStateToProps, { fetchUsers })(UserList)
+export default connect(mapStateToProps, { fetchUserList })(UserList)

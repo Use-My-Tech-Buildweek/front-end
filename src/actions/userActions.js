@@ -4,13 +4,14 @@ import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 //import { history } from '../utils/history'
 
+export const CLEAR_REGISTER_FORM = 'CLEAR_REGISTER_FORM'
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
 export const ADD_USER_ERROR = 'ADD_USER_ERROR'
 export const SET_ERROR = 'SET_ERROR'
-export const START_USERS_FETCH = 'START_USER_FETCH'
-export const FETCH_USERS_SUCCESS = 'FETCH_SUCCESS'
-export const FETCH_USERS_ERROR = 'FETCH_ERROR'
+export const START_USERLIST_FETCH = 'START_USER_FETCH'
+export const FETCH_USERLIST_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_USERLIST_ERROR = 'FETCH_ERROR'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -25,31 +26,16 @@ export const USER_LOG_OUT = 'USER_LOG_OUT'
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
 
 // action call to call api for list of users 
-export const fetchUsers = () => dispatch => {
-	dispatch({ type: START_USERS_FETCH })
+export const fetchUserList = () => dispatch => {
+	dispatch({ type: START_USERLIST_FETCH })
 	console.log('attempting to fetch all users')
 	axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/users')
 		.then(resp => {
-			dispatch({ type: FETCH_USERS_SUCCESS, payload: resp.data })
+			dispatch({ type: FETCH_USERLIST_SUCCESS, payload: resp.data })
 			console.log('successfully fetched users')
 		})
-		.catch(err => dispatch({ type: FETCH_USERS_ERROR, payload: err }))
+		.catch(err => dispatch({ type: FETCH_USERLIST_ERROR, payload: err }))
 }
-
-//try {
-// 	const { response, loading } = useCallAPI({
-// 		method: 'get',
-// 		url: 'https://ptpt-use-my-tech5.herokuapp.com/api/users',
-// 		headers: {
-// 			accept: '*/*'
-// 		},
-// 	})
-// 	dispatch({ type: FETCH_SUCCESS, payload: response.data, loading })
-
-// } catch (error) {
-// 	dispatch({ type: FETCH_ERROR, payload: error })
-// }
-
 
 // action call to add user to database
 export const addUser = (newUser) => dispatch => {
@@ -141,3 +127,8 @@ export const userLogOut = ()=>dispatch=>{
 	dispatch({type: USER_LOG_OUT})
 
 } */
+
+export const clearRegisterForm = () => dispatch => {
+	dispatch({ type: CLEAR_REGISTER_FORM })
+
+}

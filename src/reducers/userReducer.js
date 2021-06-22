@@ -12,23 +12,30 @@ import {
 	USER_FETCH_ERROR,
 	START_UPDATE_PROFILE,
 	UPDATE_PROFILE_SUCCESS,
-	UPDATE_PROFILE_ERROR
+	UPDATE_PROFILE_ERROR,
+	USER_LOG_OUT,
+	LOG_OUT_SUCCESS,
+	CLEAR_REGISTER_FORM,
+	START_USERLIST_FETCH,
+	FETCH_USERLIST_SUCCESS,
+	FETCH_USERLIST_ERROR
 } from '../actions/userActions'
 
 // sets state 
 const initialState = {
-	users: [],
+	userList: [],
 	user: {
 		username: '',
-		//email:'',
 		password: '',
 		department: '',
-		//bio: '',
-		//profileImg: '',
-		userId: ''
+		bio: '',
+		profile_pic: '',
+		location: '',
+		id: ''
 	},
 	errorMessages: '',
 	isLoading: false,
+	statusCode: ''
 }
 
 //reducer function
@@ -44,20 +51,21 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				user: action.payload,
-				users: [...state.users, action.payload],
+				userList: [...state.userList, action.payload],
 				isLoading: false,
 				errorsMessages: '',
 				newUser: {
 					username: '',
 					password: '',
 					department: ''
-				}
+				},
 			}
 		case ADD_USER_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload
+				errorMessages: action.payload,
+				statusCode: action.payload.response.statusCode
 			}
 		case SET_ERROR:
 			return {
@@ -75,15 +83,21 @@ const userReducer = (state = initialState, action) => {
 			console.log('userReducer says: login success. setting state')
 			return {
 				...state,
-				user: action.payload.user,
+				user: {
+					username: action.payload.username,
+					department: action.payload.department,
+					id: action.payload.id,
+					password: action.payload.password
+				},
 				isLoading: false,
-				errorMessages: ''
+				errorMessages: '',
 			}
 		case LOGIN_ERROR:
 			console.log('userReducer says: login error')
 			return {
 				...state,
-				errorMessages: action.payload
+				errorMessages: action.payload,
+				statusCode: action.payload.response.statusCode
 			}
 		case START_USER_FETCH:
 			console.log('userReducer says: attempting to fetch user profile', action.payload)
@@ -98,13 +112,14 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				errorMessages: ''
+				errorMessages: '',
 			}
 		case USER_FETCH_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload
+				errorMessages: action.payload,
+				statusCode: action.payload.response.statusCode
 			}
 		case START_UPDATE_PROFILE:
 			return {
@@ -117,15 +132,53 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				user: action.payload,
-				errorMessages: ''
+				errorMessages: '',
 			}
 		case UPDATE_PROFILE_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload
+				errorMessages: action.payload,
+				statusCode: action.payload.response.statusCode
 			}
-
+		case USER_LOG_OUT:
+			return {
+				...state.user,
+				username: '',
+				password: '',
+				department: '',
+			}
+		case CLEAR_REGISTER_FORM:
+			return {
+				...state,
+				newUser: {
+					username: '',
+					department: '',
+					password: '',
+					bio: '',
+					profile_pic: '',
+					location: ''
+				}
+			}
+		case START_USERLIST_FETCH:
+			return {
+				...state,
+				isLoading: true,
+				errorMessages: ''
+			}
+		case FETCH_USERLIST_SUCCESS:
+			return {
+				...state,
+				userList: [...state.userList, action.payload],
+				isLoading: false,
+				errorMessages: '',
+			}
+		case FETCH_USERLIST_ERROR:
+			return {
+				...state,
+				errorMessages: action.payload,
+				isLoading: false
+			}
 		default:
 			return state
 

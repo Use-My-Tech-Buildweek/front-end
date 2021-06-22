@@ -38,17 +38,19 @@ class Login extends React.Component {
     }
 
     redirect = () => {
-        if (this.props.user !== undefined) {
+        console.log('attempting redirect', this.props.user)
+        if (this.props.user && this.props.user.id !== undefined) {
+            console.log('generating path to profile', this.props.user)
             generatePath('/profile/:user/:id', {
                 user: this.props.user,
                 id: this.props.user.id,
             })
             this.props.history.push(this.generatePath)
         } else {
-            this.props.history.push('/welcome')
-
+            this.props.history.push('/login')
         }
     }
+
     //error message styling
     errorStyle = {
         color: 'red',
@@ -64,6 +66,7 @@ class Login extends React.Component {
                     id="username"
                     type="text"
                     placeholder="Username"
+                    autoComplete='username'
                     value={this.state.credentials.username}
                     onChange={this.handleChanges}
                 />
@@ -72,6 +75,7 @@ class Login extends React.Component {
                     name="password"
                     type="password"
                     id='password'
+                    autoComplete='current-password'
                     placeholder="Password"
                     onChange={this.handleChanges}
                     value={this.state.credentials.password}
