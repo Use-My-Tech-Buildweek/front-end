@@ -36,9 +36,7 @@ const App = props => {
       </header>
       <main>
         <Switch>
-          <Route exact path="/">
-            <Welcome />
-          </Route>
+          <Route exact path="/" component={Welcome} />
 
           <Route path="/register">
             <SignupForm visible={visible}
