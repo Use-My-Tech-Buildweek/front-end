@@ -2,14 +2,16 @@ import axios from 'axios'
 
 //import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+//import { history } from '../utils/history'
 
+export const CLEAR_REGISTER_FORM = 'CLEAR_REGISTER_FORM'
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
 export const ADD_USER_ERROR = 'ADD_USER_ERROR'
 export const SET_ERROR = 'SET_ERROR'
-export const START_USERS_FETCH = 'START_USER_FETCH'
-export const FETCH_USERS_SUCCESS = 'FETCH_SUCCESS'
-export const FETCH_USERS_ERROR = 'FETCH_ERROR'
+export const START_USERLIST_FETCH = 'START_USER_FETCH'
+export const FETCH_USERLIST_SUCCESS = 'FETCH_SUCCESS'
+export const FETCH_USERLIST_ERROR = 'FETCH_ERROR'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -20,36 +22,23 @@ export const USER_FETCH_ERROR = 'USER_FETCH_ERROR'
 export const START_UPDATE_PROFILE = 'START_UPDATE_PROFILE'
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS'
 export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
+export const USER_LOG_OUT = 'USER_LOG_OUT'
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
 
 // action call to call api for list of users 
-export const fetchUsers = () => dispatch => {
-	dispatch({ type: START_USERS_FETCH })
+export const fetchUserList = () => dispatch => {
+	dispatch({ type: START_USERLIST_FETCH })
 	console.log('attempting to fetch all users')
 	axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/users')
 		.then(resp => {
-			dispatch({ type: FETCH_USERS_SUCCESS, payload: resp.data })
+			dispatch({ type: FETCH_USERLIST_SUCCESS, payload: resp.data })
 			console.log('successfully fetched users')
 		})
-		.catch(err => dispatch({ type: FETCH_USERS_ERROR, payload: err }))
+		.catch(err => dispatch({ type: FETCH_USERLIST_ERROR, payload: err }))
 }
 
-//try {
-// 	const { response, loading } = useCallAPI({
-// 		method: 'get',
-// 		url: 'https://ptpt-use-my-tech5.herokuapp.com/api/users',
-// 		headers: {
-// 			accept: '*/*'
-// 		},
-// 	})
-// 	dispatch({ type: FETCH_SUCCESS, payload: response.data, loading })
-
-// } catch (error) {
-// 	dispatch({ type: FETCH_ERROR, payload: error })
-// }
-
-
 // action call to add user to database
-export const addUser = newUser => dispatch => {
+export const addUser = (newUser) => dispatch => {
 	dispatch({ type: START_ADD_USER, payload: newUser })
 	console.log('userActions says: attempting to register user', newUser)
 	try {
@@ -78,8 +67,10 @@ export const loginUser = (credentials) => dispatch => {
 		axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
 			.then(resp => {
 				console.log('actions says: post call success', resp)
-				localStorage.setItem('token', resp.data.payload)
-				dispatch({ type: LOGIN_SUCCESS, payload: resp })
+				//console.log(history)
+				localStorage.setItem('token', resp.data.token)
+				dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
+				//history.push(`/profile/:id`)
 			}).catch(err => {
 				setError(err)
 				console.log('actions says: error in post call to login', err)
@@ -130,5 +121,14 @@ export const updateProfile = user => dispatch => {
 		dispatch({ type: UPDATE_PROFILE_ERROR, payload: error })
 
 	}
+}
+/*
+export const userLogOut = ()=>dispatch=>{
+	dispatch({type: USER_LOG_OUT})
+
+} */
+
+export const clearRegisterForm = () => dispatch => {
+	dispatch({ type: CLEAR_REGISTER_FORM })
 
 }
