@@ -5,10 +5,10 @@ import M from "materialize-css";
 import { connect } from 'react-redux'
 
 import { navButtonStyle } from "./styles/styles";
+import Modal from './Modal'
 
 
-const Navbar = () => {
-  
+const Navbar = ({ triggerModal, logOut }) => {
   //=============== logout function and modal =========================
   //functions
 
@@ -63,16 +63,7 @@ const Navbar = () => {
 
   return (
     <>
-    {/* Modal */}
-    <div id="logOutModal">
-      <p>Are you sure you want to log out?</p>
-      <div>
-        <button onClick={() => {logOutFromModal()}}>Log me out!</button>
-        <button onClick={cancelModal}>Cancel</button>
-      </div>
-    </div>
-   {/* end of modal */}
-
+    <Modal actionToConfirm={ logOut } textButton="log out" modalId="logOutModal"/>
     <div className="nav-wrapper">
       <nav style={{ padding: "0 1em" }} className="valign-wrapper">
         <a href="#" data-target="responsive-nav" className="sidenav-trigger">
@@ -93,6 +84,11 @@ const Navbar = () => {
               <Link to={props.user === undefined ? ('/login') : (`/profile/:${user.id}`)} > My Profile</Link>
             </span>
           </button>
+          <button style={navButtonStyle} className="waves-effect-light btn">
+            <span className="valign-wrapper">
+              <Link to="/myItems">My Items</Link>
+            </span>
+          </button>
           <button
             style={navButtonStyle}
             className="right waves-effect-light btn"
@@ -106,7 +102,7 @@ const Navbar = () => {
             style={navButtonStyle}
             className="right waves-effect-light btn"
             id="logOutButton"
-            onClick={() => {triggerModal()}}
+            onClick={() => {triggerModal("logOutModal")}}
           >
             <span className="valign-wrapper">
               Log Out

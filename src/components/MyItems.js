@@ -6,8 +6,7 @@ import { itemsWrapperStyle } from "./styles/styles";
 
 const MyItems = (props) => {
   const history = useHistory();
-
-
+  console.log(props)
   return (
     <div>
       <div className="button-wrapper center-align" style={{ marginTop: "1em" }} >
@@ -23,10 +22,11 @@ const MyItems = (props) => {
       </div>
       <div className="items-wrapper" style={itemsWrapperStyle}>
         {/* add a way to delete item */}
-        <Item />
-        <Item />
-        <Item />
-        {/*  */}
+        {/* {itemsList.map(item => {
+          return(
+            <Item item={item}/>
+          )
+        })} */}
       </div>
     </div>
   );

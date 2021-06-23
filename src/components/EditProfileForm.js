@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { getProfile, updateProfile } from '../actions/userActions'
 import { connect } from 'react-redux'
+import * as yup from 'yup'
+import signupSchema from '../schemas/signupSchema'
+
+import Modal from './Modal'
 
 class EditProfileForm extends Component {
 	constructor(props) {
@@ -9,14 +13,49 @@ class EditProfileForm extends Component {
 			user: {
 				username: '',
 				password: '',
-				email: '',
-				bio: '',
-				profileImg: '',
-				accountType: '',
+				confirmPassword:'',
+				// email: '',
+				// bio: '',
+				// profileImg: '',
+				department: '',
 			},
+			errors: {
+                username: '',
+                password: '',
+                confirmPassword:'',
+                // email: '',
+                //bio,
+                //profileImg: '',
+                department: '',
+            },
+			error: '',
 			selectedFile: null,
+			validation: true
 		}
 	}
+
+	handleSubmit = e => {
+        e.preventDefault()
+        console.log('submit add new user button clicked, calling addUser', this.state.newUser);
+        this.props.addUser(this.state.newUser);
+        this.props.history.push(`/profile/:${this.props.user.id}`);
+    }
+
+	handleChanges = e => {
+        this.setState({
+            ...this.state,
+            newUser: {
+                ...this.state.newUser,
+                [e.target.name]: e.target.value
+            }
+        }) 
+        yup.reach(signupSchema, e.target.name)
+            .validate(e.target.value)
+            .then(() => {
+            this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
+            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))       
+    }
+
 	componentDidMount = () => {
 		this.props.getProfile(this.props.match.params.id)
 	}
@@ -39,6 +78,8 @@ class EditProfileForm extends Component {
 
 	render() {
 		return (
+			<>
+			<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal"/>
 			<form onSubmit={this.handleSubmit}>
 				<label>
 					Role
@@ -50,6 +91,8 @@ class EditProfileForm extends Component {
 				</label>
 				<label>
 					Username
+				<p>{this.state.errors.username}</p>
+
             <input
 						name="username"
 						type="text"
@@ -59,7 +102,7 @@ class EditProfileForm extends Component {
 						id='username'
 					/>
 				</label>
-				<label>
+				{/* <label>
 					Email
             <input
 						name="email"
@@ -69,9 +112,11 @@ class EditProfileForm extends Component {
 						id='email'
 						onChange={this.handleChanges}
 					/>
-				</label>
+				</label> */}
 				<label>
 					Password
+					<p>{this.state.errors.password}</p>
+
             <input
 						name="password"
 						type="password"
@@ -83,13 +128,14 @@ class EditProfileForm extends Component {
 				</label>
 				<label>
 					Confirm your Password
+					<p>{this.state.errors.confirmPassword}</p>
             <input
-						name="passwordConfirmation"
+						name="confirmPassword"
 						type="text"
 						placeholder="confirm your password"
 					/>
 				</label>
-				<label>
+				{/* <label>
 					Tell everyone a little about yourself:
             <textarea
 						name="bio"
@@ -99,8 +145,8 @@ class EditProfileForm extends Component {
 						value={this.state.user.bio}
 						onChange={this.handleChanges}
 					/>
-				</label>
-				<label>
+				</label> */}
+				{/* <label>
 					Profile picture
             <input
 						name="profilePicture"
@@ -110,9 +156,13 @@ class EditProfileForm extends Component {
 						value={this.state.user.profileImg}
 						onChange={this.fileChange}
 					/>
-				</label>
-				<button type="submit">Sign up</button>
+				</label> */}
+				<div>
+					<button type="submit" disabled={this.state.validation}>Save changes</button>
+					<button type="button" onClick={() => {this.props.triggerModal()}}>Delete my profile</button>
+				</div>
 			</form>
+			</>
 		)
 	}
 }
@@ -120,7 +170,9 @@ class EditProfileForm extends Component {
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.user,
+		error: state.error,
+
 	}
 }
 export default connect(mapStateToProps, { getProfile, updateProfile })(EditProfileForm)

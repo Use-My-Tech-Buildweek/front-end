@@ -21,14 +21,33 @@ import UserList from './components/UserList'
 const App = props => {
   const [visible, setVisible] = useState(false)
 
-  function toggleVisible() {
+  function toggleVisible(){
     setVisible(!visible)
   }
 
 
-  // const logout = () => {
-  //   userLogOut();
-  // }
+  const triggerModal = (id) => {
+    const modal = document.getElementById(id);
+    modal.style.display = "block";
+    modal.style.position = "fixed";
+    modal.style.top = "10%";
+    modal.style.left = "40%";
+  }
+
+  function deleteAccount(){
+    console.log("deleting account")
+    // get user id from user logged in 
+    // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
+  }
+
+  function logout(){
+    console.log("logging out")
+  }
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
 
   // get the items for renter
   //mock an item list 
@@ -71,12 +90,12 @@ const App = props => {
   return (
     <Router>
       <header>
-        <Navbar />
+        <Navbar triggerModal={triggerModal} logOut={logout}/>
       </header>
       <main>
         <Switch>
           <Route exact path="/">
-            <Welcome items={mockItemList}/>
+            <Welcome items={mockItemList} triggerModal={triggerModal}/>
           </Route>
 
           <Route path="/register">
@@ -86,14 +105,14 @@ const App = props => {
 
           <PrivateRoute path='/profile/user/:id' render={Profile} type='private' />
 
-          <PrivateRoute path={`/edit-profile/:id}`} render={EditProfileForm} type='private' />
+          <PrivateRoute path={`/edit-profile/:userId`}> <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount}/></PrivateRoute>
 
           <PrivateRoute path="/additem" render={NewItem} type='private' />
 
           <PrivateRoute path='/user-list' render={UserList} type='private' />
 
-          <Route path="/items">
-            <MyItems />
+          <Route path="/myItems">
+            <MyItems/>
           </Route>
 
           <Route path="/login">
