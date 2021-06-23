@@ -14,7 +14,7 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
-                confirmPassword:'',
+                confirmPassword: '',
                 // email: '',
                 //bio,
                 //profileImg: '',
@@ -23,7 +23,7 @@ class SignupForm extends React.Component {
             errors: {
                 username: '',
                 password: '',
-                confirmPassword:'',
+                confirmPassword: '',
                 // email: '',
                 //bio,
                 //profileImg: '',
@@ -40,25 +40,13 @@ class SignupForm extends React.Component {
         M.FormSelect.init(elems);
     }
 
-
-
-
-//     handleSubmit = e => {
-//         e.preventDefault()
-//         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
-//         this.props.addUser(this.state.newUser)
-//         if (!this.props.errorMessages) {
-//             this.props.history.push('/login')
-//         } else {
-//             clearRegisterForm();
-//         }
-//     }
     componentDidUpdate() {
         signupSchema.isValid(this.state.newUser)
-        .then(valid => {
-            if(this.state.validation === valid){
-                this.setState({...this.state, validation: !valid})}
-        })
+            .then(valid => {
+                if (this.state.validation === valid) {
+                    this.setState({ ...this.state, validation: !valid })
+                }
+            })
 
     }
 
@@ -66,15 +54,13 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
-         if (!this.props.errorMessages) {
-              this.props.history.push('/login')
-          } else {
-              clearRegisterForm();
-        this.props.history.push(`/profile/:${this.props.user.id}`);
+        if (!this.props.errorMessages) {
+            this.props.history.push('/login')
+        } else {
+            clearRegisterForm();
+            this.props.history.push(`/profile/:${this.props.user.id}`);
+        }
     }
-
-
-
     handleChanges = e => {
         this.setState({
             ...this.state,
@@ -82,12 +68,13 @@ class SignupForm extends React.Component {
                 ...this.state.newUser,
                 [e.target.name]: e.target.value
             }
-        }) 
+        })
         yup.reach(signupSchema, e.target.name)
             .validate(e.target.value)
             .then(() => {
-            this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
-            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))       
+                this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: "" } })
+            })
+            .catch(err => this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: err.message } }))
     }
 
     handleSelectFile = e => {
@@ -101,7 +88,6 @@ class SignupForm extends React.Component {
         })
     }
 
-        
 
     render() {
         return (
@@ -170,7 +156,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="password">Password</label>
                         </div>
                     </div>
-                    <p>{this.state.newUser.confirmPassword !== this.state.newUser.password?this.state.errors.confirmPassword:null}</p>
+                    <p>{this.state.newUser.confirmPassword !== this.state.newUser.password ? this.state.errors.confirmPassword : null}</p>
                     <div className="row">
                         <div className="input-field col s6">
                             <input
