@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { connect } from 'react-redux'
+
 
 import "./App.css";
 
@@ -14,8 +15,8 @@ import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
-import { fetchUsers } from './actions/userActions'
-
+import UserList from './components/UserList'
+//import { userLogOut } from './actions/userActions'
 
 const App = props => {
   const [visible, setVisible] = useState(false)
@@ -24,9 +25,10 @@ const App = props => {
     setVisible(!visible)
   }
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+
+  // const logout = () => {
+  //   userLogOut();
+  // }
 
   // get the items for renter
   //mock an item list 
@@ -65,6 +67,7 @@ const App = props => {
      }
   ]
 
+
   return (
     <Router>
       <header>
@@ -81,11 +84,13 @@ const App = props => {
               toggleVisible={toggleVisible} />
           </Route>
 
-          <PrivateRoute path='/profile/:userId' component={Profile} />
+          <PrivateRoute path='/profile/user/:id' render={Profile} type='private' />
 
-          <PrivateRoute path={`/edit-profile/:userId`} component={EditProfileForm} />
+          <PrivateRoute path={`/edit-profile/:id}`} render={EditProfileForm} type='private' />
 
-          <PrivateRoute path="/additem" component={NewItem} />
+          <PrivateRoute path="/additem" render={NewItem} type='private' />
+
+          <PrivateRoute path='/user-list' render={UserList} type='private' />
 
           <Route path="/items">
             <MyItems />
@@ -101,11 +106,10 @@ const App = props => {
     </Router>
   );
 }
-
 const mapStateToProps = state => {
   return {
-    users: state.users,
     user: state.user,
+
   }
 }
-export default connect(mapStateToProps, {})(App);
+export default connect(mapStateToProps, {})(App)

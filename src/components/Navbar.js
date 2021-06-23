@@ -2,7 +2,10 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
+import { connect } from 'react-redux'
+
 import { navButtonStyle } from "./styles/styles";
+
 
 const Navbar = () => {
   
@@ -45,7 +48,7 @@ const Navbar = () => {
 
   //   TODO: disable the navigation link for the current page
   let { path } = useRouteMatch();
-
+  const user = props;
   useEffect(() => {
     // Initialize responsive menu elements
     const elems = document.querySelectorAll(".sidenav");
@@ -56,6 +59,7 @@ const Navbar = () => {
     setLocation(path);
     console.log(path, location);
   }, [path, location]);
+
 
   return (
     <>
@@ -86,7 +90,7 @@ const Navbar = () => {
           </button>
           <button style={navButtonStyle} className="waves-effect-light btn">
             <span className="valign-wrapper">
-              <Link to="/profile/:userId">My Profile</Link>
+              <Link to={props.user === undefined ? ('/login') : (`/profile/:${user.id}`)} > My Profile</Link>
             </span>
           </button>
           <button
@@ -117,7 +121,14 @@ const Navbar = () => {
       </ul>
     </div>
     </>
+
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps, {})(Navbar);
+

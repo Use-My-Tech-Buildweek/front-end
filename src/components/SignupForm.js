@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
-import * as yup from 'yup'
+import { withRouter } from 'react-router-dom'
+import { addUser, setError, clearRegisterForm } from '../actions/userActions'
 
-import { addUser, setError } from '../actions/userActions'
+import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
 
 class SignupForm extends React.Component {
@@ -39,6 +40,19 @@ class SignupForm extends React.Component {
         M.FormSelect.init(elems);
     }
 
+
+
+
+//     handleSubmit = e => {
+//         e.preventDefault()
+//         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
+//         this.props.addUser(this.state.newUser)
+//         if (!this.props.errorMessages) {
+//             this.props.history.push('/login')
+//         } else {
+//             clearRegisterForm();
+//         }
+//     }
     componentDidUpdate() {
         signupSchema.isValid(this.state.newUser)
         .then(valid => {
@@ -52,6 +66,10 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
+         if (!this.props.errorMessages) {
+              this.props.history.push('/login')
+          } else {
+              clearRegisterForm();
         this.props.history.push(`/profile/:${this.props.user.id}`);
     }
 
@@ -222,7 +240,6 @@ const mapStateToProps = state => {
         users: state.users,
         newUser: state.newUser,
         error: state.error,
-        sendApiCall: state.sendApiCall,
     }
 }
-export default connect(mapStateToProps, { setError, addUser })(SignupForm)
+export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm })(SignupForm))
