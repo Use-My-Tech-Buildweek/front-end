@@ -52,7 +52,7 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
-        this.props.history.push(`/profile/:${this.props.user.id}`);
+        // this.props.history.push(`/profile/:${this.props.user.id}`);
     }
 
 

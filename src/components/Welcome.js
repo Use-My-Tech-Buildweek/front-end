@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
-const Welcome = ({ items }) => {
+const Welcome = ({ items, triggerModal }) => {
 
   const [ userSearch, setUserSearch ] = useState(false)
   const [ searchResult, setSearchResult ] = useState([])
@@ -57,7 +57,7 @@ const Welcome = ({ items }) => {
             <h4 style={h4Style} className="center-align">My search</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
               {searchResult.length>0? 
-                searchResult.map(item => { return( <Item item={item}/> )}):
+                searchResult.map(item => { return( <Item item={item} triggerModal={triggerModal}/> )}):
                 "No item found"
               }
             </div>
@@ -65,7 +65,7 @@ const Welcome = ({ items }) => {
           <>
             <h4 style={h4Style} className="center-align">Last items listed</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
-              {items.map(item => { return( <Item item={item}/> ) })}
+              {items.map(item => { return( <Item item={item} triggerModal={triggerModal}/> ) })}
             </div>
           </>
         }
