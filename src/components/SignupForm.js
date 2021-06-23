@@ -4,6 +4,8 @@ import M from "materialize-css";
 import { withRouter } from 'react-router-dom'
 import { addUser, setError, clearRegisterForm } from '../actions/userActions'
 
+import * as yup from 'yup'
+import signupSchema from '../schemas/signupSchema'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -12,15 +14,27 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
+                confirmPassword:'',
+                // email: '',
+                //bio,
+                //profileImg: '',
+                department: '',
+            },
+            errors: {
+                username: '',
+                password: '',
+                confirmPassword:'',
                 // email: '',
                 //bio,
                 //profileImg: '',
                 department: '',
             },
             error: '',
-            isFilePicked: false
+            isFilePicked: false,
+            validation: true,
         }
     }
+
     componentDidMount() {
         const elems = document.querySelectorAll("select");
         M.FormSelect.init(elems);
@@ -28,23 +42,52 @@ class SignupForm extends React.Component {
 
 
 
+
+//     handleSubmit = e => {
+//         e.preventDefault()
+//         console.log('submit add new user button clicked, calling addUser', this.state.newUser)
+//         this.props.addUser(this.state.newUser)
+//         if (!this.props.errorMessages) {
+//             this.props.history.push('/login')
+//         } else {
+//             clearRegisterForm();
+//         }
+//     }
+    componentDidUpdate() {
+        signupSchema.isValid(this.state.newUser)
+        .then(valid => {
+            if(this.state.validation === valid){
+                this.setState({...this.state, validation: !valid})}
+        })
+
+    }
+
     handleSubmit = e => {
         e.preventDefault()
-        console.log('submit add new user button clicked, calling addUser', this.state.newUser)
-        this.props.addUser(this.state.newUser)
-        if (!this.props.errorMessages) {
-            this.props.history.push('/login')
-        } else {
-            clearRegisterForm();
-        }
+        console.log('submit add new user button clicked, calling addUser', this.state.newUser);
+        this.props.addUser(this.state.newUser);
+         if (!this.props.errorMessages) {
+              this.props.history.push('/login')
+          } else {
+              clearRegisterForm();
+        this.props.history.push(`/profile/:${this.props.user.id}`);
     }
+
+
+
     handleChanges = e => {
         this.setState({
+            ...this.state,
             newUser: {
                 ...this.state.newUser,
                 [e.target.name]: e.target.value
             }
-        })
+        }) 
+        yup.reach(signupSchema, e.target.name)
+            .validate(e.target.value)
+            .then(() => {
+            this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
+            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))       
     }
 
     handleSelectFile = e => {
@@ -57,10 +100,14 @@ class SignupForm extends React.Component {
             isFilePicked: true,
         })
     }
+
+        
+
     render() {
         return (
             <div className='row'>
                 <form action='submit' className='col s12' onSubmit={this.handleSubmit}>
+                    <p>{this.state.errors.username}</p>
                     <div className='row'>
                         <div className='input-field col s6'>
                             <input
@@ -74,6 +121,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="username">Username</label>
                         </div>
                     </div>
+                    <p>{this.state.errors.department}</p>
                     <div className="row">
                         <div className="input-field col s12">
                             <select
@@ -82,7 +130,7 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.department}
                             >
-                                <option name="department" value="default" >
+                                <option name="department" value="default" selected hidden>
                                     Choose your role
                         </option>
                                 <option name="department" value="renter">
@@ -108,6 +156,7 @@ class SignupForm extends React.Component {
                         </div>
                     </div>
         */}
+                    <p>{this.state.errors.password}</p>
                     <div className="row">
                         <div className="input-field col s6">
                             <input
@@ -118,7 +167,21 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.password}
                             />
-                            <label htmlFor="password"></label>
+                            <label htmlFor="password">Password</label>
+                        </div>
+                    </div>
+                    <p>{this.state.newUser.confirmPassword !== this.state.newUser.password?this.state.errors.confirmPassword:null}</p>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                id="confirmPassword"
+                                autoComplete='current-password'
+                                onChange={this.handleChanges}
+                                value={this.state.newUser.confirmPassword}
+                            />
+                            <label htmlFor="confirmPassword">Confirm Password</label>
                         </div>
                         {/*<div className="input-field col s6">
                             <input
@@ -159,7 +222,7 @@ class SignupForm extends React.Component {
                             </div>*/}
                         <div className="row">
                             <div className="col s6">
-                                <button type="submit" className="btn btn-waves-effect">
+                                <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
                                     Submit
                             </button>
                             </div>

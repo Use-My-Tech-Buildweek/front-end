@@ -6,7 +6,44 @@ import { connect } from 'react-redux'
 
 import { navButtonStyle } from "./styles/styles";
 
-const Navbar = (props) => {
+
+const Navbar = () => {
+  
+  //=============== logout function and modal =========================
+  //functions
+
+  const triggerModal = () => {
+    const modal = document.getElementById('logOutModal');
+    modal.style.display = "block";
+    modal.style.position = "absolute";
+    modal.style.top = "10%";
+    modal.style.left = "40%";
+  }
+
+  const logOutFromModal = () => {
+    // call to logout function
+    const modal = document.getElementById('logOutModal');
+    modal.style.display = "none";
+  }
+
+  const cancelModal = () => {
+    const modal = document.getElementById('logOutModal');
+    modal.style.display = "none";
+  }
+
+  //add button to dom 
+  useEffect(() =>{
+    // modal styling
+    const modal = document.getElementById('logOutModal');
+    modal.style.display = "none";
+    modal.style.background = "white";
+    modal.style.border = "3px solid red";
+    modal.style.borderRadius = "10px";
+    modal.style.padding = "4%"; 
+    modal.style.zIndex = 10;
+  }, [])
+  // =====================================================================
+
   const [location, setLocation] = useState("/");
 
   //   TODO: disable the navigation link for the current page
@@ -23,7 +60,19 @@ const Navbar = (props) => {
     console.log(path, location);
   }, [path, location]);
 
-  return (<div>
+
+  return (
+    <>
+    {/* Modal */}
+    <div id="logOutModal">
+      <p>Are you sure you want to log out?</p>
+      <div>
+        <button onClick={() => {logOutFromModal()}}>Log me out!</button>
+        <button onClick={cancelModal}>Cancel</button>
+      </div>
+    </div>
+   {/* end of modal */}
+
     <div className="nav-wrapper">
       <nav style={{ padding: "0 1em" }} className="valign-wrapper">
         <a href="#" data-target="responsive-nav" className="sidenav-trigger">
@@ -52,6 +101,17 @@ const Navbar = (props) => {
               <Link to="/login">Log In</Link>
             </span>
           </button>
+          {/* to display if user is logged in */}
+          <button
+            style={navButtonStyle}
+            className="right waves-effect-light btn"
+            id="logOutButton"
+            onClick={() => {triggerModal()}}
+          >
+            <span className="valign-wrapper">
+              Log Out
+            </span>
+          </button>
         </div>
       </nav>
       <ul className="sidenav" id="responsive-nav">
@@ -60,7 +120,8 @@ const Navbar = (props) => {
         <li><Link to="/login" >Log In</Link></li>
       </ul>
     </div>
-  </div>
+    </>
+
   );
 };
 
