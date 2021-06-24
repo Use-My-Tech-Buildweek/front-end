@@ -6,8 +6,10 @@ import axios from 'axios'
 
 const Item = ({item, triggerModal}) => {
 
+  // import user id
+  const mockedUserId = 2
   // eslint-disable-next-line no-unused-vars
-  const { pictures, description, price, user, title, name, id } = item;
+  const { imgs, description, daily_rate, user_id, item_name, id, created_at, condition, availability, location } = item;
   const history = useHistory()
 
   function deleteItem(){
@@ -27,34 +29,36 @@ const Item = ({item, triggerModal}) => {
 
     <div className="card" style={cardStyle}>
       <span className="card-title">
-        <h4>{title}</h4>
+        <h4>{item_name}</h4>
+        {!availability? <p style={{color: "orange"}}>Item not available at the moment</p>:null}
       </span>
       <div className="card-content">
+      <img src={imgs} alt={`${item_name} picture`} width="100%"/>
         <div>
-          <h5>{name}</h5>
+          <h5>User name</h5>
+          {/* TODO import username and rating */}
           <p>User ratings</p>
+          <p>Location: {location}</p>
+          <p>condition: {condition}</p>
         </div>
         <div>
-          <h6>{description}</h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quando enim
-            Socrates, qui parens philosophiae iure dici potest, quicquam tale
-            fecit? <i>Sed nimis multa.</i> Sint ista Graecorum; Nobis aliter
-            videtur, recte secusne, postea; Quae diligentissime contra Aristonem
-            dicuntur a Chryippo. Duo Reges: constructio interrete.
-            <i>Non dolere, inquam, istud quam vim habeat postea videro;</i>
-          </p>
+          <p>{description}</p>
+          <p>Online since {created_at.slice(0,10)}</p>
+          
         </div>
       </div>
       <div className="card-action" style={{ paddingBottom: "1em" }}>
-        {/* if user's item use this button delete item */}
+      {user_id === mockedUserId? 
         <button
           className="waves-effect-light btn"
           onClick={() => triggerModal(id)}         
         >
-           Delete this item
+          Delete this item
   
-        </button>
+        </button>:null}
+
+        {/* TODO: if user's item display price as field not button */}
+        {user_id !== mockedUserId? 
         <button
           className="waves-effect-light btn"
           style={{ display: "flex", justifyContent: "space-between" }}
@@ -62,8 +66,8 @@ const Item = ({item, triggerModal}) => {
           <i className="material-icons" style={{ marginRight: ".5em" }}>
             add_shopping_cart
           </i>
-          {`Rent for $${price || "4.20"}/day`}
-        </button>
+          {`Rent for $${daily_rate}/day`}
+        </button>:null}
       </div>
     </div>
     </>

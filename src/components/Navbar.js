@@ -9,8 +9,8 @@ import Modal from './Modal'
 
 
 const Navbar = (props) => {
+
   const {triggerModal, logOut} = props
-  console.log(triggerModal)
 
   const [location, setLocation] = useState("/");
 
@@ -75,6 +75,15 @@ const Navbar = (props) => {
           >
             <span className="valign-wrapper">
               Log Out
+            </span>
+          </button>
+          <button
+            style={navButtonStyle}
+            className="right waves-effect-light btn"
+            id="myCartButton"
+          >
+            <span className="valign-wrapper">
+              <Link to="/myCart">My Cart</Link>
             </span>
           </button>
         </div>
