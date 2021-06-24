@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
-const Welcome = ({ items, triggerModal }) => {
+const Welcome = (props) => {
 
-  const [ userSearch, setUserSearch ] = useState(false)
-  const [ searchResult, setSearchResult ] = useState([])
+  const [userSearch, setUserSearch] = useState(false)
+  const [searchResult, setSearchResult] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,13 +13,13 @@ const Welcome = ({ items, triggerModal }) => {
   };
 
   const onchange = (e) => {
-    e.target.value? setUserSearch(true): setUserSearch(false);
+    e.target.value ? setUserSearch(true) : setUserSearch(false);
     search(e)
   }
 
   const search = (e) => {
     const lookFor = e.target.value.toLowerCase();
-    const res = items.filter( item => 
+    const res = props.items.filter(item =>
       item.title.toLowerCase().includes(lookFor) || item.name.toLowerCase().includes(lookFor)
     )
     setSearchResult(res)
@@ -46,26 +46,26 @@ const Welcome = ({ items, triggerModal }) => {
             }}
           >
             <i className="material-icons prefix">search</i>
-            <input type="text" id="search_input" className="validate" onChange={onchange}/>
+            <input type="text" id="search_input" className="validate" onChange={onchange} />
             <label htmlFor="search_input">What are you looking for?</label>
           </div>
         </div>
       </form>
       <div>
-        {userSearch? 
+        {userSearch ?
           <>
             <h4 style={h4Style} className="center-align">My search</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
-              {searchResult.length>0? 
-                searchResult.map(item => { return( <Item item={item} triggerModal={triggerModal}/> )}):
+              {searchResult.length > 0 ?
+                searchResult.map(item => { return (<Item item={item} key={item.id} triggerModal={props.triggerModal} />) }) :
                 "No item found"
               }
             </div>
-          </>:
+          </> :
           <>
             <h4 style={h4Style} className="center-align">Last items listed</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
-              {items.map(item => { return( <Item item={item} triggerModal={triggerModal}/> ) })}
+              {props.items.map(item => { return (<Item item={item} triggerModal={props.triggerModal} />) })}
             </div>
           </>
         }

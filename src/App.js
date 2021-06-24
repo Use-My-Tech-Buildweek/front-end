@@ -16,7 +16,7 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
 import UserList from './components/UserList'
-//import { userLogOut } from './actions/userActions'
+import { userLogOut } from './actions/userActions'
 
 const App = props => {
   const [visible, setVisible] = useState(false)
@@ -26,7 +26,7 @@ const App = props => {
   }
 
 
-  const triggerModal = (id) => {
+  function triggerModal(id) {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -36,12 +36,13 @@ const App = props => {
 
   function deleteAccount() {
     console.log("deleting account")
+
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
   function logout() {
-    console.log("logging out")
+    userLogOut();
   }
 
 
