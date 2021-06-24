@@ -18,8 +18,7 @@ const UserList = props => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		fetch('/users').then(res => setUsers(res.data)
-		)
+		fetch('/users').then(res => setUsers(res.data))
 	})
 
 	return (

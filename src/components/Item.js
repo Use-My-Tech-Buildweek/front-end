@@ -1,31 +1,30 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { cardStyle } from "./styles/styles";
-import { useHistory } from "react-router";
+//import { useHistory } from "react-router";
 import Modal from './Modal'
-import axios from 'axios'
+//import axios from 'axios'
+import {deleteItem} from '../actions/itemsActions'
+
 
 const Item = ({item, triggerModal}) => {
 
   // import user id
   const mockedUserId = 2
-  // eslint-disable-next-line no-unused-vars
   const { imgs, description, daily_rate, user_id, item_name, id, created_at, condition, availability, location } = item;
-  const history = useHistory()
+  const handleDelete = item =>{
+    deleteItem(item)
+}
 
-  function deleteItem(){
-    console.log("deleting item...")
-    const url = "https://ptpt-use-my-tech5.herokuapp.com/api/item/" + id
-    axios
-      .delete(url)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-      .finally(() => history.push("/myItems"))
-  }
 
   return (
     <>
     {/* if item is from user */}
-    <Modal textButton="delete this item" actionToConfirm={deleteItem} modalId={id}/>
+    <Modal 
+      textButton="delete this item" 
+      actionToConfirm={handleDelete} 
+      modalId={id}
+      />
 
     <div className="card" style={cardStyle}>
       <span className="card-title">
@@ -50,8 +49,9 @@ const Item = ({item, triggerModal}) => {
       <div className="card-action" style={{ paddingBottom: "1em" }}>
       {user_id === mockedUserId? 
         <button
+          id='deleteButton'
           className="waves-effect-light btn"
-          onClick={() => triggerModal(id)}         
+          onClick={()=>triggerModal(id)}
         >
           Delete this item
   

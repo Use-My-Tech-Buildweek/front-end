@@ -16,20 +16,22 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
 import UserList from './components/UserList'
+
 import MyCart from './components/MyCart'
 
-//import { userLogOut } from './actions/userActions'
+
+import { userLogOut } from './actions/userActions'
+
 
 const App = props => {
   const [visible, setVisible] = useState(false)
   const [itemList, setItemList ] = useState([])
 
-  function toggleVisible(){
+  function toggleVisible() {
     setVisible(!visible)
   }
 
-
-  function triggerModal(id){
+  function triggerModal(id) {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -37,18 +39,20 @@ const App = props => {
     modal.style.left = "40%";
   }
 
-  function deleteAccount(){
+  function deleteAccount() {
     console.log("deleting account")
+
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
-  function logout(){
-    console.log("logging out")
+  function logout() {
+    userLogOut();
   }
 
+
   useEffect(() => {
-    // fetchUsers();
+    
     axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
       .then(response => {setItemList(response.data); console.log(response.data)})
       .catch(err => console.log(err.message))
@@ -58,12 +62,15 @@ const App = props => {
   return (
     <Router>
       <header>
-        <Navbar triggerModal={triggerModal} logOut={logout}/>
+        <Navbar triggerModal={triggerModal} logOut={logout} />
       </header>
       <main>
         <Switch>
           <Route exact path="/">
+
             <Welcome items={itemList} triggerModal={triggerModal}/>
+
+
           </Route>
 
           <Route path="/register">
@@ -71,9 +78,11 @@ const App = props => {
               toggleVisible={toggleVisible} />
           </Route>
 
-          <PrivateRoute path='/profile/user/:id' render={Profile} type='private' />
+          <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
 
-          <PrivateRoute path={`/edit-profile/:userId`}> <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount}/></PrivateRoute>
+          <PrivateRoute path={`/edit-profile/:userId`}>
+            <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount} />
+          </PrivateRoute>
 
           <PrivateRoute path="/additem" render={NewItem} type='private'/>
 
@@ -85,6 +94,7 @@ const App = props => {
 
           <Route path="/myCart">
             <MyCart triggerModal={triggerModal} itemsList={itemList}/>
+
           </Route>
 
           <Route path="/login">
