@@ -68,46 +68,15 @@ const Navbar = (props) => {
               <Link to="/login">Log In</Link>
             </span>
           </button>
-          {/* to display if user is logged in */}
+            {/* to display if user is logged in */}
           <button
             style={navButtonStyle}
             className="right waves-effect-light btn"
             id="logOutButton"
-            onClick={() => {triggerModal("logOutModal")}}
-
+            onClick={() => { triggerModal("logOutModal") }}
           >
-            <button style={navButtonStyle} className="waves-effect-light btn">
-              <span className="valign-wrapper">
-                <Link to="/">Home</Link>
-              </span>
-            </button>
-            <button style={navButtonStyle} className="waves-effect-light btn">
-              <span className="valign-wrapper">
-                <Link to={props.user === undefined ? ('/login') : (`/profile/:${user.id}`)} > My Profile</Link>
-              </span>
-            </button>
-            <button style={navButtonStyle} className="waves-effect-light btn">
-              <span className="valign-wrapper">
-                <Link to="/myItems">My Items</Link>
-              </span>
-            </button>
-            <button
-              style={navButtonStyle}
-              className="right waves-effect-light btn"
-            >
-              <span className="valign-wrapper">
-                <Link to="/login">Log In</Link>
-              </span>
-            </button>
-            {/* to display if user is logged in */}
-            <button
-              style={navButtonStyle}
-              className="right waves-effect-light btn"
-              id="logOutButton"
-              onClick={() => { triggerModal("logOutModal") }}
-            >
-              <span className="valign-wrapper">
-                Log Out
+            <span className="valign-wrapper">
+              Log Out
             </span>
 
           </button>
