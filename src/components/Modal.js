@@ -2,28 +2,28 @@ import { useEffect } from 'react'
 
 const Modal = ({ actionToConfirm, textButton, modalId }) => {
 
-    useEffect(() => {
+  useEffect(() => {
     const modal = document.getElementById(modalId);
     modal.style.display = "none";
     modal.style.background = "white";
     modal.style.border = "3px solid red";
     modal.style.borderRadius = "10px";
-    modal.style.padding = "4%"; 
+    modal.style.padding = "4%";
     modal.style.zIndex = 10;
-    }, [])
+  }, [modalId])
 
-    const cancelModal = () => {
-        const modal = document.getElementById(modalId);
-        modal.style.display = "none";
-    }
+  const cancelModal = () => {
+    const modal = document.getElementById(modalId);
+    modal.style.display = "none";
+  }
 
-    const confirm = () => {
-        actionToConfirm()
-        const modal = document.getElementById(modalId);
-        modal.style.display = "none";
-    }
+  const confirm = () => {
+    actionToConfirm()
+    const modal = document.getElementById(modalId);
+    modal.style.display = "none";
+  }
 
-    return(
+  return (
     <div id={modalId}>
       <p>Are you sure you want to {textButton}?</p>
       <div>
@@ -31,7 +31,7 @@ const Modal = ({ actionToConfirm, textButton, modalId }) => {
         <button onClick={cancelModal}>Cancel</button>
       </div>
     </div>
-    )
+  )
 }
 
 export default Modal

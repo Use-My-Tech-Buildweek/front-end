@@ -18,7 +18,8 @@ import {
 	CLEAR_REGISTER_FORM,
 	START_USERLIST_FETCH,
 	FETCH_USERLIST_SUCCESS,
-	FETCH_USERLIST_ERROR
+	FETCH_USERLIST_ERROR,
+	LOG_OUT_ERROR
 } from '../actions/userActions'
 
 // sets state 
@@ -29,13 +30,14 @@ const initialState = {
 		password: '',
 		department: '',
 		bio: '',
-		profile_pic: '',
+		profile_picture: '',
 		location: '',
 		id: ''
 	},
 	errorMessages: '',
 	isLoading: false,
-	statusCode: ''
+	isUserLoggedIn: false,
+	token: ''
 }
 
 //reducer function
@@ -91,13 +93,15 @@ const userReducer = (state = initialState, action) => {
 				},
 				isLoading: false,
 				errorMessages: '',
+				isUserLoggedIn: true,
+				token: localStorage.getItem('token'),
+				userList: [...state.userList, action.payload],
 			}
 		case LOGIN_ERROR:
 			console.log('userReducer says: login error')
 			return {
 				...state,
 				errorMessages: action.payload,
-				statusCode: action.payload.response.statusCode
 			}
 		case START_USER_FETCH:
 			console.log('userReducer says: attempting to fetch user profile', action.payload)
@@ -143,10 +147,26 @@ const userReducer = (state = initialState, action) => {
 			}
 		case USER_LOG_OUT:
 			return {
-				...state.user,
-				username: '',
-				password: '',
-				department: '',
+				...state,
+				isLoading: true,
+			}
+		case LOG_OUT_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				isUserLoggedIn: false,
+				token: '',
+				user: {
+					username: '',
+					password: '',
+					department: '',
+				},
+
+			}
+		case LOG_OUT_ERROR:
+			return {
+				...state,
+				isLoading: false
 			}
 		case CLEAR_REGISTER_FORM:
 			return {
