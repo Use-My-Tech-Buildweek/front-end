@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 
@@ -26,7 +26,7 @@ const App = props => {
   }
 
 
-  const triggerModal = (id) => {
+  function triggerModal(id){
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -45,7 +45,7 @@ const App = props => {
   }
 
   useEffect(() => {
-    fetchUsers();
+    // fetchUsers();
   }, []);
 
 
@@ -86,7 +86,7 @@ const App = props => {
      }
   ]
 
-
+  // triggerModal={triggerModal} logOut={logout}
   return (
     <Router>
       <header>
@@ -128,6 +128,7 @@ const App = props => {
 const mapStateToProps = state => {
   return {
     user: state.user,
+
 
   }
 }

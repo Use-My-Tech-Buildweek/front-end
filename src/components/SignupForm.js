@@ -71,6 +71,7 @@ class SignupForm extends React.Component {
           } else {
               clearRegisterForm();
         this.props.history.push(`/profile/:${this.props.user.id}`);
+        }
     }
 
 
