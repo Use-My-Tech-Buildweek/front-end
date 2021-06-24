@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { cardStyle } from "./styles/styles";
-import { useHistory } from "react-router";
+//import { useHistory } from "react-router";
 import Modal from './Modal'
-import axios from 'axios'
+//import axios from 'axios'
 import {deleteItem} from '../actions/itemsActions'
 
 const Item = (props) => {
