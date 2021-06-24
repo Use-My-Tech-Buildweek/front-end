@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
-import Item from "./Item";
+//import Item from "./Item";
 import { itemsWrapperStyle } from "./styles/styles";
 
 const MyItems = (props) => {

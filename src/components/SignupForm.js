@@ -6,6 +6,7 @@ import { addUser, setError, clearRegisterForm } from '../actions/userActions'
 
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
+import ImageUpload from './ImageUpload'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -129,19 +130,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="department">Account Type</label>
                         </div>
                     </div>
-                    {/*  <div className="row">
-                        <div className="input-field col s6">
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                onChange={this.handleChanges}
-                                value={this.state.newUser.email}
-                            />
-                            <label htmlFor="email">Email</label>
-                        </div>
-                    </div>
-        */}
+
                     <p>{this.state.errors.password}</p>
                     <div className="row">
                         <div className="input-field col s6">
@@ -194,27 +183,28 @@ class SignupForm extends React.Component {
                             <label htmlFor="bio">Introduce Yourself</label>
                         </div>
                     </div>
-                    <div className="row">
-                        {/*    <div className="file-field input-field col s12">
-                               <div className="btn">
-                              <span>Profile Picture</span>
-                                <input
-                                 type="file"
-                                name="profile_picture"
-                          onChange={handlechange}
-                             value={formValues.profile_picture}
-                                 />
-                                   </div>
-                            </div>*/}
-                        <div className="row">
-                            <div className="col s6">
-                                <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
-                                    Submit
-                            </button>
+        */}  <div className="row">
+                            <div className="file-field input-field col s12">
+                                <div className="btn">
+                                    <span>Profile Picture</span>
+                                    <input
+                                        type="file"
+                                        name="profile_picture"
+                                        onChange={this.handleChanges}
+                                    /* value={formValues.profile_picture}*/
+
+                                    />
+                                </div>
                             </div>
+                            <div className="row">
+                                <div className="col s6">
+                                    <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
+                                        Submit
+                            </button>
+                                </div>
+                            </div>
+
                         </div>
-
-
                     </div>
                 </form>
             </div>
