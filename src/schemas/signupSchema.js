@@ -23,15 +23,15 @@ const signupSchema = yup.object().shape({
     // bio: yup
     //     .string()
     //     .max(500, "limited to 500 characters"),
-    // profileImg: yup
-    //     .mixed()
-    //     .test("fileSize", "The file is too large", 
-    //     (value) => {
-    //         console.log("value is ", value)
-    //         if (!value.length) return true // attachment is optional
-    //         return value[0].size <= 2000000
-    //         }
-    //     )
+    profile_picture: yup
+        .mixed()
+        // .test("fileSize", "The file is too large", 
+        // (value, files) => {
+        //     console.log("value is ", value, files.size )
+        //     if (!value.length) return true // attachment is optional
+        //     return value[0].size <= 20000000
+        //     }
+        // )
   });
 
 export default signupSchema

@@ -18,7 +18,7 @@ class SignupForm extends React.Component {
                 confirmPassword: '',
                 // email: '',
                 //bio,
-                //profileImg: '',
+                profile_picture: '',
                 department: '',
             },
             errors: {
@@ -27,7 +27,7 @@ class SignupForm extends React.Component {
                 confirmPassword: '',
                 // email: '',
                 //bio,
-                //profileImg: '',
+                profile_picture: '',
                 department: '',
             },
             error: '',
@@ -193,10 +193,12 @@ class SignupForm extends React.Component {
                                         type="file"
                                         name="profile_picture"
                                         onChange={this.handleChanges}
+                                        accept="image/png, image/jpeg"
                                     /* value={formValues.profile_picture}*/
 
                                     />
                                 </div>
+                                <p>{this.state.errors.profile_picture}</p>
                             </div>
                             <div className="row">
                                 <div className="col s6">
