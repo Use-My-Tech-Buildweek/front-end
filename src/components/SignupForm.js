@@ -55,11 +55,13 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
-        if (!this.props.errorMessages) {
-            this.props.history.push('/login')
-        } else {
-            clearRegisterForm();
-            this.props.history.push(`/profile/:${this.props.user.id}`);
+
+         if (!this.props.errorMessages) {
+              this.props.history.push('/login')
+          } else {
+              clearRegisterForm();
+        this.props.history.push(`/profile/:${this.props.user.id}`);
+
         }
     }
     handleChanges = e => {
