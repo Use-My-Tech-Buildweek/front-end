@@ -17,6 +17,7 @@ import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
 import UserList from './components/UserList'
 import { userLogOut } from './actions/userActions'
+import { getItems } from './actions/itemsActions'
 
 const App = props => {
   const [visible, setVisible] = useState(false)
@@ -131,7 +132,7 @@ const App = props => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-
+    items: state.items,
   }
 }
-export default connect(mapStateToProps, {})(App)
+export default connect(mapStateToProps, { getItems })(App)
