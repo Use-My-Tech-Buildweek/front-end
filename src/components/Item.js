@@ -13,22 +13,28 @@ const Item = (props) => {
   return (
     <div className="card" style={cardStyle}>
       <span className="card-title">
-        <h4>Title</h4>
+        <small
+          className={
+            props.availability !== undefined && props.availability > 0
+              ? ""
+              : "red-text text-darken-2"
+          }
+        >
+          {props.availability !== undefined
+            ? `${props.availability} available`
+            : "temporarily unavailable"}{" "}
+        </small>
       </span>
+      <div className="card-image">
+        <span className="card-title">
+          {props.item_name !== null ? props.item_name : "props.item_name"}
+        </span>
+      </div>
       <div className="card-content">
         <div>
-          <h5>Item Name</h5>
-          <p>User ratings</p>
-        </div>
-        <div>
-          <h6>Item Description</h6>
+          <p>props.description</p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quando enim
-            Socrates, qui parens philosophiae iure dici potest, quicquam tale
-            fecit? <i>Sed nimis multa.</i> Sint ista Graecorum; Nobis aliter
-            videtur, recte secusne, postea; Quae diligentissime contra Aristonem
-            dicuntur a Chryippo. Duo Reges: constructio interrete.
-            <i>Non dolere, inquam, istud quam vim habeat postea videro;</i>
+            Condition: {props.condition !== null ? props.condition : "No data"}
           </p>
         </div>
       </div>
@@ -40,7 +46,9 @@ const Item = (props) => {
           <i className="material-icons" style={cardActionIconStyle}>
             add_shopping_cart
           </i>
-          {`Rent for $${price || "4.20"}/day`}
+          {`Rent for $${
+            props.daily_rate !== undefined ? props.daily_rate : "4.20"
+          }/day`}
         </button>
       </div>
     </div>
