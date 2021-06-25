@@ -29,6 +29,7 @@ const Profile = props => {
         </button>
       </div>
       <div>
+        {/* TODO: get the list of reviews (from prop.user?) */}
         <h2>Reviews</h2>
         <Review />
         <Review />

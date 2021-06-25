@@ -3,13 +3,11 @@ import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = (props) => {
-  console.log("props:", props)
   const [userSearch, setUserSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("search form submitted");
   };
 
   const onchange = (e) => {

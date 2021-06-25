@@ -65,6 +65,18 @@ class SignupForm extends React.Component {
         }
     }
     handleChanges = e => {
+
+        if(e.target.id === "profilePicture"){
+            const maxSize = 20000
+            const size = e.target.files[0].size
+            if(size > maxSize){
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` }})
+                return
+            }else{
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" }})
+            }
+        }
+
         this.setState({
             ...this.state,
             newUser: {
@@ -184,36 +196,36 @@ class SignupForm extends React.Component {
                             />
                             <label htmlFor="bio">Introduce Yourself</label>
                         </div>
-                    </div>
-        */}  <div className="row">
-                            <div className="file-field input-field col s12">
-                                <div className="btn">
-                                    <span>Profile Picture</span>
-                                    <input
-                                        type="file"
-                                        name="profile_picture"
-                                        onChange={this.handleChanges}
-                                        accept="image/png, image/jpeg"
-                                    /* value={formValues.profile_picture}*/
+                    </div>*/}         
+                    <div className="row">
+                        <div className="file-field input-field col s12">
+                            <div className="btn">
+                                <span>Profile Picture</span>
+                                <input
+                                    id="profilePicture"
+                                    type="file"
+                                    name="profile_picture"
+                                    onChange={this.handleChanges}
+                                    accept="image/png, image/jpeg"
+                                /* value={formValues.profile_picture}*/
 
-                                    />
-                                </div>
-                                <p>{this.state.errors.profile_picture}</p>
+                                />
                             </div>
-                            <div className="row">
-                                <div className="col s6">
-                                    <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
-                                        Submit
-                            </button>
-                                </div>
-                            </div>
-
+                            <p>{this.state.errors.profile_picture}</p>
                         </div>
+                        <div className="row">
+                            <div className="col s6">
+                                <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
+                                    Submit
+                        </button>
+                            </div>
+                        </div>
+
                     </div>
-                </form>
-            </div>
-        )
-    }
+                </div>
+            </form>
+        </div>
+    )}
 }
 const mapStateToProps = state => {
     return {
