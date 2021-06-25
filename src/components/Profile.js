@@ -3,10 +3,12 @@ import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import { getProfile } from '../actions/userActions'
+import defaultProfile from '../images/defaultProfile.png'
 
 import Review from "./Review";
 
 const Profile = props => {
+
   const history = useHistory();
 
   // loads the profile matching userId when the id changes 
@@ -17,7 +19,7 @@ const Profile = props => {
   return (
     <>
       <div>
-        {/* <img src="" alt="profile picture" /> */}
+        <img src={ props.user.profile_picture || defaultProfile} alt="profile picture" />
         <p>{props.user.username}</p>
         <p>{props.user.name}</p>
         <p>{props.user.bio}</p>

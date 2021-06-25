@@ -65,9 +65,9 @@ class SignupForm extends React.Component {
         }
     }
     handleChanges = e => {
-
+        // profile picture file size checking
         if(e.target.id === "profilePicture"){
-            const maxSize = 20000
+            const maxSize = 2000000
             const size = e.target.files[0].size
             if(size > maxSize){
                 this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` }})

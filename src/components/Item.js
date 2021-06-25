@@ -5,6 +5,8 @@ import { cardStyle } from "./styles/styles";
 import Modal from './Modal'
 //import axios from 'axios'
 import {deleteItem} from '../actions/itemsActions'
+import defaultProfile from '../images/defaultProfile.png'
+
 
 
 const Item = ({item, triggerModal}) => {
@@ -34,6 +36,7 @@ const Item = ({item, triggerModal}) => {
         {!availability? <p style={{color: "orange"}}>Item not available at the moment</p>:null}
       </span>
       <div className="card-content">
+      
       <img src={imgs} alt={`${item_name} picture`} width="100%"/>
         <div>
           <h5>User name</h5>
