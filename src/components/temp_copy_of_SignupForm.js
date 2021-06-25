@@ -23,7 +23,7 @@ class SignupForm extends React.Component {
   componentDidMount() {
     const elems = document.querySelectorAll("select");
     M.FormSelect.init(elems);
-  } // GTG
+  }
   
   handleSubmit = (e) => {
     e.preventDefault();
@@ -33,9 +33,7 @@ class SignupForm extends React.Component {
     );
     this.props.addUser(this.state.newUser);
     /** 
-    Where is she getting user.id from?
-    The only props passed in are visible and setVisible
-    I'm guessing this takes you to your profile on submission
+    getting user id from props
     */
     this.props.history.push(`/profile/:${this.props.user.id}`);
   };
@@ -47,7 +45,7 @@ class SignupForm extends React.Component {
         [e.target.name]: e.target.value,
       },
     });
-  };// G2G
+  };
 
   handleSelectFile = (e) => {
     this.setState({

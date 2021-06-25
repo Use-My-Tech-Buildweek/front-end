@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-// eslint-disable-next-line no-unused-vars
 import { connect } from "react-redux";
-import M from "materialize-css";
-// eslint-disable-next-line no-unused-vars
-import { addUser, setError } from "../actions/userActions";
 import { useHistory } from "react-router-dom";
-import { searchWrapperStyle } from "./styles/styles";
+import { addUser, setError } from "../actions/userActions";
+import M from "materialize-css";
 
 const SignupForm = (props) => {
   let history = useHistory();
@@ -15,13 +12,12 @@ const SignupForm = (props) => {
     password: "",
     role: "default",
     email: "",
-    pw_validate: "",
     about_me: "",
     profile_picture: "",
     department: "",
     error: "",
     isFilePicked: false,
-    id: "",
+    id: Math.random(),
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -55,29 +51,28 @@ const SignupForm = (props) => {
     // Clear form
     setFormValues(initialFormValues);
     // Programmatic redirect to profile page
-    history.push(`/profile/:${formValues.id}`);
+    history.push(`/profile/:${formValues.id}`); // Wasn't receiving id in props, so for now
   };
 
   const handlechange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    console.log(name, value);
     setFormValues({ ...formValues, [name]: value });
   };
 
   return (
     // pass a prop to specify if the submit must create a new user or update one .. (see if user id not undefined)
-    // TODO: Add text counters
-    // TODO: Add field validation
     // Integrate Sarah's changes (Redux)
     <div className="container">
       <div className="row">
         <form action="submit" className="col s12" onSubmit={handleSubmit}>
           <div className="row">
-            <div className="input-field col s6">
+            <div className="input-field col s12 l6">
               <input
+                required
                 name="username"
-                className="counter_input"
+                className="counter_input validate"
+                minLength="2"
                 maxLength="21"
                 data-length="20"
                 id="username"
@@ -86,10 +81,20 @@ const SignupForm = (props) => {
                 value={formValues.username}
               />
               <label htmlFor="username">Username</label>
+              {/* TODO: check against existing usernames for duplicate */}
+              <span
+                className="helper-text"
+                data-error="Username must be between 2-20 characters"
+                data-success="Username available"
+              >
+                Please choose a username
+              </span>
             </div>
-            <div className="input-field col s6">
+            <div className="input-field col s12 l6">
               <input
-                className="counter_input"
+                required
+                className="counter_input validate"
+                minLength="7"
                 maxLength="31"
                 data-length="30"
                 type="email"
@@ -99,12 +104,21 @@ const SignupForm = (props) => {
                 value={formValues.email}
               />
               <label htmlFor="email">Email</label>
+              <span
+                className="helper-text"
+                data-error="Please enter a valid email address"
+                data-success="Email validated"
+              >
+                Please enter your email address
+              </span>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <select
+                required
+                className="validate"
                 name="role"
                 id="role"
                 onChange={handlechange}
@@ -121,33 +135,42 @@ const SignupForm = (props) => {
                 </option>
               </select>
               <label htmlFor="role">Role</label>
+              <span
+                className="helper-text"
+                data-error="Please select a role from the dropdown menu"
+                data-success="Welcome to the team!"
+              >
+                What do you do?
+              </span>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <textarea
-                maxLength="301"
-                data-length="300"
+                required
+                minLength="50"
+                maxLength="501"
+                data-length="500"
                 name="about_me"
                 id="about_me"
                 cols="30"
                 rows="10"
-                className="materialize-textarea counter_input"
+                className="materialize-textarea counter_input validate"
                 onChange={handlechange}
                 value={formValues.about_me}
               />
               <label htmlFor="about_me">Introduce Yourself</label>
+              <span className="helper-text">
+                What's your favorite tech stack? Semicolons or no?
+              </span>
             </div>
           </div>
 
           <div className="row">
-            {/* I got the upload working, you can pick a file on your computer and it shows a fakepath. */}
+            {/* I got the upload working, you can pick a file on your computer or phone. */}
             <div className="file-field input-field col s12">
-              <div className="btn">
-                <label htmlFor="profile_picture" className="active white-text">
-                  Profile Picture
-                </label>
+              <div className="btn left">
                 <input
                   type="file"
                   id="profile_picture"
@@ -156,28 +179,30 @@ const SignupForm = (props) => {
                   onChange={handlechange}
                   value={formValues.profile_picture}
                 />
+                <label htmlFor="profile_picture" className="active white-text">
+                  Upload a profile picture
+                </label>
               </div>
-              <div className="file-path-wrapper">
-                <input
-                  type="text"
-                  className="file-path counter_input"
-                  value={formValues.profile_picture}
-                  onChange={handlechange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div
-              className="input-field col s6 offset-s3"
-              style={searchWrapperStyle}
-            >
-              <input
+              {formValues.profile_picture === "" ? (
+                <></>
+              ) : (
+                <div className="file-path-wrapper">
+                  {/* TODO: handle cancel/modal closing during file upload */}
+                  <input
+                    type="text"
+                    className="file-path validate valid"
+                    placeholder={formValues.profile_picture}
+                    disabled
+                  />
+                </div>
+              )}
+              <button
                 type="submit"
-                value="submit"
-                className="white-text waves-effect waves-light"
-              />
+                className="btn waves-effect waves-light right"
+                name="profile_picture"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>
@@ -186,14 +211,13 @@ const SignupForm = (props) => {
   );
 };
 
-// const mapStateToProps = (user) => {
-//   return {
-//     users: users,
-//     newUser: formValues,
-//     error: error,
-//     sendApiCall: sendApiCall,
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+    newUser: state.newUser,
+    error: state.error,
+    sendApiCall: state.sendApiCall,
+  };
+};
 
-// export default connect(mapStateToProps, { setError, addUser })(SignupForm);
-export default SignupForm;
+export default connect(mapStateToProps, { setError, addUser })(SignupForm);
