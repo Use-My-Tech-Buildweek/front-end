@@ -8,7 +8,15 @@ import {deleteItem} from '../actions/itemsActions'
 
 const Item = (props) => {
   const {item,triggerModal} = props
-  const { pictures, description, price, user, title, name, id } = item;
+  const { 
+    pictures, 
+    description, 
+    price,
+    user, 
+    title,
+    name,
+     id 
+} = item;
   
   const handleDelete = item =>{
     deleteItem(item)

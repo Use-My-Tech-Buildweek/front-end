@@ -18,7 +18,7 @@ class SignupForm extends React.Component {
                 confirmPassword: '',
                 // email: '',
                 //bio,
-                //profileImg: '',
+                profile_picture: '',
                 department: '',
             },
             errors: {
@@ -119,13 +119,13 @@ class SignupForm extends React.Component {
                             >
                                 <option name="department" value="default" selected hidden>
                                     Choose your role
-                        </option>
+                                </option>
                                 <option name="department" value="renter">
                                     Renter
-                        </option>
+                                </option>
                                 <option name="department" value="owner">
                                     Owner
-                        </option>
+                                </option>
                             </select>
                             <label htmlFor="department">Account Type</label>
                         </div>
@@ -200,7 +200,7 @@ class SignupForm extends React.Component {
                                 <div className="col s6">
                                     <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
                                         Submit
-                            </button>
+                                    </button>
                                 </div>
                             </div>
 
