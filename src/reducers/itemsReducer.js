@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
 				...state,
 				isItemsLoading: false,
 				errorMessages: '',
-				itemList: [...state.itemList, action.payload]
+				items: [...state.items, action.payload]
 			}
 		case GET_ITEMS_ERROR:
 			return {

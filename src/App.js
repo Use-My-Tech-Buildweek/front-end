@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 import "./App.css";
 
@@ -18,28 +17,24 @@ import UserList from './components/UserList'
 
 import MyCart from './components/MyCart'
 
-
 import { userLogOut } from './actions/userActions'
+import { getItems } from './actions/itemsActions';
 
+const App = props => {
+  const [visible, setVisible] = useState(false)
+  const [itemList, setItemList] = useState(props.itemList)
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-      itemList: this.props.itemList,
-    }
+  const toggleVisible = () => {
+    setVisible(!visible)
   }
 
-
-  toggleVisible = () => {
-    this.setState(
-      ...this.state,
-      this.state.visible, !this.state.visible
-    )
+  useEffect(() => {
+    getItems()
   }
+    , [])
 
-  triggerModal(id) {
+
+  const triggerModal = (id) => {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -47,67 +42,64 @@ class App extends React.Component {
     modal.style.left = "40%";
   }
 
-  deleteAccount = (id) => {
+  const deleteAccount = (id) => {
     console.log("deleting account")
 
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
-  logout = () => {
+  const logout = () => {
     userLogOut();
   }
 
-  render() {
+  return (
+    <Router>
+      <header>
+        <Navbar triggerModal={triggerModal} logOut={logout} />
+      </header>
+      <main>
+        <Switch>
+          <Route exact path="/">
 
-    return (
-      <Router>
-        <header>
-          <Navbar triggerModal={this.triggerModal} logOut={this.logout} />
-        </header>
-        <main>
-          <Switch>
-            <Route exact path="/">
-
-              <Welcome items={this.state.itemList} triggerModal={this.state.triggerModal} />
+            <Welcome itemList={props.itemList} triggerModal={triggerModal} />
 
 
-            </Route>
+          </Route>
 
-            <Route path="/register">
-              <SignupForm visible={this.state.visible}
-                toggleVisible={this.toggleVisible} />
-            </Route>
+          <Route path="/register">
+            <SignupForm visible={visible}
+              toggleVisible={toggleVisible} />
+          </Route>
 
-            <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
+          <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
 
-            <PrivateRoute path={`/edit-profile/:userId`}>
-              <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
-            </PrivateRoute>
+          <PrivateRoute path={`/edit-profile/:userId`}>
+            <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount} />
+          </PrivateRoute>
 
-            <PrivateRoute path="/additem" render={NewItem} type='private' />
+          <PrivateRoute path="/additem" render={NewItem} type='private' />
 
-            <PrivateRoute path='/user-list' render={UserList} type='private' />
+          <PrivateRoute path='/user-list' render={UserList} type='private' />
 
-            <Route path="/myItems">
-              <MyItems triggerModal={this.triggerModal} itemsList={this.state.itemList} />
-            </Route>
+          <Route path="/myItems">
+            <MyItems triggerModal={triggerModal} itemsList={itemList} />
+          </Route>
 
-            <Route path="/myCart">
-              <MyCart triggerModal={this.triggerModal} itemsList={this.state.itemList} />
+          <Route path="/myCart">
+            <MyCart triggerModal={triggerModal} itemsList={itemList} />
 
-            </Route>
+          </Route>
 
-            <Route path="/login">
-              <Login />
-            </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
 
 
-          </Switch>
-        </main>
-      </Router>)
+        </Switch>
+      </main>
+    </Router>)
 
-  }
 }
 
 

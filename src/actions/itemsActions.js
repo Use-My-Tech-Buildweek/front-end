@@ -22,18 +22,13 @@ export const deleteItem = item => dispatch => {
 		})
 }
 
-export async function getItems(dispatch) {
-	try {
-		dispatch({ type: GET_ITEMS_START })
-		const response = await axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
-		console.log('itemsActions says: successfully fetched all items', response)
-		dispatch({ type: GET_ITEMS_SUCCESS, payload: response.data })
-
-
-	} catch (err) {
-		console.log('itemsActions says: error fetching all items', err)
-		dispatch({ type: GET_ITEMS_ERROR, payload: JSON.stringify(err) }
-
-		)
-	}
+export const getItems = () => dispatch => {
+	dispatch({ type: GET_ITEMS_START })
+	axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
+		.then(response => {
+			dispatch({ type: GET_ITEMS_SUCCESS, payload: response.data })
+		})
+		.catch(err => {
+			dispatch({ type: GET_ITEMS_ERROR, payload: err })
+		})
 }
