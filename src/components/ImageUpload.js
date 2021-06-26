@@ -18,7 +18,8 @@ class ImageUpload extends Component {
 		}
 	}
 
-	selectFile(evt) {
+
+	selectFile = (evt) => {
 		this.setState({
 			currentFile: evt.target.files[0],
 			previewImage: URL.createObjectURL(evt.target.files[0]),
@@ -32,6 +33,7 @@ class ImageUpload extends Component {
 			progress: 0,
 		})
 		FileUploadService.upload(this.state.currentFile, (evt) => {
+
 			this.setState({
 				progress: Math.round((100 * evt.loaded) / evt.total),
 			});
@@ -88,7 +90,7 @@ class ImageUpload extends Component {
 							onClick={this.upload}
 						>
 							Upload
-            </button>
+						</button>
 					</div>
 				</div>
 				{/* ************************ ATTENTION GREG: THIS IS THE BOOTSTRAP VERSION OF STYLING FOR PROGRESS BAR, PLEASE UPDATE*********/}
@@ -103,7 +105,7 @@ class ImageUpload extends Component {
 							style={{ width: progress + "%" }}
 						>
 							{progress}%
-            </div>
+						</div>
 					</div>
 				)}
 
@@ -119,17 +121,6 @@ class ImageUpload extends Component {
 					</div>
 				)}
 
-				<div className="card mt-3">
-					<div className="card-header">List of Files</div>
-					<ul className="list-group list-group-flush">
-						{imageInfos &&
-							imageInfos.map((img, index) => (
-								<li className="list-group-item" key={index}>
-									<a href={img.url}>{img.name}</a>
-								</li>
-							))}
-					</ul>
-				</div>
 			</div>
 		);
 	}

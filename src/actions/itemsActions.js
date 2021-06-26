@@ -22,7 +22,7 @@ export const deleteItem = item => dispatch => {
 		})
 }
 
-export async function getItems(dispatch, getState) {
+export async function getItems(dispatch) {
 	try {
 		dispatch({ type: GET_ITEMS_START })
 		const response = await axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')

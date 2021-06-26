@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-
+import axios from 'axios'
 
 import "./App.css";
 
@@ -15,19 +15,31 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
 import UserList from './components/UserList'
+
+import MyCart from './components/MyCart'
+
+
 import { userLogOut } from './actions/userActions'
 
 
-const App = props => {
-  const { itemList } = props//, item, isLoading, isUserLoggedIn, errorMessages, userLogOut, getItems } = props
-  const [visible, setVisible] = useState(false)
-
-  console.log(itemList)
-  const toggleVisible = () => {
-    setVisible(!visible);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      itemList: this.props.itemList,
+    }
   }
 
-  const triggerModal = (id) => {
+
+  toggleVisible = () => {
+    this.setState(
+      ...this.state,
+      this.state.visible, !this.state.visible
+    )
+  }
+
+  triggerModal(id) {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -35,47 +47,55 @@ const App = props => {
     modal.style.left = "40%";
   }
 
-  const deleteAccount = (id) => {
+  deleteAccount = (id) => {
     console.log("deleting account")
 
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
-  const logOut = () => {
+  logout = () => {
     userLogOut();
   }
 
-  return (
-    <>
-      {props.isLoading && <h1>Loading....</h1>}
+  render() {
+
+    return (
       <Router>
         <header>
-          <Navbar triggerModal={triggerModal} logOut={logOut} />
+          <Navbar triggerModal={this.triggerModal} logOut={this.logout} />
         </header>
         <main>
           <Switch>
             <Route exact path="/">
-              <Welcome items={props.itemList} triggerModal={triggerModal} />
+
+              <Welcome items={this.state.itemList} triggerModal={this.state.triggerModal} />
+
+
             </Route>
 
             <Route path="/register">
-              <SignupForm visible={visible}
-                toggleVisible={toggleVisible} />
+              <SignupForm visible={this.state.visible}
+                toggleVisible={this.toggleVisible} />
             </Route>
 
             <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
 
             <PrivateRoute path={`/edit-profile/:userId`}>
-              <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount} />
+              <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
             </PrivateRoute>
 
             <PrivateRoute path="/additem" render={NewItem} type='private' />
 
             <PrivateRoute path='/user-list' render={UserList} type='private' />
 
-            <Route exact path="/myItems">
-              <MyItems itemList={props.itemList} />
+            <Route path="/myItems">
+              <MyItems triggerModal={this.triggerModal} itemsList={this.state.itemList} />
+            </Route>
+
+            <Route path="/myCart">
+              <MyCart triggerModal={this.triggerModal} itemsList={this.state.itemList} />
+
             </Route>
 
             <Route path="/login">
@@ -85,11 +105,11 @@ const App = props => {
 
           </Switch>
         </main>
-      </Router >
-    </>
-  )
+      </Router>)
 
+  }
 }
+
 
 const mapStateToProps = state => {
   return {

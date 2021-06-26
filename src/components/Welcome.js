@@ -6,13 +6,11 @@ import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = (props) => {
-
   const [userSearch, setUserSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("search form submitted");
   };
 
   const onchange = (e) => {
@@ -23,7 +21,7 @@ const Welcome = (props) => {
   const search = (e) => {
     const lookFor = e.target.value.toLowerCase();
     const res = props.items.filter(item =>
-      item.title.toLowerCase().includes(lookFor) || item.name.toLowerCase().includes(lookFor)
+      item.item_name.toLowerCase().includes(lookFor) || item.description.toLowerCase().includes(lookFor)
     )
     setSearchResult(res)
   }
