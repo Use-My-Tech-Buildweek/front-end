@@ -66,7 +66,7 @@ const SignupForm = (props) => {
     <div className="container">
       <div className="row">
         <form action="submit" className="col s12" onSubmit={handleSubmit}>
-          
+
           <div className="row">
             <div className="input-field col s12 l6">
               <input
@@ -154,8 +154,8 @@ const SignupForm = (props) => {
                 minLength="50"
                 maxLength="501"
                 data-length="500"
-                name="about_me"
-                id="about_me"
+                name="bio"
+                id="bio"
                 cols="30"
                 rows="10"
                 className="materialize-textarea counter_input validate"
@@ -164,7 +164,7 @@ const SignupForm = (props) => {
               />
               <label htmlFor="about_me">Introduce Yourself</label>
               <span className="helper-text">
-                What's your favorite tech stack? Semicolons or no?
+               Tell us about yourself
               </span>
             </div>
           </div>
