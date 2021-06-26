@@ -59,29 +59,22 @@ export const setError = errorMessage => {
 }
 
 // action call to log in
-export const loginUser = (credentials) => dispatch => {
+export const loginUser = (credentials) => async dispatch => {
 	console.log('actions says: dispatching LOGIN_USER', credentials)
 	dispatch({ type: LOGIN_USER, payload: credentials })
-
+	console.log('actions says: attempting api.post login', credentials)
 	try {
-		console.log('actions says: attempting api.post login', credentials)
-		axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
-			.then(resp => {
-				console.log('actions says: post call success', resp)
-				localStorage.setItem('token', resp.data.token)
-				dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
-			}).catch(err => {
-				setError(err)
-				console.log('actions says: error in post call to login', err)
-				dispatch({ type: LOGIN_ERROR, payload: err })
-			}
-			)
-	} catch (error) {
-		console.log('actions says: dispatching LOGIN_ERROR')
-		dispatch({ type: LOGIN_ERROR, payload: error })
+		const resp = await axiosWithAuth().post('https://ptpt-use-my-tech5.herokuapp.com/api/login', credentials)
+		console.log('actions says: post call success', resp)
+		localStorage.setItem('token', resp.data.token)
+		dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
+	} catch (err) {
+		setError(err)
+		console.log('actions says: error in post call to login', err)
+		dispatch({ type: LOGIN_ERROR, payload: err })
 	}
-}
 
+}
 // action call to get a particular profile
 export const getProfile = userId => dispatch => {
 	console.log('actions says: calling getProfile', userId)
@@ -122,17 +115,16 @@ export const updateProfile = user => dispatch => {
 	}
 }
 
-export const userLogOut = () => dispatch => {
+export const userLogOut = () => async dispatch => {
 	dispatch({ type: USER_LOG_OUT })
-	axiosWithAuth().delete('https://ptpt-use-my-tech5.herokuapp.com/api/logout')
-		.then(response => {
-			dispatch({ type: LOG_OUT_SUCCESS, payload: response })
-			console.log('actions says: successfully logged out', response)
-		}).catch(err => {
-			dispatch({ type: LOG_OUT_ERROR, payload: err })
-			console.log(err)
-		}
-		)
+	try {
+		const response = await axiosWithAuth().delete('https://ptpt-use-my-tech5.herokuapp.com/api/logout')
+		dispatch({ type: LOG_OUT_SUCCESS, payload: response })
+		console.log('actions says: successfully logged out', response)
+	} catch (err) {
+		dispatch({ type: LOG_OUT_ERROR, payload: err })
+		console.log(err)
+	}
 }
 export const clearRegisterForm = () => dispatch => {
 	dispatch({ type: CLEAR_REGISTER_FORM })

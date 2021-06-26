@@ -14,7 +14,7 @@ import { fetchItemList } from './utils/fetchItemList'
 
 
 const store = createStore(rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, logger)));
+  composeWithDevTools(applyMiddleware(logger, thunk)));
 
 store.dispatch(fetchItemList)
 
