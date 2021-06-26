@@ -51,7 +51,7 @@ const SignupForm = (props) => {
     // Clear form
     setFormValues(initialFormValues);
     // Programmatic redirect to profile page
-    history.push(`/profile/:${formValues.id}`); // Wasn't receiving id in props, so for now
+    history.push(`/profile/:${formValues.id}`);
   };
 
   const handlechange = (e) => {
@@ -66,6 +66,7 @@ const SignupForm = (props) => {
     <div className="container">
       <div className="row">
         <form action="submit" className="col s12" onSubmit={handleSubmit}>
+
           <div className="row">
             <div className="input-field col s12 l6">
               <input
@@ -138,7 +139,7 @@ const SignupForm = (props) => {
               <span
                 className="helper-text"
                 data-error="Please select a role from the dropdown menu"
-                data-success="Welcome to the team!"
+                data-success="Success!"
               >
                 What do you do?
               </span>
@@ -147,13 +148,14 @@ const SignupForm = (props) => {
 
           <div className="row">
             <div className="input-field col s12">
+              <i className="material-icons prefix">mode_edit</i>
               <textarea
                 required
                 minLength="50"
                 maxLength="501"
                 data-length="500"
-                name="about_me"
-                id="about_me"
+                name="bio"
+                id="bio"
                 cols="30"
                 rows="10"
                 className="materialize-textarea counter_input validate"
@@ -162,7 +164,7 @@ const SignupForm = (props) => {
               />
               <label htmlFor="about_me">Introduce Yourself</label>
               <span className="helper-text">
-                What's your favorite tech stack? Semicolons or no?
+               Tell us about yourself
               </span>
             </div>
           </div>
