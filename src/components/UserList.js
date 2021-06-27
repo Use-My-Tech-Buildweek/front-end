@@ -34,7 +34,8 @@ const mapStateToProps = state => {
 	return {
 		userList: state.userList,
 		isLoading: state.isLoading,
-		errorMessages: state.errorMessages
+		errorMessages: state.errorMessages,
+		isUserLoggedIn: state.isUserLoggedIn
 	}
 }
 export default connect(mapStateToProps, { fetchUserList })(UserList)

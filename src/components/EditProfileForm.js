@@ -13,21 +13,21 @@ class EditProfileForm extends Component {
 			user: {
 				username: '',
 				password: '',
-				confirmPassword:'',
+				confirmPassword: '',
 				// email: '',
 				// bio: '',
 				// profileImg: '',
 				department: '',
 			},
 			errors: {
-                username: '',
-                password: '',
-                confirmPassword:'',
-                // email: '',
-                //bio,
-                //profileImg: '',
-                department: '',
-            },
+				username: '',
+				password: '',
+				confirmPassword: '',
+				// email: '',
+				//bio,
+				//profileImg: '',
+				department: '',
+			},
 			error: '',
 			selectedFile: null,
 			validation: true
@@ -35,26 +35,27 @@ class EditProfileForm extends Component {
 	}
 
 	handleSubmit = e => {
-        e.preventDefault()
-        console.log('submit add new user button clicked, calling addUser', this.state.newUser);
-        this.props.addUser(this.state.newUser);
-        this.props.history.push(`/profile/:${this.props.user.id}`);
-    }
+		e.preventDefault()
+		console.log('submit add new user button clicked, calling addUser', this.state.newUser);
+		this.props.addUser(this.state.newUser);
+		this.props.history.push(`/profile/:${this.props.user.id}`);
+	}
 
 	handleChanges = e => {
-        this.setState({
-            ...this.state,
-            newUser: {
-                ...this.state.newUser,
-                [e.target.name]: e.target.value
-            }
-        }) 
-        yup.reach(signupSchema, e.target.name)
-            .validate(e.target.value)
-            .then(() => {
-            this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: ""}})})
-            .catch(err => this.setState({...this.state, errors: {...this.state.errors, [e.target.name]: err.message}}))       
-    }
+		this.setState({
+			...this.state,
+			newUser: {
+				...this.state.newUser,
+				[e.target.name]: e.target.value
+			}
+		})
+		yup.reach(signupSchema, e.target.name)
+			.validate(e.target.value)
+			.then(() => {
+				this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: "" } })
+			})
+			.catch(err => this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: err.message } }))
+	}
 
 	componentDidMount = () => {
 		this.props.getProfile(this.props.match.params.id)
@@ -79,30 +80,30 @@ class EditProfileForm extends Component {
 	render() {
 		return (
 			<>
-			<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal"/>
-			<form onSubmit={this.handleSubmit}>
-				<label>
-					Role
-            <select name="role" onChange={this.handleChanges}>
-						<option value="" disabled>== option ==</option>
-						<option value='Renter'>Renter</option>
-						<option value="Owner">Owner</option>
-					</select>
-				</label>
-				<label>
-					Username
-				<p>{this.state.errors.username}</p>
+				<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal" />
+				<form onSubmit={this.handleSubmit}>
+					<label>
+						Role
+						<select name="role" onChange={this.handleChanges}>
+							<option value="" disabled>== option ==</option>
+							<option value='Renter'>Renter</option>
+							<option value="Owner">Owner</option>
+						</select>
+					</label>
+					<label>
+						Username
+						<p>{this.state.errors.username}</p>
 
-            <input
-						name="username"
-						type="text"
-						placeholder="choose your username"
-						onChange={this.handleChanges}
-						value={this.state.user.username}
-						id='username'
-					/>
-				</label>
-				{/* <label>
+						<input
+							name="username"
+							type="text"
+							placeholder="choose your username"
+							onChange={this.handleChanges}
+							value={this.state.user.username}
+							id='username'
+						/>
+					</label>
+					{/* <label>
 					Email
             <input
 						name="email"
@@ -113,29 +114,29 @@ class EditProfileForm extends Component {
 						onChange={this.handleChanges}
 					/>
 				</label> */}
-				<label>
-					Password
-					<p>{this.state.errors.password}</p>
+					<label>
+						Password
+						<p>{this.state.errors.password}</p>
 
-            <input
-						name="password"
-						type="password"
-						placeholder="enter your password"
-						value={this.state.user.password}
-						id='password'
-						onChange={this.handleChanges}
-					/>
-				</label>
-				<label>
-					Confirm your Password
-					<p>{this.state.errors.confirmPassword}</p>
-            <input
-						name="confirmPassword"
-						type="text"
-						placeholder="confirm your password"
-					/>
-				</label>
-				{/* <label>
+						<input
+							name="password"
+							type="password"
+							placeholder="enter your password"
+							value={this.state.user.password}
+							id='password'
+							onChange={this.handleChanges}
+						/>
+					</label>
+					<label>
+						Confirm your Password
+						<p>{this.state.errors.confirmPassword}</p>
+						<input
+							name="confirmPassword"
+							type="text"
+							placeholder="confirm your password"
+						/>
+					</label>
+					{/* <label>
 					Tell everyone a little about yourself:
             <textarea
 						name="bio"
@@ -146,7 +147,7 @@ class EditProfileForm extends Component {
 						onChange={this.handleChanges}
 					/>
 				</label> */}
-				{/* <label>
+					{/* <label>
 					Profile picture
             <input
 						name="profilePicture"
@@ -157,11 +158,11 @@ class EditProfileForm extends Component {
 						onChange={this.fileChange}
 					/>
 				</label> */}
-				<div>
-					<button type="submit" disabled={this.state.validation}>Save changes</button>
-					<button type="button" onClick={() => {this.props.triggerModal()}}>Delete my profile</button>
-				</div>
-			</form>
+					<div>
+						<button type="submit" disabled={this.state.validation}>Save changes</button>
+						<button type="button" onClick={() => { this.props.triggerModal() }}>Delete my profile</button>
+					</div>
+				</form>
 			</>
 		)
 	}
@@ -172,6 +173,7 @@ const mapStateToProps = state => {
 	return {
 		user: state.user,
 		error: state.error,
+		isUserLoggedIn: state.isUserLoggedIn
 
 	}
 }

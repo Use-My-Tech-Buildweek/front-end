@@ -213,6 +213,7 @@ const mapStateToProps = state => {
         users: state.users,
         newUser: state.newUser,
         error: state.error,
+        isUserLoggedIn: state.isUserLoggedIn
     }
 }
 export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm })(SignupForm))

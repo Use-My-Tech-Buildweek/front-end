@@ -18,6 +18,7 @@ const User = props => {
 const mapStateToProps = state => {
 	return {
 		isLoading: state.isLoading,
+		isUserLoggedIn: state.isUserLoggedIn
 	}
 }
 
