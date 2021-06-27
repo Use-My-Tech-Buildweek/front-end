@@ -101,6 +101,7 @@ const userReducer = (state = initialState, action) => {
 			console.log('userReducer says: login error')
 			return {
 				...state,
+				isLoading: false,
 				errorMessages: action.payload,
 			}
 		case START_USER_FETCH:

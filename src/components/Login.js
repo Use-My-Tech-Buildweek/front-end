@@ -34,7 +34,14 @@ class Login extends React.Component {
         e.preventDefault();
         console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
         this.props.loginUser(this.state.credentials)
-            .then(this.props.history.push(`/welcome`))
+            .then(response => {
+                if (this.props.isUserLoggedIn) {
+                    this.props.history.push(`/profile/${this.props.user.id}`)
+                } else {
+                    this.props.setError(this.props.errorMessages)
+                    this.props.history.push(`/login`)
+                }
+            })
             .catch(err => console.log(err))
     }
 
@@ -76,7 +83,7 @@ class Login extends React.Component {
                 {/* handle password forgotten */}
 
                 {
-                    this.props.loading ? (<p>Loading...</p>) : (<div>
+                    this.props.isLoading ? (<p>Loading...</p>) : (<div>
                         {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
                 }
                 )
@@ -87,11 +94,11 @@ class Login extends React.Component {
 //connecting global state to props
 const mapStateToProps = state => {
     return {
-        credentials: state.credentials,
-        errorMessages: state.errorMessages,
-        isLoading: state.isLoading,
-        user: state.user,
-        isUserLoggedIn: state.isUserLoggedIn
+        credentials: state.users.credentials,
+        errorMessages: state.users.errorMessages,
+        isLoading: state.users.isLoading,
+        user: state.users.user,
+        isUserLoggedIn: state.users.isUserLoggedIn
     }
 }
 export default withRouter(connect(mapStateToProps, { loginUser, setError })(Login))

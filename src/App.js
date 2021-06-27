@@ -86,7 +86,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
 
-              <Welcome itemList={this.state.items} triggerModal={this.triggerModal} />
+              <Welcome itemList={this.state.itemList} triggerModal={this.triggerModal} />
 
 
             </Route>
