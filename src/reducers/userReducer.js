@@ -19,7 +19,10 @@ import {
 	START_USERLIST_FETCH,
 	FETCH_USERLIST_SUCCESS,
 	FETCH_USERLIST_ERROR,
-	LOG_OUT_ERROR
+	LOG_OUT_ERROR,
+	GET_MYITEMS_SUCCESS,
+	GET_MYITEMS_START,
+	GET_MYITEMS_ERROR
 } from '../actions/userActions'
 
 // sets state 
@@ -37,7 +40,8 @@ const initialState = {
 	errorMessages: '',
 	isLoading: false,
 	isUserLoggedIn: false,
-	token: ''
+	token: '',
+	myItems: []
 }
 
 //reducer function
@@ -199,6 +203,25 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				errorMessages: action.payload,
 				isLoading: false
+			}
+		case GET_MYITEMS_START:
+			return {
+				...state,
+				isLoading: true,
+				errorMessages: ''
+			}
+		case GET_MYITEMS_SUCCESS:
+			return {
+				...state,
+				myItems: action.payload,
+				isLoading: false,
+				errorMessages: ''
+			}
+		case GET_MYITEMS_ERROR:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: action.payload
 			}
 		default:
 			return state

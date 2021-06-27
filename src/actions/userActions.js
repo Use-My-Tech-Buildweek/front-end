@@ -25,6 +25,9 @@ export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
 export const USER_LOG_OUT = 'USER_LOG_OUT'
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
 export const LOG_OUT_ERROR = 'LOG_OUT_ERROR'
+export const GET_MYITEMS_START = 'GET_MYITEMS_START'
+export const GET_MYITEMS_SUCCESS = 'GET_MYITEMS_SUCCESS'
+export const GET_MYITEMS_ERROR = 'GET_MYITEMS_ERROR'
 
 // action call to call api for list of users 
 export const fetchUserList = () => dispatch => {
@@ -128,5 +131,16 @@ export const userLogOut = () => async dispatch => {
 }
 export const clearRegisterForm = () => dispatch => {
 	dispatch({ type: CLEAR_REGISTER_FORM })
+
+}
+
+export const getMyItems = id => async dispatch => {
+	dispatch({ type: GET_MYITEMS_START })
+	try {
+		const resp = await axiosWithAuth().get(`https://ptpt-use-my-tech5.herokuapp.com/api/users/${id}/items`)
+		dispatch({ type: GET_MYITEMS_SUCCESS, payload: resp.data })
+	} catch (err) {
+		dispatch({ type: GET_MYITEMS_ERROR, payload: err })
+	}
 
 }
