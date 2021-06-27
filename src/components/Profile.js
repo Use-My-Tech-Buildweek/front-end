@@ -12,20 +12,21 @@ const Profile = props => {
 
   const history = useHistory();
 
-  const myItems = id => {
+  const loadMyItems = id => {
     getMyItems(id);
   }
 
   return (
     <>
       <div>
-        <h1>{props.user.username}</h1>
+        <h2>{props.user.username}</h2>
+        <h3>{props.user.department}</h3>
         <img src={props.user.profile_picture || defaultProfile} alt="" />
         <p>{props.user.username}</p>
-        <p>{props.user.name}</p>
 
-        <h2>My {props.user.department === 'renter' ? 'Recent Rentals' : 'Items for Rent'}</h2>
-        <MyItems />
+
+        {props.user.department === 'renter' ? (<h3>My Recent Rentals</h3>)
+          : (<div><h3>Items I Own</h3><MyItems /></div>)}
         <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
           Edit Profile
         </button>
