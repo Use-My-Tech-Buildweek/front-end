@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+
 
 import "./App.css";
 
@@ -18,28 +19,44 @@ import UserList from './components/UserList'
 import MyCart from './components/MyCart'
 
 import { userLogOut } from './actions/userActions'
-import { getItems } from './actions/itemsActions';
+import { fetchItems } from './actions/itemsActions';
 
-const App = props => {
-  const [visible, setVisible] = useState(false)
-  // const [itemList, setItemList] = useState([])
-
-  const toggleVisible = () => {
-    setVisible(!visible)
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: false,
+      items: [],
+      itemList: this.props.itemList.itemList
+    }
   }
 
-  //  setItemList(props.itemList)
-  /* 
-    useEffect(() => {
-      props.getItems()
-        .then(resp => { console.log(resp); setItemList(resp) })
-        .catch(err => console.log(err))
-    }, [props])
-   */
+  toggleVisible = () => {
+    this.setState(
+      this.state.visible, !this.state.visible)
+  }
 
-  const { items, itemList, isLoading, isUserLoggedIn } = props;
 
-  const triggerModal = (id) => {
+  componentDidMount() {
+    this.props.fetchItems()
+
+    if (localStorage.getItem('token') !== '') {
+      localStorage.clear();
+      this.props.userLogOut();
+    }
+
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.itemList.length !== this.props.itemList.length) {
+      this.setState({
+        ...this.state,
+        items: this.props.itemList.itemList
+      })
+    }
+  }
+
+
+  triggerModal = (id) => {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -47,78 +64,79 @@ const App = props => {
     modal.style.left = "40%";
   }
 
-  const deleteAccount = (id) => {
+  deleteAccount = (id) => {
     console.log("deleting account")
 
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
-  const logout = () => {
-    userLogOut();
+  logout = () => {
+    this.props.userLogOut();
+
   }
+  render() {
+    return (
+      <Router>
+        <header>
+          {this.props.isLoading && <h1>Loading.....</h1>}
+          <Navbar triggerModal={this.triggerModal} logOut={this.logout} />
+        </header>
+        <main>
+          <Switch>
+            <Route exact path="/">
 
-  return (
-    <Router>
-      <header>
-        {isLoading && <h1>Loading.....</h1>}
-        <Navbar triggerModal={triggerModal} logOut={logout} />
-      </header>
-      <main>
-        <Switch>
-          <Route exact path="/">
-
-            <Welcome itemList={props.items} triggerModal={triggerModal} />
-
-
-          </Route>
-
-          <Route path="/register">
-            <SignupForm visible={visible} toggleVisible={toggleVisible} />
-          </Route>
-
-          <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
-
-          <PrivateRoute path={`/edit-profile/:userId`}>
-            <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount} />
-          </PrivateRoute>
-
-          <PrivateRoute path="/additem" render={NewItem} type='private' />
-
-          <PrivateRoute path='/user-list' render={UserList} type='private' />
-
-          <Route path="/myItems">
-            <MyItems triggerModal={triggerModal} itemsList={props.itemList} />
-          </Route>
-
-          <Route path="/myCart">
-            <MyCart triggerModal={triggerModal} itemsList={props.itemList} />
-
-          </Route>
-
-          <Route path="/login">
-            <Login />
-          </Route>
+              <Welcome itemList={this.state.items} triggerModal={this.triggerModal} />
 
 
-        </Switch>
-      </main>
-    </Router>)
+            </Route>
 
+            <Route path="/register">
+              <SignupForm visible={this.state.visible} toggleVisible={this.toggleVisible} />
+            </Route>
+
+            <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
+
+            <PrivateRoute path={`/edit-profile/:userId`}>
+              <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
+            </PrivateRoute>
+
+            <PrivateRoute path="/additem" render={NewItem} type='private' />
+
+            <PrivateRoute path='/user-list' render={UserList} type='private' />
+
+            <Route path="/myItems">
+              <MyItems triggerModal={this.triggerModal} itemsList={this.state.items} />
+            </Route>
+
+            <Route path="/myCart">
+              <MyCart triggerModal={this.triggerModal} itemsList={this.state.items} />
+
+            </Route>
+
+            <Route path="/login">
+              <Login />
+            </Route>
+
+
+          </Switch>
+        </main>
+      </Router>)
+
+  }
 }
-
 
 const mapStateToProps = state => {
   return {
-    userList: state.userList,
-    user: state.user,
-    itemList: state.itemList,
-    item: state.item,
-    isLoading: state.isLoading,
-    isUserLoggedIn: state.isUserLoggedIn,
-    token: state.token,
-    items: state.items
+    userList: state.users.userList,
+    user: state.users.user,
+    itemList: state.itemList.itemList,
+    item: state.items.item,
+    isLoading: state.items.isLoading,
+    isUserLoggedIn: state.users.isUserLoggedIn,
+    token: state.users.token,
+    items: state.items.items
   }
 }
 
-export default connect(mapStateToProps, { userLogOut, getItems })(App)
+export default withRouter(connect(mapStateToProps, { userLogOut, fetchItems })(App))

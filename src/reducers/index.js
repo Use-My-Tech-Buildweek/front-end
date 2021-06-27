@@ -4,9 +4,9 @@ import FetchReducer from '../utils/fetchItemList'
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
-	userReducer,
-	itemsReducer,
-	FetchReducer
+	users: userReducer,
+	items: itemsReducer,
+	itemList: FetchReducer
 })
 
 export default rootReducer

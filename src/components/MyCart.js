@@ -33,4 +33,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default (mapStateToProps, {})(MyCart)
+export default connect(mapStateToProps, {})(MyCart)
