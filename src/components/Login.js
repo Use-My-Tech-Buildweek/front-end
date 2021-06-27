@@ -36,7 +36,7 @@ class Login extends React.Component {
         this.props.loginUser(this.state.credentials)
             .then(response => {
                 if (this.props.isUserLoggedIn) {
-                    this.props.history.push(`/profile/${this.props.user.id}`)
+                    this.props.history.push(`/profile/user/${this.props.user.id}`)
                 } else {
                     this.props.setError(this.props.errorMessages)
                     this.props.history.push(`/login`)

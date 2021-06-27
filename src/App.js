@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -39,10 +39,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.fetchItems()
-
     if (localStorage.getItem('token') !== '') {
       localStorage.clear();
-      this.props.userLogOut();
+      //this.props.userLogOut();
     }
 
   }
@@ -73,7 +72,7 @@ class App extends React.Component {
 
   logout = () => {
     this.props.userLogOut();
-
+    this.props.history.push('/login')
   }
   render() {
     return (
@@ -95,7 +94,7 @@ class App extends React.Component {
               <SignupForm visible={this.state.visible} toggleVisible={this.toggleVisible} />
             </Route>
 
-            <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
+            <PrivateRoute path='/profile/user/:id' user={this.props.user} component={Profile} type='private' />
 
             <PrivateRoute path={`/edit-profile/:userId`}>
               <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
