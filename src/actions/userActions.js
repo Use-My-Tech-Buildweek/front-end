@@ -72,9 +72,8 @@ export const loginUser = (credentials) => async dispatch => {
 		localStorage.setItem('token', resp.data.token)
 		dispatch({ type: LOGIN_SUCCESS, payload: resp.data.user })
 	} catch (err) {
-		setError(err)
 		console.log('actions says: error in post call to login', err)
-		dispatch({ type: LOGIN_ERROR, payload: err })
+		dispatch({ type: LOGIN_ERROR, payload: err.message })
 	}
 
 }

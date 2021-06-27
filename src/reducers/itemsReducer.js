@@ -8,6 +8,7 @@ import {
 	DELETE_ITEM_SUCCESS,
 	DELETE_ITEM_ERROR,
 
+	ADD_TO_CART,
 }
 	from '../actions/itemsActions'
 
@@ -17,14 +18,19 @@ export const initialState = {
 	isLoading: false,
 	items: [],
 	item: {
-		pictures: [],
+		availability: 0,
+		condition: '',
+		created_at: '',
+		daily_rate: '',
 		description: '',
-		price: '',
-		user: '',
-		title: '',
-		name: '',
-		id: ''
+		id: '',
+		imgs: '',
+		item_name: '',
+		location: '',
+		updated_at: '',
+		user_id: '',
 	},
+	cart: [],
 }
 
 // itemsReducer functions
@@ -61,6 +67,14 @@ const reducer = (state = initialState, action) => {
 		case DELETE_ITEM_ERROR:
 			return {
 				...state,
+			}
+		case ADD_TO_CART:
+			return {
+				...state,
+				cart: [...state.cart, action.payload],
+				item: {
+					availability: state.item.availability - 1,
+				}
 			}
 		default:
 			return state

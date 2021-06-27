@@ -1,6 +1,10 @@
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux'
+
+
 const NewItem = () => {
   const history = useHistory();
+
   return (
     <>
       <h2>Add a new item</h2>
@@ -33,5 +37,11 @@ const NewItem = () => {
     </>
   );
 };
-
-export default NewItem;
+const mapStateToProps = state => {
+  return {
+    myItems: state.users.myItems,
+    items: state.items.items,
+    itemList: state.itemList.itemList
+  }
+}
+export default connect(mapStateToProps, {})(NewItem)
