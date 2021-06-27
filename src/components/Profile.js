@@ -11,20 +11,13 @@ const Profile = props => {
 
   const history = useHistory();
 
-  // loads the profile matching userId when the id changes 
-  useEffect(() => {
-    getProfile(props.userId)
-  }, [props.userId])
-
   return (
     <>
       <div>
-        <img src={props.user.profile_picture || defaultProfile} alt="profile picture" />
+        <h1>{props.user.username}</h1>
+        <img src={props.user.profile_picture || defaultProfile} alt="" />
         <p>{props.user.username}</p>
         <p>{props.user.name}</p>
-        <p>{props.user.bio}</p>
-        <p>{props.user.email}</p>
-        <p>{props.user.ratings}</p>
 
         <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
           Edit Profile
@@ -44,12 +37,8 @@ const Profile = props => {
 
 const mapStateToProps = state => {
   return {
-    user: {
-      username: state.username,
-      email: state.email,
-      userId: state.userId,
-    },
-    isUserLoggedIn: state.isUserLoggedIn
+    user: state.users.user,
+    isUserLoggedIn: state.users.isUserLoggedIn
   }
 }
 

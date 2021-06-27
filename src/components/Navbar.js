@@ -53,7 +53,7 @@ const Navbar = (props) => {
             </button>
             <button style={navButtonStyle} className="waves-effect-light btn">
               <span className="valign-wrapper">
-                <Link to={user.id === undefined ? ('/login') : (`/profile/${user.id}`)} > My Profile</Link>
+                <Link to={props.isUserLoggedIn ? (`/profile/user/${user.id}`) : ('/login')} > My Profile</Link>
               </span>
             </button>
             <button style={navButtonStyle} className="waves-effect-light btn">
@@ -106,8 +106,8 @@ const Navbar = (props) => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    isUserLoggedIn: state.isUserLoggedIn
+    user: state.users.user,
+    isUserLoggedIn: state.users.isUserLoggedIn
   }
 }
 export default connect(mapStateToProps, {})(Navbar);
