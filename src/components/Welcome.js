@@ -20,7 +20,7 @@ const Welcome = (props) => {
 
   const search = (e) => {
     const lookFor = e.target.value.toLowerCase();
-    const res = props.items.filter(item =>
+    const res = props.itemList.filter(item =>
       item.item_name.toLowerCase().includes(lookFor) || item.description.toLowerCase().includes(lookFor)
     )
     setSearchResult(res)
@@ -66,7 +66,7 @@ const Welcome = (props) => {
           <>
             <h4 style={h4Style} className="center-align">Last items listed</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
-              {props.items ? props.items.map(item => {
+              {props.itemList ? props.itemList.map(item => {
                 return (
                   <Item item={item} triggerModal={props.triggerModal} />)
               })
@@ -82,8 +82,9 @@ const Welcome = (props) => {
 
 const mapStateToProps = state => {
   return {
-    items: state.items,
-    isUserLoggedIn: state.isUserLoggedIn
+    items: state.items.items,
+    isUserLoggedIn: state.users.isUserLoggedIn,
+    itemList: state.itemList.itemList
 
   }
 }

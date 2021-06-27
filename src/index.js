@@ -11,14 +11,14 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import rootReducer from './reducers'
 import App from './App'
 import { fetchItemList } from './utils/fetchItemList'
-import { getItems } from './actions/itemsActions'
+import { fetchItems } from './actions/itemsActions'
 
 
 const store = createStore(rootReducer,
   composeWithDevTools(applyMiddleware(logger, thunk)));
 
 store.dispatch(fetchItemList)
-store.dispatch(getItems())
+//store.dispatch(fetchItems())
 
 ReactDOM.render(
   <Provider store={store}>

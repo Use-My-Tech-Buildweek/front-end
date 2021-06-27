@@ -34,10 +34,8 @@ class Login extends React.Component {
         e.preventDefault();
         console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
         this.props.loginUser(this.state.credentials)
-            .then(response => {
-                console.log(response)
-                this.props.history.push(`/welcome`)
-            }).catch(err => console.log(err))
+            .then(this.props.history.push(`/welcome`))
+            .catch(err => console.log(err))
     }
 
     //error message styling
