@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { generatePath } from 'react-router'
 import { connect } from 'react-redux'
 
 import { loginUser, setError } from '../actions/userActions'
@@ -31,14 +30,14 @@ class Login extends React.Component {
     }
 
     // onSubmit handler
-    login = async e => {
+    login = e => {
         e.preventDefault();
         console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
-        await this.props.loginUser(this.state.credentials)
+        this.props.loginUser(this.state.credentials)
             .then(response => {
                 console.log(response)
                 this.props.history.push(`/welcome`)
-            })
+            }).catch(err => console.log(err))
     }
 
     //error message styling

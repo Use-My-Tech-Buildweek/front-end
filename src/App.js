@@ -22,17 +22,22 @@ import { getItems } from './actions/itemsActions';
 
 const App = props => {
   const [visible, setVisible] = useState(false)
-  const [itemList, setItemList] = useState(props.itemList)
+  // const [itemList, setItemList] = useState([])
 
   const toggleVisible = () => {
     setVisible(!visible)
   }
 
-  useEffect(() => {
-    getItems()
-  }
-    , [])
+  //  setItemList(props.itemList)
+  /* 
+    useEffect(() => {
+      props.getItems()
+        .then(resp => { console.log(resp); setItemList(resp) })
+        .catch(err => console.log(err))
+    }, [props])
+   */
 
+  const { items, itemList, isLoading, isUserLoggedIn } = props;
 
   const triggerModal = (id) => {
     const modal = document.getElementById(id);
@@ -56,20 +61,20 @@ const App = props => {
   return (
     <Router>
       <header>
+        {isLoading && <h1>Loading.....</h1>}
         <Navbar triggerModal={triggerModal} logOut={logout} />
       </header>
       <main>
         <Switch>
           <Route exact path="/">
 
-            <Welcome itemList={props.itemList} triggerModal={triggerModal} />
+            <Welcome itemList={props.items} triggerModal={triggerModal} />
 
 
           </Route>
 
           <Route path="/register">
-            <SignupForm visible={visible}
-              toggleVisible={toggleVisible} />
+            <SignupForm visible={visible} toggleVisible={toggleVisible} />
           </Route>
 
           <PrivateRoute path='/profile/user/:id' component={Profile} type='private' />
@@ -83,11 +88,11 @@ const App = props => {
           <PrivateRoute path='/user-list' render={UserList} type='private' />
 
           <Route path="/myItems">
-            <MyItems triggerModal={triggerModal} itemsList={itemList} />
+            <MyItems triggerModal={triggerModal} itemsList={props.itemList} />
           </Route>
 
           <Route path="/myCart">
-            <MyCart triggerModal={triggerModal} itemsList={itemList} />
+            <MyCart triggerModal={triggerModal} itemsList={props.itemList} />
 
           </Route>
 
@@ -112,7 +117,8 @@ const mapStateToProps = state => {
     isLoading: state.isLoading,
     isUserLoggedIn: state.isUserLoggedIn,
     token: state.token,
+    items: state.items
   }
 }
 
-export default connect(mapStateToProps, { userLogOut })(App)
+export default connect(mapStateToProps, { userLogOut, getItems })(App)
