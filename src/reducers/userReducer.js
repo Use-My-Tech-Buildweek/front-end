@@ -29,7 +29,7 @@ const initialState = {
 		username: '',
 		password: '',
 		department: '',
-		bio: '',
+		//		bio: '',
 		profile_picture: '',
 		location: '',
 		id: ''
