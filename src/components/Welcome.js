@@ -83,6 +83,7 @@ const Welcome = (props) => {
 const mapStateToProps = state => {
   return {
     items: state.items,
+    isUserLoggedIn: state.isUserLoggedIn
 
   }
 }

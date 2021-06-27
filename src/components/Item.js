@@ -6,6 +6,7 @@ import Modal from './Modal'
 //import axios from 'axios'
 import { deleteItem } from '../actions/itemsActions'
 import defaultProfile from '../images/defaultProfile.png'
+import { connect } from 'react-redux'
 
 
 
@@ -79,4 +80,9 @@ const Item = ({ item, triggerModal }) => {
   );
 };
 
-export default Item;
+const mapStateToProps = state => {
+  return {
+    isUserLoggedIn: state.isUserLoggedIn
+  }
+}
+export default connect(mapStateToProps, {})(Item)

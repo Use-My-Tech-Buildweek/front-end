@@ -128,7 +128,7 @@ class ImageUpload extends Component {
 
 const mapStateToProps = state => {
 	return {
-
+		isUserLoggedIn: state.isUserLoggedIn
 	}
 }
 export default connect(mapStateToProps, {})(ImageUpload)
