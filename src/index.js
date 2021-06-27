@@ -6,15 +6,19 @@ import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import rootReducer from './reducers'
 import App from './App'
-import { BrowserRouter as Router } from 'react-router-dom'
-
+import { fetchItemList } from './utils/fetchItemList'
+import { getItems } from './actions/itemsActions'
 
 
 const store = createStore(rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, logger)));
+  composeWithDevTools(applyMiddleware(logger, thunk)));
+
+store.dispatch(fetchItemList)
+store.dispatch(getItems())
 
 ReactDOM.render(
   <Provider store={store}>

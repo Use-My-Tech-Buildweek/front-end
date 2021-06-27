@@ -1,10 +1,12 @@
 import userReducer from './userReducer'
-import rentalItemsReducer from './rentalItemsReducer'
+import itemsReducer from './itemsReducer'
+import FetchReducer from '../utils/fetchItemList'
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
 	userReducer,
-	rentalItemsReducer
+	itemsReducer,
+	FetchReducer
 })
 
 export default rootReducer

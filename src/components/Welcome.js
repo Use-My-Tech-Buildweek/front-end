@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux'
+
 import Item from "./Item";
+//import Items from './Items'
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const Welcome = (props) => {
@@ -63,7 +66,12 @@ const Welcome = (props) => {
           <>
             <h4 style={h4Style} className="center-align">Last items listed</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
-              {props.items.map(item => { return (<Item item={item} triggerModal={props.triggerModal} />) })}
+              {props.items ? props.items.map(item => {
+                return (
+                  <Item item={item} triggerModal={props.triggerModal} />)
+              })
+                :
+                ('')}
             </div>
           </>
         }
@@ -72,4 +80,11 @@ const Welcome = (props) => {
   );
 };
 
-export default Welcome;
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+    isUserLoggedIn: state.isUserLoggedIn
+
+  }
+}
+export default connect(mapStateToProps, {})(Welcome)

@@ -29,8 +29,13 @@ const initialState = {
 		username: '',
 		password: '',
 		department: '',
+<<<<<<< HEAD
 		bio: '',
 		profile_pic: '',
+=======
+		//		bio: '',
+		profile_picture: '',
+>>>>>>> a509b2d53f9cf3dac8a5823edff18a4bcf97fc56
 		location: '',
 		id: ''
 	},

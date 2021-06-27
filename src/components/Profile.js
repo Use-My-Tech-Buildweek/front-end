@@ -19,7 +19,7 @@ const Profile = props => {
   return (
     <>
       <div>
-        <img src={ props.user.profile_picture || defaultProfile} alt="profile picture" />
+        <img src={props.user.profile_picture || defaultProfile} alt="profile picture" />
         <p>{props.user.username}</p>
         <p>{props.user.name}</p>
         <p>{props.user.bio}</p>
@@ -48,9 +48,9 @@ const mapStateToProps = state => {
     user: {
       username: state.username,
       email: state.email,
-      userId: state.userId
-
-    }
+      userId: state.userId,
+    },
+    isUserLoggedIn: state.isUserLoggedIn
   }
 }
 

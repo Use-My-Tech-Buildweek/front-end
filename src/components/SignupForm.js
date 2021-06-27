@@ -15,19 +15,21 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
-                confirmPassword: '',
+                // confirmPassword: '',
                 // email: '',
                 //bio,
                 profile_pic: '',
                 department: '',
+                location: ''
             },
             errors: {
                 username: '',
                 password: '',
                 confirmPassword: '',
                 // email: '',
+                // eslint-disable-next-line no-undef
                 //bio,
-                profile_pict: '',
+                profile_pic: '',
                 department: '',
             },
             error: '',
@@ -56,24 +58,25 @@ class SignupForm extends React.Component {
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
 
-         if (!this.props.errorMessages) {
-              this.props.history.push('/login')
-          } else {
-              clearRegisterForm();
-        this.props.history.push(`/profile/:${this.props.user.id}`);
+        if (!this.props.errorMessages) {
+            this.props.history.push('/login')
+        } else {
+            clearRegisterForm();
+            this.props.history.push(`/profile/:${this.props.user.id}`);
 
         }
     }
     handleChanges = e => {
         // profile picture file size checking
-        if(e.target.id === "profilePicture"){
+        if (e.target.id === "profilePicture") {
             const maxSize = 2000000
             const size = e.target.files[0].size
-            if(size > maxSize){
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_pict']: `your file is ${size}, it should be ${maxSize} max` }})
+
+            if (size > maxSize) {
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
                 return
-            }else{
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_pict']: "" }})
+            } else {
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
             }
         }
 
@@ -91,17 +94,17 @@ class SignupForm extends React.Component {
             })
             .catch(err => this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: err.message } }))
     }
-
-    handleSelectFile = e => {
-        this.setState({
-            ...this.state.user,
-            profileImg: e.target.files[0],
-        })
-        this.setState({
-            ...this.state,
-            isFilePicked: true,
-        })
-    }
+    /*
+        selectFile = e => {
+            this.setState({
+                ...this.state.user,
+                profileImg: e.target.files[0],
+            })
+            this.setState({
+                ...this.state,
+                isFilePicked: true,
+            })
+        } */
 
 
     render() {
@@ -133,9 +136,16 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.department}
                             >
-                                <option name="department" value="" disabled hidden>Choose your role</option>
-                                <option data-cy="departmentValueSignUp" name="department" value="renter">Renter</option>
-                                <option name="department" value="owner">Owner</option>
+
+                                <option name="department" value="default" hidden>
+                                    Choose your role
+                                </option>
+                                <option name="department" value="renter">
+                                    Renter
+                                </option>
+                                <option name="department" value="owner">
+                                    Owner
+                                </option>
                             </select>
                             <label htmlFor="department">Account Type</label>
                         </div>
@@ -156,7 +166,7 @@ class SignupForm extends React.Component {
                             <label htmlFor="password">Password</label>
                         </div>
                     </div>
-                    <p>{this.state.newUser.confirmPassword !== this.state.newUser.password ? this.state.errors.confirmPassword : null}</p>
+                    { /*  <p>{this.state.newUser.confirmPassword !== this.state.newUser.password ? this.state.errors.confirmPassword : null}</p>
                     <div className="row">
                         <div className="input-field col s6">
                             <input
@@ -169,47 +179,47 @@ class SignupForm extends React.Component {
                                 value={this.state.newUser.confirmPassword}
                             />
                             <label htmlFor="confirmPassword">Confirm Password</label>
-                        </div>        
+                        </div>
+        </div> */}
                     <div className="row">
                         <div className="file-field input-field col s12">
-                            <div className="btn">
-                                <span>Profile Picture</span>
-                                <input
-                                    id="profilePicture"
-                                    type="file"
-                                    name="profile_pic"
-                                    onChange={this.handleChanges}
-                                    accept="image/png, image/jpeg"
-                                /* value={formValues.profile_picture}*/
 
-                                />
-                            </div>
-                            <p>{this.state.errors.profile_picture}</p>
+                            <ImageUpload />
+
+                            { /*  <div className="btn">
+                                    <span>Profile Picture</span>
+                                    <input
+                                        id="profilePicture"
+                                        type="file"
+                                        name="profile_picture"
+                                        onChange={this.handleChanges}
+                                        accept="image/png, image/jpeg"
+                                        value={formValues.profile_picture}
+                                    />
+                </div> */}
+                            <p>{this.state.errors.profile_pic}</p>
                         </div>
                         <div className="row">
                             <div className="col s6">
-                                <button 
-                                    type="submit" 
-                                    className="btn btn-waves-effect" 
-                                    disabled={this.state.validation}
-                                    data-cy="submitButtonSignUp"
-                                >
+                                <button type="submit" className="btn btn-waves-effect" >
                                     Submit
-                        </button>
+                                </button>
                             </div>
                         </div>
 
                     </div>
-                </div>
-            </form>
-        </div>
-    )}
+
+                </form>
+            </div>
+        )
+    }
 }
 const mapStateToProps = state => {
     return {
         users: state.users,
         newUser: state.newUser,
         error: state.error,
+        isUserLoggedIn: state.isUserLoggedIn
     }
 }
 export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm })(SignupForm))

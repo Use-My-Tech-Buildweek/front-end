@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { generatePath } from 'react-router'
 import { connect } from 'react-redux'
 
 import { loginUser, setError } from '../actions/userActions'
@@ -14,10 +13,11 @@ class Login extends React.Component {
             credentials: {
                 username: '',
                 password: ''
-            }
+            },
         }
-
     }
+
+
     // change handler
     handleChanges = e => {
         this.setState({
@@ -30,25 +30,14 @@ class Login extends React.Component {
     }
 
     // onSubmit handler
-    login = async e => {
+    login = e => {
         e.preventDefault();
         console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
-        await this.props.loginUser(this.state.credentials)
-        this.redirect();
-    }
-
-    redirect = () => {
-        console.log('attempting redirect', this.props.user)
-        if (this.props.user && this.props.user.id !== undefined) {
-            console.log('generating path to profile', this.props.user)
-            generatePath('/profile/:user/:id', {
-                user: this.props.user,
-                id: this.props.user.id,
-            })
-            this.props.history.push(this.generatePath)
-        } else {
-            this.props.history.push('/login')
-        }
+        this.props.loginUser(this.state.credentials)
+            .then(response => {
+                console.log(response)
+                this.props.history.push(`/welcome`)
+            }).catch(err => console.log(err))
     }
 
     //error message styling
@@ -60,7 +49,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.login}>
+            <form onSubmit={this.login} >
                 <input
                     data-cy="usernameField"
                     name="username"
@@ -95,14 +84,13 @@ class Login extends React.Component {
                     data-cy="signUpLink"
                 >
                     Sign up!</Link>
-
                 <p>Forgot your password?</p>
                 {/* handle password forgotten */}
 
-                {this.props.loading ? (<p>Loading...</p>) : (<div>
-                    {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
+                {
+                    this.props.loading ? (<p>Loading...</p>) : (<div>
+                        {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
                 }
-        )
             </form>
         )
     }
@@ -112,9 +100,9 @@ const mapStateToProps = state => {
     return {
         credentials: state.credentials,
         errorMessages: state.errorMessages,
-        loading: state.loading,
-
-        user: state.user
+        isLoading: state.isLoading,
+        user: state.user,
+        isUserLoggedIn: state.isUserLoggedIn
     }
 }
 export default withRouter(connect(mapStateToProps, { loginUser, setError })(Login))
