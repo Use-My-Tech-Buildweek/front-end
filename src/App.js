@@ -100,7 +100,7 @@ class App extends React.Component {
               <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
             </PrivateRoute>
 
-            <PrivateRoute path="/user/:id/additem" render={NewItem} type='private' />
+            <PrivateRoute path="/user/:id/additem" component={NewItem} type='private' />
 
             <PrivateRoute path='/user-list' render={UserList} type='private' />
 

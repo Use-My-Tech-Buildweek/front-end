@@ -9,6 +9,7 @@ export const DELETE_ITEM_ERROR = 'DELETE_ITEM_ERROR'
 export const GET_ITEMS_START = 'GET_ITEMS_START'
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR'
+export const ADD_TO_CART = 'ADD_TO_CART'
 
 export const deleteItem = item => dispatch => {
 
@@ -33,4 +34,8 @@ export const fetchItems = () => dispatch => {
 			dispatch({ type: GET_ITEMS_ERROR, payload: err })
 		}
 	}
+}
+
+export const addToCart = (item_id) => dispatch => {
+	dispatch({ type: ADD_TO_CART, payload: item_id })
 }

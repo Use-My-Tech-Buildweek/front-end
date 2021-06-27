@@ -12,7 +12,7 @@ const Profile = props => {
 
   const history = useHistory();
 
-  const loadMyItems = id => {
+  const loadMyItems = (id) => {
     getMyItems(id);
   }
 
@@ -26,7 +26,7 @@ const Profile = props => {
 
 
         {props.user.department === 'renter' ? (<h3>My Recent Rentals</h3>)
-          : (<div><h3>Items I Own</h3><MyItems /></div>)}
+          : (<div><h3>Items I Own</h3><MyItems loadMyItems={loadMyItems} /></div>)}
         <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
           Edit Profile
         </button>
@@ -50,5 +50,5 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getProfile })(Profile)
+export default connect(mapStateToProps, { getProfile, getMyItems })(Profile)
 

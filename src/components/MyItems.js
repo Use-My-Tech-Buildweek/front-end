@@ -8,7 +8,7 @@ import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const MyItems = (props) => {
   const history = useHistory();
-  const { triggerModal, myItems } = props
+  const { triggerModal } = props
 
   return (
     <div>
@@ -25,8 +25,6 @@ const MyItems = (props) => {
         </button>
       </div>
       <div className="items-wrapper" style={itemsWrapperStyle}>
-        {/* add a way to delete item */}
-
         {props.myItems.map(item => {
           return (
             <Item item={item} triggerModal={triggerModal} />
@@ -42,7 +40,8 @@ const mapStateToProps = state => {
     items: state.items.items,
     isUserLoggedIn: state.users.isUserLoggedIn,
     itemList: state.items.itemList,
-    myItems: state.users.myItems
+    myItems: state.users.myItems,
+    user: state.users.user
   }
 }
 export default connect(mapStateToProps, {})(MyItems);
