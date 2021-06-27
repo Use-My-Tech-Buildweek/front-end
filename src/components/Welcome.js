@@ -44,8 +44,8 @@ const Welcome = (props) => {
             }}
           >
             <i className="material-icons prefix">search</i>
-            <input type="text" id="search_input" className="validate" onChange={onchange} />
-            <label htmlFor="search_input">What are you looking for?</label>
+            <input data-cy="search_inputBar" type="text" id="search_input" className="validate" onChange={onchange} />
+            <label data-cy="search_input" htmlFor="search_input">What are you looking for?</label>
           </div>
         </div>
       </form>
@@ -55,7 +55,7 @@ const Welcome = (props) => {
             <h4 style={h4Style} className="center-align">My search</h4>
             <div className="items-wrapper" style={itemsWrapperStyle}>
               {searchResult.length > 0 ?
-                searchResult.map(item => { return (<Item item={item} key={item.id} triggerModal={props.triggerModal} />) }) :
+                searchResult.map(item => { return (<Item key={`item${item.id}`} item={item} key={item.id} triggerModal={props.triggerModal} />) }) :
                 "No item found"
               }
             </div>

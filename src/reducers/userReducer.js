@@ -30,7 +30,7 @@ const initialState = {
 		password: '',
 		department: '',
 		bio: '',
-		profile_picture: '',
+		profile_pic: '',
 		location: '',
 		id: ''
 	},

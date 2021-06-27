@@ -24,6 +24,7 @@ import { userLogOut } from './actions/userActions'
 
 
 const App = props => {
+
   const [visible, setVisible] = useState(false)
   const [itemList, setItemList ] = useState([])
 
@@ -54,11 +55,12 @@ const App = props => {
   useEffect(() => {
     
     axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
-      .then(response => {setItemList(response.data); console.log(response.data)})
+      .then(response => {setItemList(response.data)})
       .catch(err => console.log(err.message))
   }, []);
 
 
+  console.log("logged in?", props)
   return (
     <Router>
       <header>

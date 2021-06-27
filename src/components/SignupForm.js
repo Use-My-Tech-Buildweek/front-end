@@ -18,7 +18,7 @@ class SignupForm extends React.Component {
                 confirmPassword: '',
                 // email: '',
                 //bio,
-                profile_picture: '',
+                profile_pic: '',
                 department: '',
             },
             errors: {
@@ -27,7 +27,7 @@ class SignupForm extends React.Component {
                 confirmPassword: '',
                 // email: '',
                 //bio,
-                profile_picture: '',
+                profile_pict: '',
                 department: '',
             },
             error: '',
@@ -70,10 +70,10 @@ class SignupForm extends React.Component {
             const maxSize = 2000000
             const size = e.target.files[0].size
             if(size > maxSize){
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` }})
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_pict']: `your file is ${size}, it should be ${maxSize} max` }})
                 return
             }else{
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" }})
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_pict']: "" }})
             }
         }
 
@@ -112,6 +112,7 @@ class SignupForm extends React.Component {
                     <div className='row'>
                         <div className='input-field col s6'>
                             <input
+                                data-cy="userNameSignUp"
                                 name="username"
                                 type="text"
                                 id='username'
@@ -119,27 +120,22 @@ class SignupForm extends React.Component {
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.username}
                             />
-                            <label htmlFor="username">Username</label>
+                            <label data-cy="userNameLabelSignUp" htmlFor="username">Username</label>
                         </div>
                     </div>
                     <p>{this.state.errors.department}</p>
                     <div className="row">
                         <div className="input-field col s12">
                             <select
+                                data-cy="departmentSignUp"
                                 name="department"
                                 id="department"
                                 onChange={this.handleChanges}
                                 value={this.state.newUser.department}
                             >
-                                <option name="department" value="default" selected hidden>
-                                    Choose your role
-                        </option>
-                                <option name="department" value="renter">
-                                    Renter
-                        </option>
-                                <option name="department" value="owner">
-                                    Owner
-                        </option>
+                                <option name="department" value="" disabled hidden>Choose your role</option>
+                                <option data-cy="departmentValueSignUp" name="department" value="renter">Renter</option>
+                                <option name="department" value="owner">Owner</option>
                             </select>
                             <label htmlFor="department">Account Type</label>
                         </div>
@@ -149,6 +145,7 @@ class SignupForm extends React.Component {
                     <div className="row">
                         <div className="input-field col s6">
                             <input
+                                data-cy="passwordSignUp"
                                 type="password"
                                 name="password"
                                 id="password"
@@ -163,6 +160,7 @@ class SignupForm extends React.Component {
                     <div className="row">
                         <div className="input-field col s6">
                             <input
+                                data-cy="confirmPasswordSignUp"
                                 type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
@@ -171,32 +169,7 @@ class SignupForm extends React.Component {
                                 value={this.state.newUser.confirmPassword}
                             />
                             <label htmlFor="confirmPassword">Confirm Password</label>
-                        </div>
-                        {/*<div className="input-field col s6">
-                            <input
-                                type="password"
-                                name="pw_validate"
-                                id="pw_validate"
-                                onChange={this.handleChanges}
-                                value={this.state.pw_validate}
-                            />
-                            <label htmlFor="pw_verify"></label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <textarea
-                                name="bio"
-                                id="bio"
-                                cols="30"
-                                rows="10"
-                                className="materialize-textarea"
-                                onChange={this.handleChanges}
-                                value={this.state.newUser.bio}
-                            />
-                            <label htmlFor="bio">Introduce Yourself</label>
-                        </div>
-                    </div>*/}         
+                        </div>        
                     <div className="row">
                         <div className="file-field input-field col s12">
                             <div className="btn">
@@ -204,7 +177,7 @@ class SignupForm extends React.Component {
                                 <input
                                     id="profilePicture"
                                     type="file"
-                                    name="profile_picture"
+                                    name="profile_pic"
                                     onChange={this.handleChanges}
                                     accept="image/png, image/jpeg"
                                 /* value={formValues.profile_picture}*/
@@ -215,7 +188,12 @@ class SignupForm extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col s6">
-                                <button type="submit" className="btn btn-waves-effect" disabled={this.state.validation}>
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-waves-effect" 
+                                    disabled={this.state.validation}
+                                    data-cy="submitButtonSignUp"
+                                >
                                     Submit
                         </button>
                             </div>

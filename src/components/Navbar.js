@@ -10,6 +10,7 @@ import { userLogOut } from '../actions/userActions'
 
 const Navbar = (props) => {
 
+  console.log("NavBar Props", props)
   const {triggerModal, logOut} = props
 
 
@@ -45,7 +46,7 @@ const Navbar = (props) => {
           id="nav-mobile"
           className="right hide-on-med-and-down"
         >
-          <button style={navButtonStyle} className="waves-effect-light btn">
+          <button data-cy="homeButton" style={navButtonStyle} className="waves-effect-light btn">
             <span className="valign-wrapper">
               <Link to="/">Home</Link>
             </span>
@@ -63,6 +64,7 @@ const Navbar = (props) => {
           <button
             style={navButtonStyle}
             className="right waves-effect-light btn"
+            data-cy="logInButton"
           >
             <span className="valign-wrapper">
               <Link to="/login">Log In</Link>

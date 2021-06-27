@@ -62,6 +62,7 @@ class Login extends React.Component {
         return (
             <form onSubmit={this.login}>
                 <input
+                    data-cy="usernameField"
                     name="username"
                     id="username"
                     type="text"
@@ -72,6 +73,7 @@ class Login extends React.Component {
                 />
 
                 <input
+                    data-cy="passwordField"
                     name="password"
                     type="password"
                     id='password'
@@ -80,11 +82,20 @@ class Login extends React.Component {
                     onChange={this.handleChanges}
                     value={this.state.credentials.password}
                 />
-                <button type="submit">Login</button>
+                <button 
+                    type="submit"
+                    data-cy="loginFormButton"
+                >
+                    Login</button>
 
                 {/* add a keep me logged in checkbox? */}
                 <p>Don't have an account?</p>
-                <Link to="/register">Sign up!</Link>
+                <Link 
+                    to="/register"
+                    data-cy="signUpLink"
+                >
+                    Sign up!</Link>
+
                 <p>Forgot your password?</p>
                 {/* handle password forgotten */}
 

@@ -23,7 +23,7 @@ const signupSchema = yup.object().shape({
     // bio: yup
     //     .string()
     //     .max(500, "limited to 500 characters"),
-    profile_picture: yup
+    profile_pic: yup
         .mixed()
         // .test("fileSize", "The file is too large", 
         // (value, files) => {
