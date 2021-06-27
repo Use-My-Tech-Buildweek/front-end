@@ -14,10 +14,11 @@ class Login extends React.Component {
             credentials: {
                 username: '',
                 password: ''
-            }
+            },
         }
-
     }
+
+
     // change handler
     handleChanges = e => {
         this.setState({
@@ -34,21 +35,10 @@ class Login extends React.Component {
         e.preventDefault();
         console.log('Login says: submit button clicked, calling loginUser', this.state.credentials)
         await this.props.loginUser(this.state.credentials)
-        this.redirect();
-    }
-
-    redirect = () => {
-        console.log('attempting redirect', this.props.user)
-        if (this.props.user && this.props.user.id !== undefined) {
-            console.log('generating path to profile', this.props.user)
-            generatePath('/profile/:user/:id', {
-                user: this.props.user,
-                id: this.props.user.id,
+            .then(response => {
+                console.log(response)
+                this.props.history.push(`/welcome`)
             })
-            this.props.history.push(this.generatePath)
-        } else {
-            this.props.history.push('/login')
-        }
     }
 
     //error message styling
@@ -60,7 +50,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.login}>
+            <form onSubmit={this.login} >
                 <input
                     name="username"
                     id="username"
@@ -83,15 +73,16 @@ class Login extends React.Component {
                 <button type="submit">Login</button>
 
                 {/* add a keep me logged in checkbox? */}
-                <p>Don't have an account?</p>
-                <Link to="/register">Sign up!</Link>
+                <p> Don't have an account?</p>
+                <Link to="/register"> Sign up!</Link>
                 <p>Forgot your password?</p>
                 {/* handle password forgotten */}
 
-                {this.props.loading ? (<p>Loading...</p>) : (<div>
-                    {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
+                {
+                    this.props.loading ? (<p>Loading...</p>) : (<div>
+                        {this.props.errorMessages && (<div><p style={this.errorStyle}>{this.props.errorMessages}</p></div>)}</div>)
                 }
-        )
+                )
             </form>
         )
     }
@@ -101,8 +92,7 @@ const mapStateToProps = state => {
     return {
         credentials: state.credentials,
         errorMessages: state.errorMessages,
-        loading: state.loading,
-
+        isLoading: state.isLoading,
         user: state.user
     }
 }

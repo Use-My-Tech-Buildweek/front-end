@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 import "./App.css";
 
@@ -10,7 +9,6 @@ import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
 import Welcome from "./components/Welcome"
 import MyItems from "./components/MyItems";
-//import Items from './components/Items'
 import NewItem from "./components/NewItem";
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
@@ -19,19 +17,24 @@ import UserList from './components/UserList'
 
 import MyCart from './components/MyCart'
 
-
 import { userLogOut } from './actions/userActions'
-
+import { getItems } from './actions/itemsActions';
 
 const App = props => {
   const [visible, setVisible] = useState(false)
-  const [itemList, setItemList ] = useState([])
+  const [itemList, setItemList] = useState(props.itemList)
 
-  function toggleVisible() {
+  const toggleVisible = () => {
     setVisible(!visible)
   }
 
-  function triggerModal(id) {
+  useEffect(() => {
+    getItems()
+  }
+    , [])
+
+
+  const triggerModal = (id) => {
     const modal = document.getElementById(id);
     modal.style.display = "block";
     modal.style.position = "fixed";
@@ -39,25 +42,16 @@ const App = props => {
     modal.style.left = "40%";
   }
 
-  function deleteAccount() {
+  const deleteAccount = (id) => {
     console.log("deleting account")
 
     // get user id from user logged in 
     // call: https://ptpt-use-my-tech5.herokuapp.com/api/user/:id
   }
 
-  function logout() {
+  const logout = () => {
     userLogOut();
   }
-
-
-  useEffect(() => {
-    
-    axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
-      .then(response => {setItemList(response.data); console.log(response.data)})
-      .catch(err => console.log(err.message))
-  }, []);
-
 
   return (
     <Router>
@@ -68,7 +62,7 @@ const App = props => {
         <Switch>
           <Route exact path="/">
 
-            <Welcome items={itemList} triggerModal={triggerModal}/>
+            <Welcome itemList={props.itemList} triggerModal={triggerModal} />
 
 
           </Route>
@@ -84,16 +78,16 @@ const App = props => {
             <EditProfileForm triggerModal={triggerModal} deleteAccount={deleteAccount} />
           </PrivateRoute>
 
-          <PrivateRoute path="/additem" render={NewItem} type='private'/>
+          <PrivateRoute path="/additem" render={NewItem} type='private' />
 
           <PrivateRoute path='/user-list' render={UserList} type='private' />
 
           <Route path="/myItems">
-            <MyItems triggerModal={triggerModal} itemsList={itemList}/>
+            <MyItems triggerModal={triggerModal} itemsList={itemList} />
           </Route>
 
           <Route path="/myCart">
-            <MyCart triggerModal={triggerModal} itemsList={itemList}/>
+            <MyCart triggerModal={triggerModal} itemsList={itemList} />
 
           </Route>
 
@@ -104,14 +98,21 @@ const App = props => {
 
         </Switch>
       </main>
-    </Router>
-  );
+    </Router>)
+
 }
+
+
 const mapStateToProps = state => {
   return {
+    userList: state.userList,
     user: state.user,
-
-
+    itemList: state.itemList,
+    item: state.item,
+    isLoading: state.isLoading,
+    isUserLoggedIn: state.isUserLoggedIn,
+    token: state.token,
   }
 }
-export default connect(mapStateToProps, {})(App)
+
+export default connect(mapStateToProps, { userLogOut })(App)
