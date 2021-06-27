@@ -68,7 +68,7 @@ const Welcome = (props) => {
             <div className="items-wrapper" style={itemsWrapperStyle}>
               {props.itemList ? props.itemList.map(item => {
                 return (
-                  <Item item={item} triggerModal={props.triggerModal} />)
+                  <Item item={item} key={item.id} triggerModal={props.triggerModal} />)
               })
                 :
                 ('')}
