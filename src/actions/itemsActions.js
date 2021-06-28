@@ -9,7 +9,12 @@ export const DELETE_ITEM_ERROR = 'DELETE_ITEM_ERROR'
 export const GET_ITEMS_START = 'GET_ITEMS_START'
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR'
+
 export const ADD_TO_CART = 'ADD_TO_CART'
+
+export const ADD_NEW_ITEM_START = 'ADD_NEW_ITEM'
+export const ADD_NEW_ITEM_SUCCESS = 'ADD_NEW_ITEM_SUCCESS'
+export const ADD_NEW_ITEM_ERROR = 'ADD_NEW_ITEM_ERROR'
 
 export const deleteItem = item => dispatch => {
 
@@ -22,8 +27,6 @@ export const deleteItem = item => dispatch => {
 			dispatch({ type: DELETE_ITEM_ERROR, payload: err })
 		})
 }
-
-
 export const fetchItems = () => dispatch => {
 	return async dispatch => {
 		try {
@@ -35,7 +38,21 @@ export const fetchItems = () => dispatch => {
 		}
 	}
 }
-
 export const addToCart = (item_id) => dispatch => {
 	dispatch({ type: ADD_TO_CART, payload: item_id })
+}
+export const addNewItem = (user_id, newItem) => dispatch => {
+	dispatch({ type: ADD_NEW_ITEM_START, payload: newItem })
+	console.log('itemsActions says: attempting to add new item', newItem)
+	try {
+		axiosWithAuth().post(`https://ptpt-use-my-tech5.herokuapp.com/api/users/${user_id}/items`, newItem)
+			.then(resp => {
+				dispatch({ type: ADD_NEW_ITEM_SUCCESS, payload: resp.data })
+			}).catch(err => {
+				dispatch({ type: ADD_NEW_ITEM_ERROR, payload: err.message })
+				console.log(err)
+			})
+	} catch (error) {
+		console.log(error.message)
+	}
 }

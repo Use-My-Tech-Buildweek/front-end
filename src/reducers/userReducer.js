@@ -37,7 +37,7 @@ const initialState = {
 		location: '',
 		id: ''
 	},
-	errorMessages: '',
+	errorMessages: [],
 	isLoading: false,
 	isUserLoggedIn: false,
 	token: '',
@@ -51,7 +51,7 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case ADD_USER_SUCCESS:
 			return {
@@ -59,7 +59,7 @@ const userReducer = (state = initialState, action) => {
 				user: action.payload,
 				userList: [...state.userList, action.payload],
 				isLoading: false,
-				errorsMessages: '',
+				errorsMessages: [],
 				newUser: {
 					username: '',
 					password: '',
@@ -70,20 +70,19 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload,
-				statusCode: action.payload.response.statusCode
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case SET_ERROR:
 			return {
 				...state,
-				errorMessages: action.payload
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case LOGIN_USER:
 			console.log('userReducer says: starting call to login user')
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case LOGIN_SUCCESS:
 			console.log('userReducer says: login success. setting state')
@@ -96,7 +95,7 @@ const userReducer = (state = initialState, action) => {
 					password: action.payload.password
 				},
 				isLoading: false,
-				errorMessages: '',
+				errorMessages: [],
 				isUserLoggedIn: true,
 				token: localStorage.getItem('token'),
 				userList: [...state.userList, action.payload],
@@ -106,14 +105,14 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload,
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case START_USER_FETCH:
 			console.log('userReducer says: attempting to fetch user profile', action.payload)
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case USER_FETCH_SUCCESS:
 			console.log('userReducer says: user fetch successful', action.payload)
@@ -121,34 +120,32 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				errorMessages: '',
+				errorMessages: []
 			}
 		case USER_FETCH_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload,
-				statusCode: action.payload.response.statusCode
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case START_UPDATE_PROFILE:
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case UPDATE_PROFILE_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
 				user: action.payload,
-				errorMessages: '',
+				errorMessages: [],
 			}
 		case UPDATE_PROFILE_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload,
-				statusCode: action.payload.response.statusCode
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case USER_LOG_OUT:
 			return {
@@ -171,7 +168,8 @@ const userReducer = (state = initialState, action) => {
 		case LOG_OUT_ERROR:
 			return {
 				...state,
-				isLoading: false
+				isLoading: false,
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		case CLEAR_REGISTER_FORM:
 			return {
@@ -189,39 +187,39 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case FETCH_USERLIST_SUCCESS:
 			return {
 				...state,
 				userList: [...state.userList, action.payload],
 				isLoading: false,
-				errorMessages: '',
+				errorMessages: [],
 			}
 		case FETCH_USERLIST_ERROR:
 			return {
 				...state,
-				errorMessages: action.payload,
+				errorMessages: [...state.errorMessages, action.payload],
 				isLoading: false
 			}
 		case GET_MYITEMS_START:
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case GET_MYITEMS_SUCCESS:
 			return {
 				...state,
 				myItems: action.payload,
 				isLoading: false,
-				errorMessages: ''
+				errorMessages: []
 			}
 		case GET_MYITEMS_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: action.payload
+				errorMessages: [...state.errorMessages, action.payload],
 			}
 		default:
 			return state

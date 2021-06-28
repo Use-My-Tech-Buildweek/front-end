@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { cardStyle } from "./styles/styles";
-//import { useHistory } from "react-router";
 import Modal from './Modal'
-//import axios from 'axios'
 import { addToCart, deleteItem } from '../actions/itemsActions'
 import defaultProfile from '../images/defaultProfile.png'
 import { connect } from 'react-redux'
