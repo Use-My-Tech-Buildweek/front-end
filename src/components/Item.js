@@ -17,6 +17,9 @@ const Item = (props, { item, triggerModal }) => {
   }
 
 
+  const buyItem = item_id => {
+    props.addToCart(item_id)
+  }
 
 
   return (
@@ -45,8 +48,8 @@ const Item = (props, { item, triggerModal }) => {
           </div>
           <div>
             <p>{props.item.description}</p>
-            <p>Online since {props.item.created_at.slice(0, 10)}</p>
-
+            {/*}   <p>Online since {props.item.created_at.slice(0, 10)}</p>
+    */}
           </div>
         </div>
         <div className="card-action" style={{ paddingBottom: "1em" }}>
@@ -54,7 +57,7 @@ const Item = (props, { item, triggerModal }) => {
             <button
               id='deleteButton'
               className="waves-effect-light btn"
-              onClick={() => triggerModal(props.item.id)}
+              onClick={() => triggerModal(props.item_id)}
             >
               Delete this item
 
@@ -62,7 +65,7 @@ const Item = (props, { item, triggerModal }) => {
 
           {/* TODO: if user's item display price as field not button */}
           {props.item.user_id !== props.user.user_id ?
-            <button onClick={props.addToCart(props.item.item_id)}
+            <button onClick={addToCart(props.item_id)}
               className="waves-effect-light btn"
               style={{ display: "flex", justifyContent: "space-between" }}
             >

@@ -93,19 +93,6 @@ class SignupForm extends React.Component {
             })
             .catch(err => this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: err.message } }))
     }
-    /*
-        selectFile = e => {
-            this.setState({
-                ...this.state.user,
-                profileImg: e.target.files[0],
-            })
-            this.setState({
-                ...this.state,
-                isFilePicked: true,
-            })
-        } */
-
-
     render() {
         return (
             <div className='row'>

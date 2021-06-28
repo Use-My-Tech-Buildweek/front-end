@@ -28,12 +28,13 @@ const NewItem = props => {
   const onAdd = e => {
     e.preventDefault()
     props.addNewItem(newItem.user_id, newItem)
+    history.push(`/profile/user/${props.user.id}`)
   }
 
   return (
     <>
       <h2>Add a new item</h2>
-      <form onSubmit={onAdd}>
+      <form enctype='multi-part/form-data' onSubmit={onAdd}>
         <label>
           Item name
           <input
@@ -59,15 +60,15 @@ const NewItem = props => {
               onChange={changeHandler}
             />
           </label>
-          <label>Daily Rate <input type='number' name='daily_rate' /></label>
           <label>
-            Price
+            Daily Rate
             <input
-              name="itemPrice"
-              type="number"
+              type='number'
+              name='daily_rate'
               onChange={changeHandler}
             />
           </label>
+
         </div>
         <label>
           Condition

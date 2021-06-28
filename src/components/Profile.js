@@ -12,9 +12,9 @@ const Profile = props => {
 
   const history = useHistory();
 
-  const loadMyItems = (id) => {
-    getMyItems(id);
-  }
+  useEffect(() => {
+    props.getMyItems(props.user.id)
+  }, [props, props.user.id])
 
   return (
     <>
@@ -26,7 +26,7 @@ const Profile = props => {
 
 
         {props.user.department === 'renter' ? (<h3>My Recent Rentals</h3>)
-          : (<div><h3>Items I Own</h3><MyItems loadMyItems={loadMyItems} /></div>)}
+          : (<div><h3>Items I Own</h3><MyItems /></div>)}
         <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
           Edit Profile
         </button>

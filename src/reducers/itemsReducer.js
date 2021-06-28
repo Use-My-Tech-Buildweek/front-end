@@ -9,6 +9,10 @@ import {
 	DELETE_ITEM_ERROR,
 
 	ADD_TO_CART,
+
+	ADD_NEW_ITEM_START,
+	ADD_NEW_ITEM_SUCCESS,
+	ADD_NEW_ITEM_ERROR
 }
 	from '../actions/itemsActions'
 
@@ -76,6 +80,26 @@ const reducer = (state = initialState, action) => {
 					availability: state.item.availability - 1,
 				}
 			}
+		case ADD_NEW_ITEM_START:
+			return {
+				...state,
+				isLoading: true,
+				errorMessages: ''
+			}
+		case ADD_NEW_ITEM_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: '',
+				items: [...state.items, action.payload],
+			}
+		case ADD_NEW_ITEM_ERROR:
+			return {
+				...state,
+				isLoading: false,
+				errorMessages: action.payload,
+			}
+
 		default:
 			return state
 	}

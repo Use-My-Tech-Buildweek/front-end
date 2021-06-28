@@ -6,7 +6,7 @@ import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const MyCart = (props) => {
   const history = useHistory();
-  const { triggerModal, itemsList } = props
+  const { triggerModal, cart } = props
 
   return (
     <div>
@@ -16,12 +16,11 @@ const MyCart = (props) => {
       <div className="items-wrapper" style={itemsWrapperStyle}>
         {/* add a way to delete item */}
         {/* filter if item id is in list of item renter by user*/}
-
-        list of items
-        {/* {itemsList.filter(item => user.listOfItem.includes(item.id) ).map(item => {
-          return(
-            <Item item={item} triggerModal={triggerModal}/>
-        )})}  */}
+        {cart.map(item => {
+          return (
+            <Item item={item} triggerModal={triggerModal} />
+          )
+        })}
       </div>
     </div>
   );
@@ -29,7 +28,12 @@ const MyCart = (props) => {
 
 const mapStateToProps = state => {
   return {
-    isUserLoggedIn: state.isUserLoggedIn
+    isUserLoggedIn: state.users.isUserLoggedIn,
+    itemList: state.itemList.itemList,
+    items: state.items.items,
+    item: state.items.item,
+    user: state.users.user,
+    cart: state.items.cart,
   }
 }
 
