@@ -28,6 +28,9 @@ export const LOG_OUT_ERROR = 'LOG_OUT_ERROR'
 export const GET_MYITEMS_START = 'GET_MYITEMS_START'
 export const GET_MYITEMS_SUCCESS = 'GET_MYITEMS_SUCCESS'
 export const GET_MYITEMS_ERROR = 'GET_MYITEMS_ERROR'
+export const UPLOAD_FILE_START = 'UPLOAD_FILE_START'
+export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
 
 // action call to call api for list of users 
 export const fetchUserList = () => dispatch => {
@@ -49,7 +52,7 @@ export const addUser = (newUser) => dispatch => {
 		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register', newUser)
 			.then(resp => {
 				dispatch({ type: ADD_USER_SUCCESS, payload: resp.data })
-			}).catch(err => dispatch({ type: ADD_USER_ERROR, payload: err })
+			}).catch(err => dispatch({ type: ADD_USER_ERROR, payload: err.message })
 			)
 	} catch (error) {
 		dispatch({ type: ADD_USER_ERROR, payload: error })
@@ -142,4 +145,19 @@ export const getMyItems = id => async dispatch => {
 		dispatch({ type: GET_MYITEMS_ERROR, payload: err })
 	}
 
+}
+
+export const uploadFile = formData => dispatch => {
+	dispatch({ type: UPLOAD_FILE_START, payload: formData })
+	console.log('attempting file upload')
+	try {
+		axios.post('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', formData)
+			.then(response => {
+				dispatch({ type: UPLOAD_FILE_SUCCESS, payload: response.data })
+			}).catch(err => {
+				dispatch({ type: UPLOAD_FILE_ERROR, payload: err.message })
+			})
+	} catch (err) {
+		console.log(err)
+	}
 }

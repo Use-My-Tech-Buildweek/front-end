@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import { addNewItem } from '../actions/itemsActions'
+import FileUploader from './FileUploader';
 
 
 const NewItem = props => {
@@ -28,12 +29,13 @@ const NewItem = props => {
   const onAdd = e => {
     e.preventDefault()
     props.addNewItem(newItem.user_id, newItem)
+    history.push(`/profile/user/${props.user.id}`)
   }
 
   return (
     <>
       <h2>Add a new item</h2>
-      <form onSubmit={onAdd}>
+      <form encType='multi-part/form-data' onSubmit={onAdd}>
         <label>
           Item name
           <input
@@ -59,15 +61,15 @@ const NewItem = props => {
               onChange={changeHandler}
             />
           </label>
-          <label>Daily Rate <input type='number' name='daily_rate' /></label>
           <label>
-            Price
+            Daily Rate
             <input
-              name="itemPrice"
-              type="number"
+              type='number'
+              name='daily_rate'
               onChange={changeHandler}
             />
           </label>
+
         </div>
         <label>
           Condition
@@ -85,14 +87,15 @@ const NewItem = props => {
         </label>
         <label>
           Pictures
-          <input
+          { /*  <input
             name="imgs"
             type="file"
             accept=".jpg,.jpeg,.png"
             placeholder="item pictures..."
             onChange={changeHandler}
             multiple
-          />
+        /> */}
+          <FileUploader name='imgs' />
         </label>
         <button>Add this Item</button>
 

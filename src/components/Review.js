@@ -28,8 +28,8 @@ const Review = () => {
 
 const mapStateToProps = state => {
     return {
-        isUserLoggedIn: state.isUserLoggedIn
+        isUserLoggedIn: state.users.isUserLoggedIn
     }
 }
 
-export default connect(mapStateToProps, {})(Review)
+export default connect(mapStateToProps, {})(Review);

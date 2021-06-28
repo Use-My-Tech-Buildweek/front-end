@@ -17,17 +17,20 @@ const Item = (props, { item, triggerModal }) => {
   }
 
 
+  const buyItem = item_id => {
+    props.addToCart(item_id)
+  }
 
 
   return (
     <>
-      {/* if item is from user 
+      {/* if item is from user
+      
       <Modal
         textButton="delete this item"
         actionToConfirm={handleDelete}
-      // modalId={props.item.id}
-      />
-      */}
+        modalId={props.item.id}
+      />*/}
       <div className="card" style={cardStyle}>
         <span className="card-title">
           <h4>{props.item.item_name}</h4>
@@ -37,7 +40,7 @@ const Item = (props, { item, triggerModal }) => {
 
           <img src={props.item.imgs} alt={`${props.item.item_name}`} width="100%" />
           <div>
-            <h5>{props.user.username}</h5>
+            <h5>{props.item.user_id}</h5>
             {/* TODO import username and rating */}
             <p>User ratings</p>
             <p>Location: {props.user.location}</p>
@@ -45,8 +48,8 @@ const Item = (props, { item, triggerModal }) => {
           </div>
           <div>
             <p>{props.item.description}</p>
-            <p>Online since {props.item.created_at.slice(0, 10)}</p>
-
+            {/*}   <p>Online since {props.item.created_at.slice(0, 10)}</p>
+    */}
           </div>
         </div>
         <div className="card-action" style={{ paddingBottom: "1em" }}>
@@ -54,16 +57,17 @@ const Item = (props, { item, triggerModal }) => {
             <button
               id='deleteButton'
               className="waves-effect-light btn"
-              onClick={() => triggerModal(props.item.id)}
+              onClick={triggerModal}
             >
               Delete this item
 
             </button> : null}
 
           {/* TODO: if user's item display price as field not button */}
+
           {props.item.user_id !== props.user.user_id ?
-            <button onClick={props.addToCart(props.item.item_id)}
-              className="waves-effect-light btn"
+            <button onClick={addToCart(props.item_id)}
+              className={props.item.availability <= 0 ? ('disabled waves-effect-light btn') : ('waves-effect-light btn')}
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <i className="material-icons" style={{ marginRight: ".5em" }}>
@@ -80,7 +84,8 @@ const Item = (props, { item, triggerModal }) => {
 const mapStateToProps = state => {
   return {
     isUserLoggedIn: state.users.isUserLoggedIn,
-    user: state.users.user
+    user: state.users.user,
+    item: state.items.item
   }
 }
 export default connect(mapStateToProps, { addToCart })(Item);

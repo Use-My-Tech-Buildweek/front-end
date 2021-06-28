@@ -22,7 +22,10 @@ import {
 	LOG_OUT_ERROR,
 	GET_MYITEMS_SUCCESS,
 	GET_MYITEMS_START,
-	GET_MYITEMS_ERROR
+	GET_MYITEMS_ERROR,
+	UPLOAD_FILE_START,
+	UPLOAD_FILE_SUCCESS,
+	UPLOAD_FILE_ERROR
 } from '../actions/userActions'
 
 // sets state 
@@ -37,7 +40,7 @@ const initialState = {
 		location: '',
 		id: ''
 	},
-	errorMessages: [],
+	errorMessages: '',
 	isLoading: false,
 	isUserLoggedIn: false,
 	token: '',
@@ -70,7 +73,7 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: [...state.errorMessages, action.payload],
+				errorMessages: action.payload,
 			}
 		case SET_ERROR:
 			return {
@@ -216,10 +219,24 @@ const userReducer = (state = initialState, action) => {
 				errorMessages: []
 			}
 		case GET_MYITEMS_ERROR:
+		case UPLOAD_FILE_START:
+			return {
+				isLoading: true,
+				errorMessages: ''
+			}
+
+		case UPLOAD_FILE_SUCCESS:
+			return {
+				...state,
+				user: [...state.user.profile_pic, action.payload],
+				isLoading: false,
+				errorMessages: ''
+			}
+		case UPLOAD_FILE_ERROR:
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: [...state.errorMessages, action.payload],
+				errorMessages: action.payload
 			}
 		default:
 			return state

@@ -27,7 +27,7 @@ const MyItems = (props) => {
       <div className="items-wrapper" style={itemsWrapperStyle}>
         {props.myItems.map(item => {
           return (
-            <Item item={item} triggerModal={triggerModal} />
+            <Item item={item} key={item.item_id} triggerModal={triggerModal} />
           )
         })}
       </div>
@@ -41,7 +41,8 @@ const mapStateToProps = state => {
     isUserLoggedIn: state.users.isUserLoggedIn,
     itemList: state.items.itemList,
     myItems: state.users.myItems,
-    user: state.users.user
+    user: state.users.user,
+    item: state.items.item
   }
 }
 export default connect(mapStateToProps, {})(MyItems);
