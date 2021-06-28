@@ -24,13 +24,13 @@ const Item = (props, { item, triggerModal }) => {
 
   return (
     <>
-      {/* if item is from user
-      
+      {/* if item is from user 
       <Modal
         textButton="delete this item"
         actionToConfirm={handleDelete}
-        modalId={props.item.id}
-      />*/}
+      // modalId={props.item.id}
+      />
+      */}
       <div className="card" style={cardStyle}>
         <span className="card-title">
           <h4>{props.item.item_name}</h4>
@@ -40,7 +40,7 @@ const Item = (props, { item, triggerModal }) => {
 
           <img src={props.item.imgs} alt={`${props.item.item_name}`} width="100%" />
           <div>
-            <h5>{props.item.user_id}</h5>
+            <h5>{props.user.username}</h5>
             {/* TODO import username and rating */}
             <p>User ratings</p>
             <p>Location: {props.user.location}</p>
@@ -57,7 +57,7 @@ const Item = (props, { item, triggerModal }) => {
             <button
               id='deleteButton'
               className="waves-effect-light btn"
-              onClick={triggerModal}
+              onClick={() => triggerModal(props.item_id)}
             >
               Delete this item
 
@@ -84,8 +84,7 @@ const Item = (props, { item, triggerModal }) => {
 const mapStateToProps = state => {
   return {
     isUserLoggedIn: state.users.isUserLoggedIn,
-    user: state.users.user,
-    item: state.items.item
+    user: state.users.user
   }
 }
 export default connect(mapStateToProps, { addToCart })(Item);
