@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import { addNewItem } from '../actions/itemsActions'
+import FileUploader from './FileUploader';
 
 
 const NewItem = props => {
@@ -34,7 +35,7 @@ const NewItem = props => {
   return (
     <>
       <h2>Add a new item</h2>
-      <form enctype='multi-part/form-data' onSubmit={onAdd}>
+      <form encType='multi-part/form-data' onSubmit={onAdd}>
         <label>
           Item name
           <input
@@ -86,14 +87,15 @@ const NewItem = props => {
         </label>
         <label>
           Pictures
-          <input
+          { /*  <input
             name="imgs"
             type="file"
             accept=".jpg,.jpeg,.png"
             placeholder="item pictures..."
             onChange={changeHandler}
             multiple
-          />
+        /> */}
+          <FileUploader name='imgs' />
         </label>
         <button>Add this Item</button>
 

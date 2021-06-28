@@ -27,7 +27,7 @@ class App extends React.Component {
     this.state = {
       visible: false,
       items: [],
-      itemList: this.props.itemList.itemList
+      itemList: this.props.itemList
     }
   }
 

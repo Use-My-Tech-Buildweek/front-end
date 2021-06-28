@@ -2,11 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
 import { withRouter } from 'react-router-dom'
-import { addUser, setError, clearRegisterForm } from '../actions/userActions'
+import { addUser, setError, clearRegisterForm, uploadFile } from '../actions/userActions'
+
 
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
-import ImageUpload from './ImageUpload'
+import FileUploader from './FileUploader'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class SignupForm extends React.Component {
                 //bio,
                 profile_pic: '',
                 department: '',
-                location: ''
+                //location: ''
             },
             errors: {
                 username: '',
@@ -164,8 +165,7 @@ class SignupForm extends React.Component {
         </div> */}
                     <div className="row">
                         <div className="file-field input-field col s12">
-
-                            <ImageUpload />
+                            <FileUploader uploadFile={uploadFile} image_name='profile_pic' />
 
                             { /*  <div className="btn">
                                     <span>Profile Picture</span>

@@ -15,10 +15,10 @@ const MyCart = (props) => {
       </div>
       <div className="items-wrapper" style={itemsWrapperStyle}>
         {/* add a way to delete item */}
-        {/* filter if item id is in list of item renter by user*/}
+
         {cart.map(item => {
           return (
-            <Item item={item} triggerModal={triggerModal} />
+            <Item item={item} key={item.item_id} triggerModal={triggerModal} />
           )
         })}
       </div>
