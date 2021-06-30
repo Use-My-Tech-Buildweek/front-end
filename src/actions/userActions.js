@@ -69,6 +69,7 @@ export const addUser = (newUser) => dispatch => {
 				dispatch({ type: ADD_USER_SUCCESS, payload: resp.data })
 			}).catch(err => {
 				console.log('error object:', err)
+				console.log(err)
 				dispatch({ type: ADD_USER_ERROR, payload: err.message })
 
 			})

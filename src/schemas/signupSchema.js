@@ -6,9 +6,7 @@ const signupSchema = yup.object().shape({
         .string()
         .required()
         .oneOf(['renter', 'owner'], "You must select a role"),
-    // email: yup
-    //     .string()
-    //     .email('enter a valid email'),
+
     password: yup
         .string()
         .required('Password is required')
@@ -25,14 +23,14 @@ const signupSchema = yup.object().shape({
     //     .max(500, "limited to 500 characters"),
     profile_picture: yup
         .mixed()
-        // .test("fileSize", "The file is too large", 
-        // (value, files) => {
-        //     console.log("value is ", value, files.size )
-        //     if (!value.length) return true // attachment is optional
-        //     return value[0].size <= 20000000
-        //     }
-        // )
-  });
+    // .test("fileSize", "The file is too large", 
+    // (value, files) => {
+    //     console.log("value is ", value, files.size )
+    //     if (!value.length) return true // attachment is optional
+    //     return value[0].size <= 20000000
+    //     }
+    // )
+});
 
 export default signupSchema
 

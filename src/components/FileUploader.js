@@ -20,6 +20,7 @@ const FileUploader = props => {
 
 	return (
 		<div>
+			<h1>Please select a file to use as your avatar!</h1>
 			<div className="row">
 				<div className="col-8">
 					<input type="file" name='profile_image' accept="image/*" onChange={changeHandler} />

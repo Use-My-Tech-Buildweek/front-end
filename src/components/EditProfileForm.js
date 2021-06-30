@@ -3,29 +3,22 @@ import { getProfile, updateProfile, deleteAccount } from '../actions/userActions
 import { connect } from 'react-redux'
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
+import M from "materialize-css"
 
 import Modal from './Modal'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
+import { getUserUrl } from '../utils/apiUrls'
 
 class EditProfileForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			user: {
-				username: this.props.user.username,
-				password: this.props.user.password,
-				profile_pic: this.props.user.profile_pic,
-				department: this.props.user.department,
-				location: this.props.user.location,
-			},
-			updatedUser: {
 				username: '',
 				password: '',
-				//confirmPassword: '',
-				// email: '',
-				// bio: '',
 				profile_pic: '',
 				department: '',
-				location: '',
+				location: ''
 			},
 			errors: {
 				username: '',
@@ -40,7 +33,8 @@ class EditProfileForm extends Component {
 			error: '',
 			selectedFile: null,
 			validation: true,
-			id: 'editProfile'
+			id: 'editProfile',
+			isFilePicked: false
 		}
 
 	}
@@ -53,13 +47,13 @@ class EditProfileForm extends Component {
 	}
 
 	handleChanges = e => {
-		this.setState({
-			...this.state,
-			updatedUser: {
-				...this.state.updatedUser,
+		e.persist();
+		this.setState(prevState => ({
+			user: {
+				...prevState.user,
 				[e.target.name]: e.target.value
 			}
-		})
+		}))
 		yup.reach(signupSchema, e.target.name)
 			.validate(e.target.value)
 			.then(() => {
@@ -69,7 +63,14 @@ class EditProfileForm extends Component {
 	}
 
 	componentDidMount = () => {
-		this.props.getProfile(this.props.user.id)
+		axiosWithAuth().get(getUserUrl + `${this.props.user.id}`)
+			.then(res => {
+				this.setState({ user: res.data })
+			})
+			.catch(error => console.log(error))
+
+		const elems = document.querySelectorAll("select");
+		M.FormSelect.init(elems);
 	}
 
 	handleSubmit = e => {
@@ -87,57 +88,52 @@ class EditProfileForm extends Component {
 		this.props.uploadFile(this.state.selectedFile)
 	}
 
+	componentDidUpdate() {
+		signupSchema.isValid(this.state.user)
+			.then(valid => {
+				if (this.state.validation === valid) {
+					this.setState({ ...this.state, validation: !valid })
+				}
+			})
+
+	}
+
+	goToFileUploader = () => {
+		this.props.history.push(`/user/${this.state.user.id}/avatar`)
+	}
 
 	render() {
 		return (
 			<>
-				{/*<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal" />*/}
-				<form onSubmit={this.handleSubmit}>
-					<label>
-						Role
-						<select value={this.state.user.department}>
-							<option value="" disabled>== option ==</option>
-							<option value='Renter'>Renter</option>
-							<option value="Owner">Owner</option>
-						</select>
-					</label>
-					<label>
-						Username
-						<p>{this.state.errors.username}</p>
-
-						<input
-							name="username"
-							type="text"
-							placeholder="choose your username"
-							onChange={this.handleChanges}
-							value={this.state.user.username}
-							id='username'
-						/>
-					</label>
-					{/* <label>
-					Email
-            <input
-						name="email"
-						type="text"
-						placeholder="contact email"
-						value={this.state.user.email}
-						id='email'
-						onChange={this.handleChanges}
-					/>
-				</label> */}
-					<label>
-						Password
-						<p>{this.state.errors.password}</p>
-
-						<input
-							name="password"
-							type="password"
-							placeholder="enter your password"
-							value={this.state.user.password}
-							id='password'
-							onChange={this.handleChanges}
-						/>
-					</label>
+				<form onSubmit={this.handleSubmit} className='col s8'>
+					<div className='row'>
+						<div className='input-field col s6'>
+							<input
+								name="username"
+								type="text"
+								id='username'
+								autoComplete='username'
+								onChange={this.handleChanges}
+								value={this.state.user.username}
+							/>
+							<label htmlFor="username">Username</label>
+						</div>
+					</div>
+					<p>{this.state.errors.username}</p>
+					<p>{this.state.errors.password}</p>
+					<div className="row">
+						<div className="input-field col s6">
+							<input
+								type="password"
+								name="password"
+								id="password"
+								autoComplete='current-password'
+								onChange={this.handleChanges}
+								value={this.state.user.password}
+							/>
+							<label htmlFor="password">Password</label>
+						</div>
+					</div>
 					<label>
 						Confirm your Password
 						<p>{this.state.errors.confirmPassword}</p>
@@ -147,32 +143,35 @@ class EditProfileForm extends Component {
 							placeholder="confirm your password"
 						/>
 					</label>
-					{/* <label>
-					Tell everyone a little about yourself:
-            <textarea
-						name="bio"
-						type="text"
-						placeholder="About me..."
-						id='bio'
-						value={this.state.user.bio}
-						onChange={this.handleChanges}
-					/>
-				</label> */}
-					<label>
-						Profile picture
-						<input
-							name="profilePicture"
-							type="file"
-							accept=".jpg,.jpeg,.png"
-							placeholder="Avatar"
-							value={this.state.user.profile_pic}
-							onChange={this.fileChange}
-						/>
-					</label>
-					<div>
-						<button type="submit" disabled={this.state.validation}>Save changes</button>
-						{//<button type="button" onClick={() => { this.props.triggerModal(this.state.id) }}>Delete my profile</button>
-						}
+					<p>{this.state.errors.department}</p>
+					<div className="row">
+						<div className="input-field col s12">
+							<select
+								name="department"
+								id="department"
+								onChange={this.handleChanges}
+								value={this.state.user.department}
+							>
+								<option name="department" value="default" hidden>
+									Choose your role
+								</option>
+								<option name="department" value="renter">
+									Renter
+								</option>
+								<option name="department" value="owner">
+									Owner
+								</option>
+							</select>
+							<label htmlFor="department">Account Type</label>
+						</div>
+					</div>
+					<button onClick={this.goToFileUploader}>Click to add your avatar</button>
+					<div className="row">
+						<div className="col s6">
+							<button type="submit" disabled={this.state.validation} className="btn btn-waves-effect" >
+
+								Save changes</button>
+						</div>
 					</div>
 				</form>
 			</>
@@ -191,3 +190,5 @@ const mapStateToProps = state => {
 	}
 }
 export default connect(mapStateToProps, { getProfile, updateProfile, deleteAccount })(EditProfileForm)
+
+

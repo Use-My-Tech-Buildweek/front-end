@@ -17,7 +17,7 @@ const store = createStore(rootReducer,
   composeWithDevTools(applyMiddleware(logger, thunk)));
 
 store.dispatch(fetchItemList)
-store.dispatch(fetchUserList)
+//store.dispatch(fetchUserList)
 
 ReactDOM.render(
   <Provider store={store}>

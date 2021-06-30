@@ -20,6 +20,7 @@ import MyCart from './components/MyCart'
 
 import { userLogOut } from './actions/userActions'
 import { fetchItems } from './actions/itemsActions';
+import FileUploader from "./components/FileUploader";
 
 class App extends React.Component {
   constructor(props) {
@@ -97,11 +98,12 @@ class App extends React.Component {
             <PrivateRoute path='/profile/user/:id' user={this.props.user} component={Profile} type='private' />
 
             <PrivateRoute path={`/edit-profile/:userId`}>
-              <EditProfileForm triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
+              <EditProfileForm history={this.props.history} triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
             </PrivateRoute>
 
             <PrivateRoute path="/user/:id/additem" component={NewItem} type='private' />
 
+            <PrivateRoute path='/user/:id/avatar' component={FileUploader} user={this.props.user} />
             <PrivateRoute path='/user-list' render={UserList} type='private' />
 
             <Route path="/myItems">
@@ -112,6 +114,7 @@ class App extends React.Component {
               <MyCart triggerModal={this.triggerModal} itemsList={this.state.items} />
 
             </Route>
+
 
             <Route path="/login">
               <Login />
