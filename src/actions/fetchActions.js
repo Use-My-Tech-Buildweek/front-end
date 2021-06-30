@@ -14,7 +14,7 @@ export async function fetchItemList(dispatch) {
 }
 
 export async function fetchUserList(dispatch) {
-	await axiosWithAuth().get(`http://ptpt-use-my-tech5.herokuapp.com/api/users`)
+	await axiosWithAuth().get(`http://ptpt-use-my-tech5.herokuapp.com/api/users/`)
 		.then(response => {
 			dispatch({ type: USER_LIST_LOADED, payload: response.data })
 			return response.data

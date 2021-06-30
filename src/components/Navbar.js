@@ -56,11 +56,12 @@ const Navbar = (props) => {
                 <Link to={props.isUserLoggedIn ? (`/profile/user/${user.id}`) : ('/login')} > My Profile</Link>
               </span>
             </button>
-            <button style={navButtonStyle} className="waves-effect-light btn">
-              <span className="valign-wrapper">
-                <Link to="/myItems">My Items</Link>
-              </span>
-            </button>
+            {props.user.department === 'owner' ?
+              <button style={navButtonStyle} className="waves-effect-light btn">
+                <span className="valign-wrapper">
+                  <Link to="/myItems">My Items</Link>
+                </span>
+              </button> : null}
             <button
               style={navButtonStyle}
               className="right waves-effect-light btn"

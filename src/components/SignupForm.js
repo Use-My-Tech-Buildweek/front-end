@@ -36,6 +36,7 @@ class SignupForm extends React.Component {
             error: '',
             isFilePicked: false,
             validation: true,
+            selectedFile: ''
         }
     }
 
@@ -54,11 +55,22 @@ class SignupForm extends React.Component {
 
     }
 
+    fileChange = e => {
+        this.setState({ selectedFile: e.target.files[0] })
+        this.setState({ isFilePicked: true })
+    }
+
+    onFileUpload = () => {
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile, this.state.selectedFile.name);
+        this.props.uploadFile(this.state.selectedFile)
+    }
+
     handleSubmit = e => {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
-        this.props.fetchUserList();
+        //this.props.fetchUserList();
         if (!this.props.errorMessages) {
             this.props.history.push('/login')
         } else {
@@ -72,14 +84,14 @@ class SignupForm extends React.Component {
         if (e.target.id === "profilePicture") {
             const maxSize = 2000000
             const size = e.target.files[0].size
-            // if (size > maxSize) {
-            //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
-            //     return
-            // } else {
-            //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
-            // }
-        }
+            if (size > maxSize) {
+                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
 
+                // } else {
+                //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
+                // }
+            }
+        }
         this.setState({
             ...this.state,
             newUser: {
@@ -162,11 +174,28 @@ class SignupForm extends React.Component {
                             />
                             <label htmlFor="confirmPassword">Confirm Password</label>
                         </div>
-        </div> */}
-                    <div className="row">
+        </div> <div className="row">
                         <div className="file-field input-field col s12">
-                            <FileUploader uploadFile={uploadFile} image_name='profile_pic' />
-
+                            {/*<FileUploader uploadFile={uploadFile} image_name='profile_pic' />
+                            <div className="col-8">
+                                <input type="file" name='profile_image' accept="image/*" onChange={this.fileChange} />
+                                {this.state.isFilePicked ? (<div>
+                                    <p>Filename: {this.state.selectedFile.name}</p>
+                                    <p>Filetype: {this.state.selectedFile.type}</p>
+                                    <p>Size in bytes: {this.state.selectedFile.size}</p>
+                                    <p>
+                                        lastModifiedDate:{' '}
+                                        {this.state.selectedFile.lastModifiedDate.toLocaleDateString()}
+                                    </p>
+                                </div>
+                                ) : (
+                                    <p>Select a file to show details</p>
+                                )}
+                                <div>
+                                    <button onClick={this.onFileUpload}>Submit</button>
+                                </div>
+                            </div>
+}
                             { /*  <div className="btn">
                                     <span>Profile Picture</span>
                                     <input
@@ -177,21 +206,20 @@ class SignupForm extends React.Component {
                                         accept="image/png, image/jpeg"
                                         value={formValues.profile_picture}
                                     />
-                </div> */}
-                            <p>{this.state.errors.profile_pic}</p>
+                </div> 
+                    <p>{this.state.errors.profile_pic}</p>
+                        </div>*/}
+                    <div className="row">
+                        <div className="col s6">
+                            <button type="submit" className="btn btn-waves-effect" >
+                                Submit
+                            </button>
                         </div>
-                        <div className="row">
-                            <div className="col s6">
-                                <button type="submit" className="btn btn-waves-effect" >
-                                    Submit
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
 
-                </form>
-            </div>
+
+                </form >
+            </div >
         )
     }
 }

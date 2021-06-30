@@ -22,7 +22,7 @@ const FileUploader = props => {
 		<div>
 			<div className="row">
 				<div className="col-8">
-					<input type="file" name={props.image_name} accept="image/*" onChange={changeHandler} />
+					<input type="file" name='profile_image' accept="image/*" onChange={changeHandler} />
 					{isFilePicked ? (<div>
 						<p>Filename: {selectedFile.name}</p>
 						<p>Filetype: {selectedFile.type}</p>

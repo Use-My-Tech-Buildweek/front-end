@@ -64,12 +64,17 @@ export const addUser = (newUser) => dispatch => {
 	dispatch({ type: START_ADD_USER, payload: newUser })
 	console.log('userActions says: attempting to register user', newUser)
 	try {
-		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register', newUser)
+		axios.post('https://ptpt-use-my-tech5.herokuapp.com/api/register/', newUser)
 			.then(resp => {
 				dispatch({ type: ADD_USER_SUCCESS, payload: resp.data })
-			}).catch(err => dispatch({ type: ADD_USER_ERROR, payload: err.message })
-			)
+			}).catch(err => {
+				console.log('error object:', err)
+				dispatch({ type: ADD_USER_ERROR, payload: err.message })
+
+			})
 	} catch (error) {
+		console.log('error obj: ', error)
+
 		dispatch({ type: ADD_USER_ERROR, payload: error })
 	}
 }

@@ -88,7 +88,7 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: []
+				errorMessages: ''
 			}
 		case LOGIN_SUCCESS:
 			console.log('userReducer says: login success. setting state')
@@ -110,7 +110,7 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				errorMessages: [...state.errorMessages, action.payload],
+				errorMessages: action.payload,
 			}
 		case START_USER_FETCH:
 			console.log('userReducer says: attempting to fetch user profile', action.payload)
