@@ -20,6 +20,9 @@ export const UPLOAD_FILE_START = 'UPLOAD_FILE_START'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
 
+export const ADJUST_AVAILABILITY_SUCCESS = 'ADJUST_AVAILABILITY_SUCCESS'
+export const ADJUST_ERROR = 'ADJUST_ERROR'
+
 export const deleteItem = item_id => dispatch => {
 
 	dispatch({ type: DELETE_ITEM_START, payload: item_id })
@@ -74,7 +77,15 @@ export const uploadFile = formData => dispatch => {
 	}
 }
 
-export const addToCart = item_id => dispatch => {
-	console.log('adding item to cart', item_id)
-	dispatch({ type: ADD_TO_CART, payload: item_id })
+export const addToCart = (updatedItem, id) => dispatch => {
+	return (dispatch) => {
+		console.log('adding item to cart', updatedItem.id)
+		dispatch({ type: ADD_TO_CART, payload: updatedItem.id })
+		console.log('adjusting item availability')
+		axiosWithAuth().put(`https://ptpt-use-my-tech5.herokuapp.com/api/item/${id}`, updatedItem)
+			.then(response => {
+				dispatch({ type: ADJUST_AVAILABILITY_SUCCESS, payload: response.data })
+				console.log('successfully adjusted availability', response)
+			}).catch(err => dispatch({ type: ADJUST_ERROR, payload: err.message }))
+	}
 }

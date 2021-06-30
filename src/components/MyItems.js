@@ -42,7 +42,8 @@ const mapStateToProps = state => {
     itemList: state.items.itemList,
     myItems: state.users.myItems,
     user: state.users.user,
-    item: state.items.item
+    item: state.items.item,
+    userList: state.lists.userList
   }
 }
 export default connect(mapStateToProps, {})(MyItems);

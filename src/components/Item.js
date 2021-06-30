@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { cardStyle } from "./styles/styles";
+import React, { useState } from "react";
+import { cardStyle, itemsWrapperStyle } from "./styles/styles";
 import Modal from './Modal'
 import { addToCart, deleteItem } from '../actions/itemsActions'
 import defaultProfile from '../images/defaultProfile.png'
@@ -17,10 +17,13 @@ const Item = (props, { item, triggerModal }) => {
   }
 
 
-  const buyItem = item_id => {
-    props.addToCart(item_id)
+  const putInCart = (item) => {
+    props.addToCart(item.id)
   }
-
+  const getOwnersName = () => {
+    let ownerId = props.item.user_id;
+    //SetchUser(ownerId)
+  }
 
   return (
     <>
@@ -40,7 +43,7 @@ const Item = (props, { item, triggerModal }) => {
 
           <img src={props.item.imgs} alt={`${props.item.item_name}`} width="100%" />
           <div>
-            <h5>{props.user.username}</h5>
+            <h5>{ }</h5>
             {/* TODO import username and rating */}
             <p>User ratings</p>
             <p>Location: {props.user.location}</p>
@@ -66,7 +69,7 @@ const Item = (props, { item, triggerModal }) => {
           {/* TODO: if user's item display price as field not button */}
 
           {props.item.user_id !== props.user.user_id ?
-            <button onClick={addToCart(props.item_id)}
+            <button onClick={putInCart}
               className={props.item.availability <= 0 ? ('disabled waves-effect-light btn') : ('waves-effect-light btn')}
               style={{ display: "flex", justifyContent: "space-between" }}
             >
@@ -84,7 +87,8 @@ const Item = (props, { item, triggerModal }) => {
 const mapStateToProps = state => {
   return {
     isUserLoggedIn: state.users.isUserLoggedIn,
-    user: state.users.user
+    user: state.users.user,
+    userList: state.lists.userlist
   }
 }
 export default connect(mapStateToProps, { addToCart })(Item);

@@ -19,3 +19,15 @@ export const cardStyle = {
   margin: "1em",
   padding: "8px",
 };
+
+export const titleStyle = {
+  padding: '20px',
+  margin: '20px'
+}
+
+export const profilePicWrapperStyle = {
+  display: 'block',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  width: '50%'
+}

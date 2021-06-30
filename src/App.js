@@ -127,14 +127,14 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    userList: state.users.userList,
+    userList: state.lists.userList,
     user: state.users.user,
-    itemList: state.itemList.itemList,
+    itemList: state.lists.itemList,
     item: state.items.item,
     isLoading: state.items.isLoading,
     isUserLoggedIn: state.users.isUserLoggedIn,
     token: state.users.token,
-    items: state.items.items
+
   }
 }
 

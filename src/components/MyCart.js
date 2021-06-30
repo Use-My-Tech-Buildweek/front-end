@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 
 import Item from "./Item";
 import { itemsWrapperStyle, h4Style } from "./styles/styles";
 
 const MyCart = (props) => {
-  const history = useHistory();
+  //  const history = useHistory();
   const { triggerModal, cart } = props
 
   return (
@@ -29,11 +29,12 @@ const MyCart = (props) => {
 const mapStateToProps = state => {
   return {
     isUserLoggedIn: state.users.isUserLoggedIn,
-    itemList: state.itemList.itemList,
+    //itemList: state.itemList.itemList,
     items: state.items.items,
     item: state.items.item,
     user: state.users.user,
     cart: state.items.cart,
+    userList: state.lists.userList
   }
 }
 

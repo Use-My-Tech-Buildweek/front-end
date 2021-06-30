@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import M from "materialize-css";
 import { withRouter } from 'react-router-dom'
 import { addUser, setError, clearRegisterForm, uploadFile } from '../actions/userActions'
-
+import { fetchUserList } from '../actions/fetchActions'
 
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
@@ -58,7 +58,7 @@ class SignupForm extends React.Component {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
         this.props.addUser(this.state.newUser);
-
+        this.props.fetchUserList();
         if (!this.props.errorMessages) {
             this.props.history.push('/login')
         } else {
@@ -72,12 +72,12 @@ class SignupForm extends React.Component {
         if (e.target.id === "profilePicture") {
             const maxSize = 2000000
             const size = e.target.files[0].size
-            if (size > maxSize) {
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
-                return
-            } else {
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
-            }
+            // if (size > maxSize) {
+            //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
+            //     return
+            // } else {
+            //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
+            // }
         }
 
         this.setState({
@@ -203,4 +203,4 @@ const mapStateToProps = state => {
         isUserLoggedIn: state.isUserLoggedIn
     }
 }
-export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm })(SignupForm))
+export default withRouter(connect(mapStateToProps, { setError, addUser, clearRegisterForm, fetchUserList })(SignupForm))

@@ -9,6 +9,8 @@ import {
 	DELETE_ITEM_ERROR,
 
 	ADD_TO_CART,
+	ADJUST_AVAILABILITY_SUCCESS,
+	ADJUST_ERROR,
 
 	ADD_NEW_ITEM_START,
 	ADD_NEW_ITEM_SUCCESS,
@@ -24,7 +26,6 @@ import {
 export const initialState = {
 	errorMessages: '',
 	isLoading: false,
-	items: [],
 	item: {
 		availability: 0,
 		condition: '',
@@ -97,9 +98,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				cart: [...state.cart, action.payload],
-				item: {
-					availability: state.item.availability - 1,
-				}
+				isLoading: true,
+			}
+		case ADJUST_AVAILABILITY_SUCCESS:
+			return {
+				...state
 			}
 		case ADD_NEW_ITEM_START:
 			return {

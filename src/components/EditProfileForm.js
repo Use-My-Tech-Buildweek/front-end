@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getProfile, updateProfile } from '../actions/userActions'
+import { getProfile, updateProfile, deleteAccount } from '../actions/userActions'
 import { connect } from 'react-redux'
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
@@ -11,41 +11,52 @@ class EditProfileForm extends Component {
 		super(props)
 		this.state = {
 			user: {
+				username: this.props.user.username,
+				password: this.props.user.password,
+				profile_pic: this.props.user.profile_pic,
+				department: this.props.user.department,
+				location: this.props.user.location,
+			},
+			updatedUser: {
 				username: '',
 				password: '',
-				confirmPassword: '',
+				//confirmPassword: '',
 				// email: '',
 				// bio: '',
-				// profileImg: '',
+				profile_pic: '',
 				department: '',
+				location: '',
 			},
 			errors: {
 				username: '',
 				password: '',
-				confirmPassword: '',
+				//confirmPassword: '',
 				// email: '',
 				//bio,
-				//profileImg: '',
+				profile_pic: '',
 				department: '',
+				location: '',
 			},
 			error: '',
 			selectedFile: null,
-			validation: true
+			validation: true,
+			id: 'editProfile'
 		}
+
 	}
 
 	handleSubmit = e => {
 		e.preventDefault()
-		console.log('submit add new user button clicked, calling addUser', this.state.newUser);
-		this.props.addUser(this.state.newUser);
+		console.log('submit update user button clicked, calling update user', this.state.updatedUser);
+		this.props.updateProfile(this.state.updatedUser);
 		this.props.history.push(`/profile/:${this.props.user.id}`);
 	}
 
 	handleChanges = e => {
 		this.setState({
 			...this.state,
-			newUser: {
-				...this.state.newUser,
+			updatedUser: {
+				...this.state.updatedUser,
 				[e.target.name]: e.target.value
 			}
 		})
@@ -58,12 +69,12 @@ class EditProfileForm extends Component {
 	}
 
 	componentDidMount = () => {
-		this.props.getProfile(this.props.match.params.id)
+		this.props.getProfile(this.props.user.id)
 	}
 
 	handleSubmit = e => {
 		e.persist()
-		this.props.updateProfile(this.state.user)
+		this.props.updateProfile(this.state.updatedUser)
 	}
 
 	fileChange = e => {
@@ -80,11 +91,11 @@ class EditProfileForm extends Component {
 	render() {
 		return (
 			<>
-				<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal" />
+				{/*<Modal actionToConfirm={this.props.deleteAccount} textButton="delete my account" id="deleteProfileModal" />*/}
 				<form onSubmit={this.handleSubmit}>
 					<label>
 						Role
-						<select name="role" onChange={this.handleChanges}>
+						<select value={this.state.user.department}>
 							<option value="" disabled>== option ==</option>
 							<option value='Renter'>Renter</option>
 							<option value="Owner">Owner</option>
@@ -147,20 +158,21 @@ class EditProfileForm extends Component {
 						onChange={this.handleChanges}
 					/>
 				</label> */}
-					{/* <label>
-					Profile picture
-            <input
-						name="profilePicture"
-						type="file"
-						accept=".jpg,.jpeg,.png"
-						placeholder="Avatar"
-						value={this.state.user.profileImg}
-						onChange={this.fileChange}
-					/>
-				</label> */}
+					<label>
+						Profile picture
+						<input
+							name="profilePicture"
+							type="file"
+							accept=".jpg,.jpeg,.png"
+							placeholder="Avatar"
+							value={this.state.user.profile_pic}
+							onChange={this.fileChange}
+						/>
+					</label>
 					<div>
 						<button type="submit" disabled={this.state.validation}>Save changes</button>
-						<button type="button" onClick={() => { this.props.triggerModal() }}>Delete my profile</button>
+						{//<button type="button" onClick={() => { this.props.triggerModal(this.state.id) }}>Delete my profile</button>
+						}
 					</div>
 				</form>
 			</>
@@ -171,10 +183,11 @@ class EditProfileForm extends Component {
 
 const mapStateToProps = state => {
 	return {
-		user: state.user,
-		error: state.error,
-		isUserLoggedIn: state.isUserLoggedIn
+		user: state.users.user,
+		errorMessages: state.users.error,
+		isUserLoggedIn: state.users.isUserLoggedIn,
+		userList: state.lists.userList
 
 	}
 }
-export default connect(mapStateToProps, { getProfile, updateProfile })(EditProfileForm)
+export default connect(mapStateToProps, { getProfile, updateProfile, deleteAccount })(EditProfileForm)

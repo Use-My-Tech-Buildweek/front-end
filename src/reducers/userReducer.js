@@ -3,26 +3,31 @@ import {
 	START_ADD_USER,
 	ADD_USER_SUCCESS,
 	ADD_USER_ERROR,
+
 	SET_ERROR,
+
 	LOGIN_USER,
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
+
 	START_USER_FETCH,
 	USER_FETCH_SUCCESS,
 	USER_FETCH_ERROR,
+
 	START_UPDATE_PROFILE,
 	UPDATE_PROFILE_SUCCESS,
 	UPDATE_PROFILE_ERROR,
+
 	USER_LOG_OUT,
 	LOG_OUT_SUCCESS,
-	CLEAR_REGISTER_FORM,
-	START_USERLIST_FETCH,
-	FETCH_USERLIST_SUCCESS,
-	FETCH_USERLIST_ERROR,
 	LOG_OUT_ERROR,
+
+	CLEAR_REGISTER_FORM,
+
 	GET_MYITEMS_SUCCESS,
 	GET_MYITEMS_START,
 	GET_MYITEMS_ERROR,
+
 	UPLOAD_FILE_START,
 	UPLOAD_FILE_SUCCESS,
 	UPLOAD_FILE_ERROR
@@ -30,7 +35,6 @@ import {
 
 // sets state 
 const initialState = {
-	userList: [],
 	user: {
 		username: '',
 		password: '',
@@ -60,7 +64,6 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				user: action.payload,
-				userList: [...state.userList, action.payload],
 				isLoading: false,
 				errorsMessages: [],
 				newUser: {
@@ -101,7 +104,6 @@ const userReducer = (state = initialState, action) => {
 				errorMessages: [],
 				isUserLoggedIn: true,
 				token: localStorage.getItem('token'),
-				userList: [...state.userList, action.payload],
 			}
 		case LOGIN_ERROR:
 			console.log('userReducer says: login error')
@@ -186,25 +188,7 @@ const userReducer = (state = initialState, action) => {
 					location: ''
 				}
 			}
-		case START_USERLIST_FETCH:
-			return {
-				...state,
-				isLoading: true,
-				errorMessages: []
-			}
-		case FETCH_USERLIST_SUCCESS:
-			return {
-				...state,
-				userList: [...state.userList, action.payload],
-				isLoading: false,
-				errorMessages: [],
-			}
-		case FETCH_USERLIST_ERROR:
-			return {
-				...state,
-				errorMessages: [...state.errorMessages, action.payload],
-				isLoading: false
-			}
+
 		case GET_MYITEMS_START:
 			return {
 				...state,

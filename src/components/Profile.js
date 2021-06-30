@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
+import { titleStyle, profilePicWrapperStyle } from './styles/styles.js'
 
 import { getProfile, getMyItems } from '../actions/userActions'
 import defaultProfile from '../images/defaultProfile.png'
@@ -12,22 +13,29 @@ const Profile = props => {
 
   const history = useHistory();
 
+
   useEffect(() => {
     props.getMyItems(props.user.id)
   }, [props, props.user.id])
 
+  const startEditProfile = (e, id) => {
+    history.push(`/edit-profile/:${props.user.id}`)
+  }
+
+
+
   return (
     <>
       <div>
-        <h2>{props.user.username}</h2>
-        <h3>{props.user.department}</h3>
-        <img src={props.user.profile_picture || defaultProfile} alt="" />
+        <h2 style={titleStyle}>{props.user.username}</h2>
+        <h3 style={titleStyle}>{props.user.department}</h3>
+        <img style={profilePicWrapperStyle} src={props.user.profile_picture || defaultProfile} alt="" />
         <p>{props.user.username}</p>
 
 
         {props.user.department === 'renter' ? (<h3>My Recent Rentals</h3>)
           : (<div><h3>Items I Own</h3><MyItems /></div>)}
-        <button onClick={() => history.push(`/edit-profile/:${props.userId}`)}>
+        <button onClick={startEditProfile}>
           Edit Profile
         </button>
       </div>

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
 import { connect } from 'react-redux'

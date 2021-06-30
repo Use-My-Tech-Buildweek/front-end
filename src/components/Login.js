@@ -98,7 +98,8 @@ const mapStateToProps = state => {
         errorMessages: state.users.errorMessages,
         isLoading: state.users.isLoading,
         user: state.users.user,
-        isUserLoggedIn: state.users.isUserLoggedIn
+        isUserLoggedIn: state.users.isUserLoggedIn,
+
     }
 }
 export default withRouter(connect(mapStateToProps, { loginUser, setError })(Login))

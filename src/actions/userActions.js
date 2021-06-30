@@ -5,32 +5,47 @@ import { axiosWithAuth } from '../utils/axiosWithAuth'
 //import { history } from '../utils/history'
 
 export const CLEAR_REGISTER_FORM = 'CLEAR_REGISTER_FORM'
+
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
 export const ADD_USER_ERROR = 'ADD_USER_ERROR'
+
 export const SET_ERROR = 'SET_ERROR'
+
 export const START_USERLIST_FETCH = 'START_USER_FETCH'
 export const FETCH_USERLIST_SUCCESS = 'FETCH_SUCCESS'
 export const FETCH_USERLIST_ERROR = 'FETCH_ERROR'
+
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
-export const EDIT_PROFILE = 'EDIT_PROFILE'
+
+
 export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS'
 export const START_USER_FETCH = 'START_USER_FETCH'
 export const USER_FETCH_ERROR = 'USER_FETCH_ERROR'
+
 export const START_UPDATE_PROFILE = 'START_UPDATE_PROFILE'
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS'
 export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
+
 export const USER_LOG_OUT = 'USER_LOG_OUT'
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
 export const LOG_OUT_ERROR = 'LOG_OUT_ERROR'
+
 export const GET_MYITEMS_START = 'GET_MYITEMS_START'
 export const GET_MYITEMS_SUCCESS = 'GET_MYITEMS_SUCCESS'
 export const GET_MYITEMS_ERROR = 'GET_MYITEMS_ERROR'
+
 export const UPLOAD_FILE_START = 'UPLOAD_FILE_START'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
+
+export const GET_OWNER = 'GET_OWNER'
+
+export const DELETE_ACCOUNT_START = 'DELETE_ACCOUNT_START'
+export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS'
+export const DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR'
 
 // action call to call api for list of users 
 export const fetchUserList = () => dispatch => {
@@ -160,4 +175,12 @@ export const uploadFile = formData => dispatch => {
 	} catch (err) {
 		console.log(err)
 	}
+}
+
+export const deleteAccount = id => dispatch => {
+	dispatch({ type: DELETE_ACCOUNT_START, payload: id })
+	axiosWithAuth().delete(`https://ptpt-use-my-tech5.herokuapp.com/api/user/${id}`)
+		.then(resp => {
+			dispatch({ type: DELETE_ACCOUNT_SUCCESS, payload: resp.data })
+		}).catch(err => dispatch({ type: DELETE_ACCOUNT_ERROR, payload: err.message }))
 }
