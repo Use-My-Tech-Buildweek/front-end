@@ -126,6 +126,7 @@ const reducer = (state = initialState, action) => {
 			}
 		case UPLOAD_FILE_START:
 			return {
+				...state,
 				isLoading: true,
 				errorMessages: ''
 			}

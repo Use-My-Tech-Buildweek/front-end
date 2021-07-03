@@ -103,7 +103,7 @@ class App extends React.Component {
 
             <PrivateRoute path="/user/:id/additem" component={NewItem} type='private' />
 
-            <PrivateRoute path='/user/:id/avatar' component={FileUploader} user={this.props.user} />
+            <PrivateRoute path='/user/:id/avatar' component={FileUploader} user={this.props.user} isUserLoggedIn={this.props.isUserLoggedIn} />
             <PrivateRoute path='/user-list' render={UserList} type='private' />
 
             <Route path="/myItems">

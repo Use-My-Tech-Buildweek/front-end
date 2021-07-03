@@ -47,6 +47,10 @@ export const DELETE_ACCOUNT_START = 'DELETE_ACCOUNT_START'
 export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS'
 export const DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR'
 
+export const AUTHENTICATE_THE_USER = 'AUTHENTICATE_THE_USER'
+
+export const GET_FILE_TO_UPLOAD = 'GET_FILE_TO_UPLOAD'
+
 // action call to call api for list of users 
 export const fetchUserList = () => dispatch => {
 	dispatch({ type: START_USERLIST_FETCH })
@@ -168,15 +172,16 @@ export const getMyItems = id => async dispatch => {
 
 }
 
-export const uploadFile = formData => dispatch => {
-	dispatch({ type: UPLOAD_FILE_START, payload: formData })
+export const uploadFile = file => dispatch => {
+	dispatch({ type: UPLOAD_FILE_START, payload: file })
 	console.log('attempting file upload')
 	try {
-		axios.post('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', formData)
+		axios.post(`https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5&source=${file}`, file)
 			.then(response => {
 				dispatch({ type: UPLOAD_FILE_SUCCESS, payload: response.data })
 			}).catch(err => {
 				dispatch({ type: UPLOAD_FILE_ERROR, payload: err.message })
+				console.log(err.message)
 			})
 	} catch (err) {
 		console.log(err)
@@ -189,4 +194,12 @@ export const deleteAccount = id => dispatch => {
 		.then(resp => {
 			dispatch({ type: DELETE_ACCOUNT_SUCCESS, payload: resp.data })
 		}).catch(err => dispatch({ type: DELETE_ACCOUNT_ERROR, payload: err.message }))
+}
+
+export const authenticateTheUser = () => dispatch => {
+	dispatch({ type: AUTHENTICATE_THE_USER })
+}
+
+export const getFileToUpload = file => dispatch => {
+	dispatch({ type: GET_FILE_TO_UPLOAD, payload: file })
 }

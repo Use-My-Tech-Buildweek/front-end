@@ -15,8 +15,10 @@ const Profile = props => {
 
 
   useEffect(() => {
-    props.getMyItems(props.user.id)
-  }, [props, props.user.id])
+    if (props.isLoggedIn) {
+      props.getMyItems(props.user.id)
+    }
+  }, [props])
 
   const startEditProfile = (e, id) => {
     history.push(`/edit-profile/:${props.user.id}`)

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { getProfile, updateProfile, deleteAccount } from '../actions/userActions'
+import M from "materialize-css"
 import { connect } from 'react-redux'
 import * as yup from 'yup'
-import signupSchema from '../schemas/signupSchema'
-import M from "materialize-css"
+import { Link } from 'react-router-dom'
 
-import Modal from './Modal'
+import signupSchema from '../schemas/signupSchema'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import { getUserUrl } from '../utils/apiUrls'
-
+import { getProfile, updateProfile, deleteAccount } from '../actions/userActions'
+import SingleFileAutoSubmit from './SingleFileAutoSubmit'
+import DropzoneWithPreview from './DropzoneWithPreview'
 class EditProfileForm extends Component {
 	constructor(props) {
 		super(props)
@@ -18,14 +19,12 @@ class EditProfileForm extends Component {
 				password: '',
 				profile_pic: '',
 				department: '',
-				location: ''
+				location: '',
+				id: ''
 			},
 			errors: {
 				username: '',
 				password: '',
-				//confirmPassword: '',
-				// email: '',
-				//bio,
 				profile_pic: '',
 				department: '',
 				location: '',
@@ -99,7 +98,7 @@ class EditProfileForm extends Component {
 	}
 
 	goToFileUploader = () => {
-		this.props.history.push(`/user/${this.state.user.id}/avatar`)
+		this.props.history.push(`/user/${this.props.user.id}/avatar`)
 	}
 
 	render() {
@@ -134,15 +133,7 @@ class EditProfileForm extends Component {
 							<label htmlFor="password">Password</label>
 						</div>
 					</div>
-					<label>
-						Confirm your Password
-						<p>{this.state.errors.confirmPassword}</p>
-						<input
-							name="confirmPassword"
-							type="text"
-							placeholder="confirm your password"
-						/>
-					</label>
+
 					<p>{this.state.errors.department}</p>
 					<div className="row">
 						<div className="input-field col s12">
@@ -165,12 +156,21 @@ class EditProfileForm extends Component {
 							<label htmlFor="department">Account Type</label>
 						</div>
 					</div>
-					<button onClick={this.goToFileUploader}>Click to add your avatar</button>
-					<div className="row">
-						<div className="col s6">
-							<button type="submit" disabled={this.state.validation} className="btn btn-waves-effect" >
+					<div className='row'>
+						<div className='col s6'>
+							<DropzoneWithPreview />
+						</div>
+						<div className='col s6'>
 
-								Save changes</button>
+							<SingleFileAutoSubmit />
+							{/*}<Link to={`/user/${this.props.user.id}/avatar`} type='button' href={'/'} onClick={this.goToFileUploader}>Click to add or change your avatar</Link>*/}
+						</div>
+						<div className="row">
+							<div className="col s6">
+								<button type="submit" className="btn btn-waves-effect" >
+
+									Save changes</button>
+							</div>
 						</div>
 					</div>
 				</form>

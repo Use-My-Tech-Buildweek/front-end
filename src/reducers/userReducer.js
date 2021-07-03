@@ -30,7 +30,11 @@ import {
 
 	UPLOAD_FILE_START,
 	UPLOAD_FILE_SUCCESS,
-	UPLOAD_FILE_ERROR
+	UPLOAD_FILE_ERROR,
+
+	AUTHENTICATE_THE_USER,
+
+	GET_FILE_TO_UPLOAD,
 } from '../actions/userActions'
 
 // sets state 
@@ -48,7 +52,8 @@ const initialState = {
 	isLoading: false,
 	isUserLoggedIn: false,
 	token: '',
-	myItems: []
+	myItems: [],
+	fileToUpload: undefined
 }
 
 //reducer function
@@ -203,10 +208,15 @@ const userReducer = (state = initialState, action) => {
 				errorMessages: []
 			}
 		case GET_MYITEMS_ERROR:
+			return {
+				...state,
+			}
 		case UPLOAD_FILE_START:
 			return {
+				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: '',
+
 			}
 
 		case UPLOAD_FILE_SUCCESS:
@@ -221,6 +231,16 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				errorMessages: action.payload
+			}
+		case AUTHENTICATE_THE_USER:
+			return {
+				...state,
+				isUserLoggedIn: true
+			}
+		case GET_FILE_TO_UPLOAD:
+			return {
+				...state,
+				fileToUpload: action.payload
 			}
 		default:
 			return state
