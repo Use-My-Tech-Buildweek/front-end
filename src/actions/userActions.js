@@ -205,8 +205,3 @@ export const authenticateTheUser = () => dispatch => {
 export const getFileToUpload = file => dispatch => {
 	dispatch({ type: GET_FILE_TO_UPLOAD, payload: file })
 }
-// export const linkNewItemToUser = newItem =>dispatch =>{
-// 	dispatch({type:LINK_NEW_ITEM_TO_USER, payload:newItem})
-
-// }
-//}

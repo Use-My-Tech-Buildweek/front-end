@@ -173,7 +173,6 @@ const userReducer = (state = initialState, action) => {
 					password: '',
 					department: '',
 				},
-
 			}
 		case LOG_OUT_ERROR:
 			return {
@@ -193,7 +192,6 @@ const userReducer = (state = initialState, action) => {
 					location: ''
 				}
 			}
-
 		case GET_MYITEMS_START:
 			return {
 				...state,
@@ -216,9 +214,7 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				isLoading: true,
 				errorMessages: '',
-
 			}
-
 		case UPLOAD_FILE_SUCCESS:
 			return {
 				...state,

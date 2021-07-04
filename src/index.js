@@ -14,7 +14,7 @@ import App from './App'
 import { fetchItemList } from './actions/fetchActions'
 import { authenticateTheUser } from './actions/userActions'
 
-// creates redux store and middleware
+// creates redux store and insert middleware
 const store = createStore(rootReducer,
   composeWithDevTools(applyMiddleware(logger, thunk)));
 
