@@ -53,6 +53,7 @@ export const initialState = {
 		user_id: '',
 	},
 	cart: [],
+	items: []
 }
 
 // itemsReducer functions
@@ -108,15 +109,15 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				errorMessages: ''
+				errorMessages: '',
+				newItem: action.payload,
 			}
 		case ADD_NEW_ITEM_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
 				errorMessages: '',
-				newItem: [...state.newItem, action.payload],
-				items: [...state.items, state.newItem],
+				items: action.payload,
 			}
 		case ADD_NEW_ITEM_ERROR:
 			return {

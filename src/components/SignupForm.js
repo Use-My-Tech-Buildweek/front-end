@@ -7,7 +7,7 @@ import { fetchUserList } from '../actions/fetchActions'
 
 import * as yup from 'yup'
 import signupSchema from '../schemas/signupSchema'
-import FileUploader from './FileUploader'
+
 
 class SignupForm extends React.Component {
     constructor(props) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import { addNewItem } from '../actions/itemsActions'
-import FileUploader from './FileUploader';
+import { getMyItems } from '../actions/userActions'
 
 
 const NewItem = props => {
@@ -29,6 +29,7 @@ const NewItem = props => {
   const onAdd = e => {
     e.preventDefault()
     props.addNewItem(newItem.user_id, newItem)
+    props.getMyItems(props.user.id)
     history.push(`/profile/user/${props.user.id}`)
   }
 
@@ -87,15 +88,7 @@ const NewItem = props => {
         </label>
         <label>
           Pictures
-          { /*  <input
-            name="imgs"
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            placeholder="item pictures..."
-            onChange={changeHandler}
-            multiple
-        /> */}
-          <FileUploader name='imgs' />
+
         </label>
         <button>Add this Item</button>
 
@@ -108,8 +101,8 @@ const mapStateToProps = state => {
   return {
     myItems: state.users.myItems,
     items: state.items.items,
-    itemList: state.itemList.itemList,
+    itemList: state.lists.itemList,
     user: state.users.user
   }
 }
-export default connect(mapStateToProps, { addNewItem })(NewItem)
+export default connect(mapStateToProps, { addNewItem, getMyItems })(NewItem)

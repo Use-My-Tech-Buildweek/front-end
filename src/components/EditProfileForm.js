@@ -9,7 +9,7 @@ import { axiosWithAuth } from '../utils/axiosWithAuth'
 import { getUserUrl } from '../utils/apiUrls'
 import { getProfile, updateProfile, deleteAccount } from '../actions/userActions'
 import SingleFileAutoSubmit from './SingleFileAutoSubmit'
-import DropzoneWithPreview from './DropzoneWithPreview'
+import ProfileDropzone from './ProfileDropzone'
 class EditProfileForm extends Component {
 	constructor(props) {
 		super(props)
@@ -158,7 +158,7 @@ class EditProfileForm extends Component {
 					</div>
 					<div className='row'>
 						<div className='col s6'>
-							<DropzoneWithPreview />
+							<ProfileDropzone />
 						</div>
 						<div className='col s6'>
 

@@ -37,7 +37,7 @@ const img = {
 };
 
 
-function DropzoneWithPreview(props) {
+function ProfileDropzone(props) {
 	const [file, setFile] = useState();
 	const { getRootProps, getInputProps } = useDropzone({
 		accept: 'image/*', maxFiles: 1,
@@ -89,4 +89,4 @@ const mapStateToProps = state => {
 
 	}
 }
-export default connect(mapStateToProps, { getFileToUpload })(DropzoneWithPreview)
+export default connect(mapStateToProps, { getFileToUpload })(ProfileDropzone)

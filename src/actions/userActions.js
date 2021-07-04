@@ -51,6 +51,8 @@ export const AUTHENTICATE_THE_USER = 'AUTHENTICATE_THE_USER'
 
 export const GET_FILE_TO_UPLOAD = 'GET_FILE_TO_UPLOAD'
 
+export const LINK_NEW_ITEM_TO_USER = 'LINK_NEW_ITEM_TO_USER'
+
 // action call to call api for list of users 
 export const fetchUserList = () => dispatch => {
 	dispatch({ type: START_USERLIST_FETCH })
@@ -203,3 +205,8 @@ export const authenticateTheUser = () => dispatch => {
 export const getFileToUpload = file => dispatch => {
 	dispatch({ type: GET_FILE_TO_UPLOAD, payload: file })
 }
+// export const linkNewItemToUser = newItem =>dispatch =>{
+// 	dispatch({type:LINK_NEW_ITEM_TO_USER, payload:newItem})
+
+// }
+//}
