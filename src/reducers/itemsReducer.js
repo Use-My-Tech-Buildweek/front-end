@@ -1,9 +1,5 @@
 //import action calls
 import {
-	GET_ITEMS_START,
-	GET_ITEMS_SUCCESS,
-	GET_ITEMS_ERROR,
-
 	DELETE_ITEM_START,
 	DELETE_ITEM_SUCCESS,
 	DELETE_ITEM_ERROR,
@@ -15,10 +11,10 @@ import {
 	ADD_NEW_ITEM_START,
 	ADD_NEW_ITEM_SUCCESS,
 	ADD_NEW_ITEM_ERROR,
-
-	UPLOAD_FILE_START,
-	UPLOAD_FILE_SUCCESS,
-	UPLOAD_FILE_ERROR
+	/* 
+		UPLOAD_FILE_START,
+		UPLOAD_FILE_SUCCESS,
+		UPLOAD_FILE_ERROR */
 }
 	from '../actions/itemsActions'
 
@@ -59,26 +55,6 @@ export const initialState = {
 // itemsReducer functions
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GET_ITEMS_START:
-			return {
-				...state,
-				isItemsLoading: true,
-				errorMessages: ''
-			}
-		case GET_ITEMS_SUCCESS:
-			return {
-				...state,
-				isItemsLoading: false,
-				errorMessages: '',
-				items: [...state.items, action.payload]
-			}
-		case GET_ITEMS_ERROR:
-			return {
-				...state,
-				isItemsLoading: false,
-				errorMessages: action.payload
-			}
-
 		case DELETE_ITEM_START:
 			return {
 				...state,
@@ -105,6 +81,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state
 			}
+		case ADJUST_ERROR:
+			return {
+				...state,
+				errorMessages: action.payload
+			}
 		case ADD_NEW_ITEM_START:
 			return {
 				...state,
@@ -125,7 +106,7 @@ const reducer = (state = initialState, action) => {
 				isLoading: false,
 				errorMessages: action.payload,
 			}
-		case UPLOAD_FILE_START:
+		/* case UPLOAD_FILE_START:
 			return {
 				...state,
 				isLoading: true,
@@ -138,12 +119,12 @@ const reducer = (state = initialState, action) => {
 				isLoading: false,
 				errorMessages: ''
 			}
-		case UPLOAD_FILE_ERROR:
+		case UPLOAD_FILE_ERROR: 
 			return {
 				...state,
 				isLoading: false,
 				errorMessages: action.payload
-			}
+			}*/
 		default:
 			return state
 	}

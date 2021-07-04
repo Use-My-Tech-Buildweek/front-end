@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import M from "materialize-css";
 import { withRouter } from 'react-router-dom'
-import { addUser, setError, clearRegisterForm, uploadFile } from '../actions/userActions'
+import { addUser, setError, clearRegisterForm } from '../actions/userActions'
 import { fetchUserList } from '../actions/fetchActions'
 
 import * as yup from 'yup'
@@ -16,36 +16,32 @@ class SignupForm extends React.Component {
             newUser: {
                 username: '',
                 password: '',
-                // confirmPassword: '',
-                // email: '',
-                //bio,
                 profile_pic: '',
                 department: '',
-                //location: ''
+                location: ''
             },
             errors: {
                 username: '',
                 password: '',
-                confirmPassword: '',
-                // email: '',
-                // eslint-disable-next-line no-undef
-                //bio,
                 profile_pic: '',
                 department: '',
             },
             error: '',
             isFilePicked: false,
             validation: true,
-            selectedFile: ''
+            selectedFile: '',
+            formValues: []
         }
     }
 
     componentDidMount() {
+        // Styling
         const elems = document.querySelectorAll("select");
         M.FormSelect.init(elems);
     }
 
     componentDidUpdate() {
+        // Error validation
         signupSchema.isValid(this.state.newUser)
             .then(valid => {
                 if (this.state.validation === valid) {
@@ -55,41 +51,42 @@ class SignupForm extends React.Component {
 
     }
 
+    // Change handler for file uploads
     fileChange = e => {
         this.setState({ selectedFile: e.target.files[0] })
         this.setState({ isFilePicked: true })
     }
-
     onFileUpload = () => {
         const formData = new FormData();
         formData.append('file', this.state.selectedFile, this.state.selectedFile.name);
         this.props.uploadFile(this.state.selectedFile)
     }
 
+    // handles form submisson for registration
     handleSubmit = e => {
         e.preventDefault()
         console.log('submit add new user button clicked, calling addUser', this.state.newUser);
+        // calls action creator to add new user
         this.props.addUser(this.state.newUser);
-        //this.props.fetchUserList();
+        // updates user list
+        this.props.fetchUserList();
+        // If no errors from action, redirect to login page
         if (!this.props.errorMessages) {
             this.props.history.push('/login')
         } else {
+            // If errors, clear form
             clearRegisterForm();
-            this.props.history.push(`/profile/:${this.props.user.id}`);
-
         }
     }
+
+    // Change handler for registration form
     handleChanges = e => {
         // profile picture file size checking
         if (e.target.id === "profilePicture") {
             const maxSize = 2000000
             const size = e.target.files[0].size
             if (size > maxSize) {
-                this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: `your file is ${size}, it should be ${maxSize} max` } })
-
-                // } else {
-                //     this.setState({ ...this.state, errors: { ...this.state.errors, ['profile_picture']: "" } })
-                // }
+                this.setState({ ...this.state, errors: { ...this.state.errors, } })
             }
         }
         this.setState({
@@ -106,6 +103,7 @@ class SignupForm extends React.Component {
             })
             .catch(err => this.setState({ ...this.state, errors: { ...this.state.errors, [e.target.name]: err.message } }))
     }
+
     render() {
         return (
             <div className='row'>
@@ -161,22 +159,9 @@ class SignupForm extends React.Component {
                             <label htmlFor="password">Password</label>
                         </div>
                     </div>
-                    { /*  <p>{this.state.newUser.confirmPassword !== this.state.newUser.password ? this.state.errors.confirmPassword : null}</p>
                     <div className="row">
-                        <div className="input-field col s6">
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                id="confirmPassword"
-                                autoComplete='current-password'
-                                onChange={this.handleChanges}
-                                value={this.state.newUser.confirmPassword}
-                            />
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                        </div>
-        </div> <div className="row">
                         <div className="file-field input-field col s12">
-                            {/*<FileUploader uploadFile={uploadFile} image_name='profile_pic' />
+                            {/*<FileUploader uploadFile={uploadFile} image_name='profile_pic' />*/}
                             <div className="col-8">
                                 <input type="file" name='profile_image' accept="image/*" onChange={this.fileChange} />
                                 {this.state.isFilePicked ? (<div>
@@ -196,30 +181,30 @@ class SignupForm extends React.Component {
                                 </div>
                             </div>
 }
-                            { /*  <div className="btn">
-                                    <span>Profile Picture</span>
-                                    <input
-                                        id="profilePicture"
-                                        type="file"
-                                        name="profile_picture"
-                                        onChange={this.handleChanges}
-                                        accept="image/png, image/jpeg"
-                                        value={formValues.profile_picture}
-                                    />
-                </div> 
-                    <p>{this.state.errors.profile_pic}</p>
-                        </div>*/}
-                    <div className="row">
-                        <div className="col s6">
-                            <button type="submit" className="btn btn-waves-effect" >
-                                Submit
-                            </button>
+                            <div className="btn">
+                                <span>Profile Picture</span>
+                                <input
+                                    id="profilePicture"
+                                    type="file"
+                                    name="profile_picture"
+                                    onChange={this.handleChanges}
+                                    accept="image/png, image/jpeg"
+                                    value={this.state.formValues.profile_picture}
+                                />
+                            </div>
+                            <p>{this.state.errors.profile_pic}</p>
                         </div>
+                        <div className="row">
+                            <div className="col s6">
+                                <button type="submit" className="btn btn-waves-effect" >
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
-
-
-                </form >
-            </div >
+                </form>
+            </div>
         )
     }
 }

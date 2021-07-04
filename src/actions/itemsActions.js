@@ -1,4 +1,6 @@
-import axios from 'axios'
+// Actions for itemsReducer
+
+//import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 
@@ -6,25 +8,22 @@ export const DELETE_ITEM_START = 'DELETE_ITEM_START'
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS'
 export const DELETE_ITEM_ERROR = 'DELETE_ITEM_ERROR'
 
-export const GET_ITEMS_START = 'GET_ITEMS_START'
-export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
-export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR'
-
 export const ADD_TO_CART = 'ADD_TO_CART'
 
 export const ADD_NEW_ITEM_START = 'ADD_NEW_ITEM'
 export const ADD_NEW_ITEM_SUCCESS = 'ADD_NEW_ITEM_SUCCESS'
 export const ADD_NEW_ITEM_ERROR = 'ADD_NEW_ITEM_ERROR'
-
+/* 
 export const UPLOAD_FILE_START = 'UPLOAD_FILE_START'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
-
+ */
 export const ADJUST_AVAILABILITY_SUCCESS = 'ADJUST_AVAILABILITY_SUCCESS'
 export const ADJUST_ERROR = 'ADJUST_ERROR'
 
-export const deleteItem = item_id => dispatch => {
 
+// Action creator for item deletion
+export const deleteItem = item_id => dispatch => {
 	dispatch({ type: DELETE_ITEM_START, payload: item_id })
 	console.log('deleting item...', item_id)
 	axiosWithAuth().delete(`https://ptpt-use-my-tech5.herokuapp.com/api/item/${item_id}`)
@@ -34,18 +33,8 @@ export const deleteItem = item_id => dispatch => {
 			dispatch({ type: DELETE_ITEM_ERROR, payload: err.message })
 		})
 }
-export const fetchItems = () => dispatch => {
-	return async dispatch => {
-		try {
-			dispatch({ type: GET_ITEMS_START })
-			let items = await axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/items')
-			dispatch({ type: GET_ITEMS_SUCCESS, payload: items.data })
-		} catch (err) {
-			dispatch({ type: GET_ITEMS_ERROR, payload: err })
-		}
-	}
-}
 
+// Action creator for user to add an item
 export const addNewItem = (user_id, newItem) => dispatch => {
 	dispatch({ type: ADD_NEW_ITEM_START, payload: newItem })
 	console.log('itemsActions says: attempting to add new item', newItem)
@@ -62,7 +51,7 @@ export const addNewItem = (user_id, newItem) => dispatch => {
 	}
 }
 
-export const uploadFile = formData => dispatch => {
+/* export const uploadFile = formData => dispatch => {
 	dispatch({ type: UPLOAD_FILE_START, payload: formData })
 	console.log('attempting file upload')
 	try {
@@ -75,8 +64,9 @@ export const uploadFile = formData => dispatch => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+} */
 
+// Action creator for when user adds item to cart
 export const addToCart = (updatedItem, id) => dispatch => {
 	return (dispatch) => {
 		console.log('adding item to cart', updatedItem.id)

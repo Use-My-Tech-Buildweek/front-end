@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router
 import React from 'react'
 import { connect } from 'react-redux'
 
-
 import "./App.css";
 
 import PrivateRoute from './components/PrivateRoute'
@@ -15,11 +14,9 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import EditProfileForm from './components/EditProfileForm'
 import UserList from './components/UserList'
-
 import MyCart from './components/MyCart'
 
 import { userLogOut } from './actions/userActions'
-import { fetchItems } from './actions/itemsActions';
 
 
 class App extends React.Component {
@@ -32,21 +29,21 @@ class App extends React.Component {
     }
   }
 
+  // Toggle modal visibility
   toggleVisible = () => {
     this.setState(
       this.state.visible, !this.state.visible)
   }
 
-
   componentDidMount() {
-    this.props.fetchItems()
+    // Keep user logged in if token is present in local storage
     if (localStorage.getItem('token') !== '') {
       localStorage.clear();
-      //this.props.userLogOut();
     }
 
   }
   componentDidUpdate(prevProps) {
+    // Keeps itemList fresh
     if (prevProps.itemList.length !== this.props.itemList.length) {
       this.setState({
         ...this.state,
@@ -54,7 +51,6 @@ class App extends React.Component {
       })
     }
   }
-
 
   triggerModal = (id) => {
     const modal = document.getElementById(id);
@@ -64,6 +60,7 @@ class App extends React.Component {
     modal.style.left = "40%";
   }
 
+  //Delete user account
   deleteAccount = (id) => {
     console.log("deleting account")
 
@@ -75,56 +72,61 @@ class App extends React.Component {
     this.props.userLogOut();
     this.props.history.push('/login')
   }
+
   render() {
     return (
       <Router>
         <header>
           {this.props.isLoading && <h1>Loading.....</h1>}
+          {/* Visible on every page*/}
           <Navbar triggerModal={this.triggerModal} logOut={this.logout} />
         </header>
         <main>
           <Switch>
+            {/* Landing page*/}
             <Route exact path="/">
-
               <Welcome itemList={this.state.itemList} triggerModal={this.triggerModal} />
-
-
             </Route>
 
+            {/* New account registration */}
             <Route path="/register">
               <SignupForm visible={this.state.visible} toggleVisible={this.toggleVisible} />
             </Route>
 
+            {/* User profile*/}
             <PrivateRoute path='/profile/user/:id' user={this.props.user} component={Profile} type='private' />
 
+            {/* Edit profile form*/}
             <PrivateRoute path={`/edit-profile/:userId`}>
               <EditProfileForm history={this.props.history} triggerModal={this.triggerModal} deleteAccount={this.deleteAccount} />
             </PrivateRoute>
 
+            {/* Add new item form*/}
             <PrivateRoute path="/user/:id/additem" component={NewItem} type='private' />
 
+            {/* Upload images for profile or new items*/}
             {/*             <PrivateRoute path='/user/:id/avatar' component={FileUploader} user={this.props.user} isUserLoggedIn={this.props.isUserLoggedIn} />*/}
+
+            {/* Display all user profiles*/}
             <PrivateRoute path='/user-list' render={UserList} type='private' />
 
+            {/* Display all items for logged in user*/}
             <Route path="/myItems">
               <MyItems triggerModal={this.triggerModal} itemsList={this.state.items} />
             </Route>
 
+            {/* Display items currently in cart*/}
             <Route path="/myCart">
               <MyCart triggerModal={this.triggerModal} itemsList={this.state.items} />
-
             </Route>
 
-
+            {/* Log in form*/}
             <Route path="/login">
               <Login />
             </Route>
-
-
           </Switch>
         </main>
       </Router>)
-
   }
 }
 
@@ -141,4 +143,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { userLogOut, fetchItems })(App))
+export default withRouter(connect(mapStateToProps, { userLogOut })(App))

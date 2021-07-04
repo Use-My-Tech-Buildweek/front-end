@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import M from "materialize-css"
 import { connect } from 'react-redux'
 import * as yup from 'yup'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 
 import signupSchema from '../schemas/signupSchema'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
