@@ -1,13 +1,17 @@
+// This is code to use antd's Upload component
+
 import React from 'react'
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
+// Check if img has correct encoding
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
 	reader.readAsDataURL(img);
 }
 
+// Check if file type is jpg or png
 function beforeUpload(file) {
 	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 	if (!isJpgOrPng) {

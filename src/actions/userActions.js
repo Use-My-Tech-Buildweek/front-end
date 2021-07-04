@@ -1,25 +1,12 @@
+// These are actions involving user's state 
+
 import axios from 'axios'
 
-//import useCallAPI from "../hooks/useCallAPI"
 import { axiosWithAuth } from '../utils/axiosWithAuth'
-//import { history } from '../utils/history'
-
-export const CLEAR_REGISTER_FORM = 'CLEAR_REGISTER_FORM'
 
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 export const START_ADD_USER = 'START_ADD_USER'
 export const ADD_USER_ERROR = 'ADD_USER_ERROR'
-
-export const SET_ERROR = 'SET_ERROR'
-
-export const START_USERLIST_FETCH = 'START_USER_FETCH'
-export const FETCH_USERLIST_SUCCESS = 'FETCH_SUCCESS'
-export const FETCH_USERLIST_ERROR = 'FETCH_ERROR'
-
-export const LOGIN_USER = 'LOGIN_USER'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_ERROR = 'LOGIN_ERROR'
-
 
 export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS'
 export const START_USER_FETCH = 'START_USER_FETCH'
@@ -28,6 +15,10 @@ export const USER_FETCH_ERROR = 'USER_FETCH_ERROR'
 export const START_UPDATE_PROFILE = 'START_UPDATE_PROFILE'
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS'
 export const UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
+
+export const LOGIN_USER = 'LOGIN_USER'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_ERROR = 'LOGIN_ERROR'
 
 export const USER_LOG_OUT = 'USER_LOG_OUT'
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
@@ -41,11 +32,13 @@ export const UPLOAD_FILE_START = 'UPLOAD_FILE_START'
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
 export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
 
-export const GET_OWNER = 'GET_OWNER'
-
 export const DELETE_ACCOUNT_START = 'DELETE_ACCOUNT_START'
 export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS'
 export const DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR'
+
+export const CLEAR_REGISTER_FORM = 'CLEAR_REGISTER_FORM'
+
+export const SET_ERROR = 'SET_ERROR'
 
 export const AUTHENTICATE_THE_USER = 'AUTHENTICATE_THE_USER'
 
@@ -53,20 +46,11 @@ export const GET_FILE_TO_UPLOAD = 'GET_FILE_TO_UPLOAD'
 
 export const LINK_NEW_ITEM_TO_USER = 'LINK_NEW_ITEM_TO_USER'
 
-// action call to call api for list of users 
-export const fetchUserList = () => dispatch => {
-	dispatch({ type: START_USERLIST_FETCH })
-	console.log('attempting to fetch all users')
-	axios.get('https://ptpt-use-my-tech5.herokuapp.com/api/users')
-		.then(resp => {
-			dispatch({ type: FETCH_USERLIST_SUCCESS, payload: resp.data })
-			console.log('successfully fetched users')
-		})
-		.catch(err => dispatch({ type: FETCH_USERLIST_ERROR, payload: err }))
-}
+export const GET_OWNER = 'GET_OWNER'
+
 
 // action call to add user to database
-export const addUser = (newUser) => dispatch => {
+export const addUser = newUser => dispatch => {
 	dispatch({ type: START_ADD_USER, payload: newUser })
 	console.log('userActions says: attempting to register user', newUser)
 	try {
@@ -92,7 +76,7 @@ export const setError = errorMessage => {
 }
 
 // action call to log in
-export const loginUser = (credentials) => async dispatch => {
+export const loginUser = credentials => async dispatch => {
 	console.log('actions says: dispatching LOGIN_USER', credentials)
 	dispatch({ type: LOGIN_USER, payload: credentials })
 	console.log('actions says: attempting api.post login', credentials)
@@ -147,6 +131,7 @@ export const updateProfile = user => dispatch => {
 	}
 }
 
+// action call to log user out
 export const userLogOut = () => async dispatch => {
 	dispatch({ type: USER_LOG_OUT })
 	try {
@@ -158,11 +143,14 @@ export const userLogOut = () => async dispatch => {
 		console.log(err)
 	}
 }
+
+// action call to clear sign up form
 export const clearRegisterForm = () => dispatch => {
 	dispatch({ type: CLEAR_REGISTER_FORM })
 
 }
 
+// action call to get user's items
 export const getMyItems = id => async dispatch => {
 	dispatch({ type: GET_MYITEMS_START })
 	try {
@@ -174,6 +162,7 @@ export const getMyItems = id => async dispatch => {
 
 }
 
+// action call to upload a file
 export const uploadFile = file => dispatch => {
 	dispatch({ type: UPLOAD_FILE_START, payload: file })
 	console.log('attempting file upload')
@@ -190,6 +179,7 @@ export const uploadFile = file => dispatch => {
 	}
 }
 
+// action call to delete user account
 export const deleteAccount = id => dispatch => {
 	dispatch({ type: DELETE_ACCOUNT_START, payload: id })
 	axiosWithAuth().delete(`https://ptpt-use-my-tech5.herokuapp.com/api/user/${id}`)
@@ -198,10 +188,12 @@ export const deleteAccount = id => dispatch => {
 		}).catch(err => dispatch({ type: DELETE_ACCOUNT_ERROR, payload: err.message }))
 }
 
+// action call to keep user logged in
 export const authenticateTheUser = () => dispatch => {
 	dispatch({ type: AUTHENTICATE_THE_USER })
 }
 
+// action call for storing file before its attached to user
 export const getFileToUpload = file => dispatch => {
 	dispatch({ type: GET_FILE_TO_UPLOAD, payload: file })
 }

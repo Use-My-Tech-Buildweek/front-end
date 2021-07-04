@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import User from './User'
 // import Profile from './Profile'
 // import PrivateRoute from './PrivateRoute'
-import { fetchUserList } from '../actions/userActions'
+//import { fetchUserList } from '../actions/userActions'
 
 const UserList = props => {
 
@@ -38,4 +38,4 @@ const mapStateToProps = state => {
 		isUserLoggedIn: state.isUserLoggedIn
 	}
 }
-export default connect(mapStateToProps, { fetchUserList })(UserList)
+export default connect(mapStateToProps, {})(UserList)

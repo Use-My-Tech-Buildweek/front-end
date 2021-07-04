@@ -1,4 +1,4 @@
-// Actions for itemsReducer
+// Actions for item's state
 
 //import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth'

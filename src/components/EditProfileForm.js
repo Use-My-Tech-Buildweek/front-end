@@ -10,6 +10,7 @@ import { getUserUrl } from '../utils/apiUrls'
 import { getProfile, updateProfile, deleteAccount } from '../actions/userActions'
 import SingleFileAutoSubmit from './SingleFileAutoSubmit'
 import ProfileDropzone from './ProfileDropzone'
+import Avatar from './Avatar'
 class EditProfileForm extends Component {
 	constructor(props) {
 		super(props)
@@ -161,7 +162,7 @@ class EditProfileForm extends Component {
 							<ProfileDropzone />
 						</div>
 						<div className='col s6'>
-
+							<Avatar />
 							<SingleFileAutoSubmit />
 							{/*}<Link to={`/user/${this.props.user.id}/avatar`} type='button' href={'/'} onClick={this.goToFileUploader}>Click to add or change your avatar</Link>*/}
 						</div>
